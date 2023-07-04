@@ -12,8 +12,7 @@ export function App() {
     const dispatch = useAppDispatch();
     const counter = useAppSelector(state => state.counter.value)
 
-
-
+    
     const onClickButtonPlus = () => {
         dispatch(incrementAction(1))
     }
@@ -26,6 +25,7 @@ export function App() {
 
     
     useEffect(() => {
+
         getQuizData()
     } , [])
 
