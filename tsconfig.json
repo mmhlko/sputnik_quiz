@@ -37,5 +37,6 @@
     "compilerOptions": {
       "module": "CommonJS"
     }
-  }
+  },
+  "include": ["src", "declaration.d.ts"],
 }
