@@ -1,8 +1,15 @@
 
 .quizWrapper {
-    background-color: #cecece;
+    background-color: transparent;
     margin: 80px;
     display: flex;
     flex-direction: column;
     
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 15px 0;
 }

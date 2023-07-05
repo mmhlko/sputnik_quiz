@@ -1,16 +1,17 @@
 
 import Quiz from 'components/quiz';
 import React, { useEffect, useState } from 'react';
-import { decrementAction, incrementAction } from 'storage/actions/counter-actions';
+import { decrementAction, incrementAction } from 'storage/actions/quizGame-actions';
 import { getQuestionsAction } from 'storage/actions/quizData-actions';
 import { useAppDispatch, useAppSelector } from 'storage/hook';
 import { quizData } from 'storage/quizData';
+import Checks from 'components/checks';
 
 export function App() {
 
     const [questions, setQuestions] = useState(quizData)
     const dispatch = useAppDispatch();
-    const counter = useAppSelector(state => state.counter.value)
+    const counter = useAppSelector(state => state.result.score)
 
     
     const onClickButtonPlus = () => {
@@ -32,13 +33,9 @@ export function App() {
 
     return (
         <>
-
-            <h2>Счетчик: {counter}</h2>
-            <div>
-                <button onClick={onClickButtonMinus}>Убавить</button>
-                <button onClick={onClickButtonPlus}>Добавить</button>
-            </div>
+        
             <Quiz /> 
+            <Checks />
             
         </>
     );

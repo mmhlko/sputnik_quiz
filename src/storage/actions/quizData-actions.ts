@@ -12,3 +12,4 @@ export function getQuestionsAction(data: TQuizQuestion[]):TQuizDataAction {
         payload: data,
     }
 }
+

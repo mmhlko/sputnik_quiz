@@ -1,23 +1,22 @@
-import { TCounterAction } from "storage/actions/counter-actions"
+import { TQuizDataAction } from "storage/actions/quizData-actions"
 import { TQuizQuestion } from "storage/quizData"
 import { GET_QUESTIONS } from "storage/types"
 
 
-export type TCounterState = {
+export type TQuizDataState = {
     data: TQuizQuestion[],
     totalQuestions: number
 }
 
-const initialState: TCounterState = {
+const initialState: TQuizDataState = {
     data: [],
     totalQuestions: 0
 }
 
-export function quizDataReducer(state = initialState, action:{type: string, payload: TQuizQuestion[]}) {
+export function quizDataReducer(state = initialState, action:TQuizDataAction) {
     switch (action.type) {
         case GET_QUESTIONS:
-            return {...state, data: action.payload}
-            break;
+            return {...state, data: action.payload, totalQuestions: action.payload.length}
     
         default:
             return state
