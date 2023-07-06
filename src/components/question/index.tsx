@@ -6,9 +6,6 @@ import { TQuizQuestion } from 'storage/quizData';
 import { useEffect, useState } from 'react';
 import { decrementAction, incrementAction } from 'storage/actions/quizGame-actions';
 import { Checkbox, Typography, Card } from 'antd';
-
-
-
 const { Title, Text } = Typography;
 
 export type TQuestionProps = {
