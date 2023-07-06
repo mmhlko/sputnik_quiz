@@ -1,3 +1,4 @@
+import { Rate } from "antd"
 import s from "./styles.module.scss"
 
 export type TQuizResultProps = {
@@ -5,12 +6,15 @@ export type TQuizResultProps = {
     total: number
 }
 
-function QuizResult ({result, total}:TQuizResultProps) {    
+function QuizResult({ result, total }: TQuizResultProps) {
 
-        return (
-        <>
-        <h2 className={s.text}>Ваш результат {result} из {total}</h2>        
-        </>
+    const stars = result / total * 5
+
+    return (
+        <div>
+            <h2 className={s.text}>Ваш результат {result} из {total}</h2>
+            <Rate disabled allowHalf defaultValue={stars} />
+        </div>
     )
 }
 

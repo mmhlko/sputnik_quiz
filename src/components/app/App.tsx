@@ -1,33 +1,25 @@
-
-import Quiz from 'components/quiz';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getQuestionsAction } from 'storage/actions/quizData-actions';
-import { useAppDispatch, useAppSelector } from 'storage/hook';
+import { useAppDispatch } from 'storage/hook';
 import { quizData } from 'storage/quizData';
+import Quiz from 'components/quiz';
 
 export function App() {
 
-    const [questions, setQuestions] = useState(quizData)
     const dispatch = useAppDispatch();
-    const counter = useAppSelector(state => state.result.score)
 
     const getQuizData = () => {
-        dispatch(getQuestionsAction(questions))
+        dispatch(getQuestionsAction(quizData))
     }
 
-    
     useEffect(() => {
         getQuizData()
-    } , [])
 
+    }, [])
 
     return (
-        <>
-            <div className="container">
-                <Quiz /> 
-            </div>
-            
-            
-        </>
+        <div className="container">
+            <Quiz />
+        </div>
     );
 }

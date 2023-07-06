@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT, QUIZ_RESET, SHOW_RESULT } from "storage/types"
+import { DECREMENT, INCREMENT, SHOW_RESULT } from "storage/types"
 
 export type TResultAction = {
     type: string,

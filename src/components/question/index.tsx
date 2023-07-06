@@ -1,11 +1,13 @@
-import { useAppDispatch, useAppSelector } from 'storage/hook';
 import s from './styles.module.scss';
+import cn from 'classnames';
+import useCheckbox from 'hooks/useCheckbox';
+import { useAppDispatch } from 'storage/hook';
 import { TQuizQuestion } from 'storage/quizData';
 import { useEffect, useState } from 'react';
 import { decrementAction, incrementAction } from 'storage/actions/quizGame-actions';
 import { Checkbox, Typography, Card } from 'antd';
-import cn from 'classnames';
-import useCheckbox from 'hooks/useCheckbox';
+
+
 
 const { Title, Text } = Typography;
 
@@ -19,11 +21,12 @@ function Question({ question, isDisable }: TQuestionProps) {
     const [activeCheckbox, setActiveCheckbox] = useState<number | null>(null);
     const { title, variants, correctAnswer } = question;
 
-    const { value, onChange } = useCheckbox(0);
+    const { value, onChange} = useCheckbox(null);
 
+    //логика определения правильного ответа
     useEffect(() => {
 
-        setActiveCheckbox(value)
+        setActiveCheckbox(value);     
 
         if (activeCheckbox) {
             if (value === correctAnswer) {
@@ -31,14 +34,12 @@ function Question({ question, isDisable }: TQuestionProps) {
                     return
                 } else {
                     dispatch(incrementAction(1))
-
                 }
             } else {
                 if (activeCheckbox !== correctAnswer) {
                     return
                 } else {
                     dispatch(decrementAction(1))
-
                 }
             }
         } else {
@@ -51,15 +52,10 @@ function Question({ question, isDisable }: TQuestionProps) {
         }
         
     }, [value])
-
-
-    console.log(value, activeCheckbox);
     
-
-
     return (
 
-        <Card title={<Title level={3}>{title}</Title>} className={s.wrapper}>
+        <Card title={<Title style={{whiteSpace: 'pre-wrap'}} level={3}>{title}</Title>} className={s.wrapper}>
             <ul className={s.variants}>
                 {variants.map((variant, index) => (
                     <li key={index} className={s.variant}>

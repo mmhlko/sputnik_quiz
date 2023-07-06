@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 const useCheckbox = (index: number) => {
@@ -8,7 +8,7 @@ const useCheckbox = (index: number) => {
         return {
             value,
             onChange: (e:any) => {
-                setValue(e.target.value)                
+                setValue(e.target.value)
             }
         }
 

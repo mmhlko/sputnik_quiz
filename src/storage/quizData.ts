@@ -8,7 +8,7 @@ export type TQuizQuestion = {
 export const quizData: TQuizQuestion[] = [
     {
         title: 'Как называется еврейский Новый год?',
-        variants: ['Ханука', 'Йом Кипур','Кванза','Рош ха-Шана'],
+        variants: ['Ханука', 'Йом Кипур','Кванза','Рош ха-Шана', 'Еврейский Новый год'],
         correctAnswer: 4,
         id: 1,
     },
@@ -26,7 +26,7 @@ export const quizData: TQuizQuestion[] = [
     },
     {
         title: 'Какое животное не фигурирует в китайском зодиаке?',
-        variants: ['Дракон', 'Кролик','Собака','Колибри', 'Бегемот'],
+        variants: ['Дракон', 'Кролик','Собака','Колибри', 'Лошадь'],
         correctAnswer: 4,
         id: 4,
     },
@@ -45,7 +45,7 @@ export const quizData: TQuizQuestion[] = [
     {
         title: 'Как назывался корабль капитана Джека Воробья в "Пиратах Карибского моря"?',
         variants: ['Мародер', 'Черная жемчужина','Черный питон','Слизерин'],
-        correctAnswer: 3,
+        correctAnswer: 2,
         id: 7,
     },
     {
