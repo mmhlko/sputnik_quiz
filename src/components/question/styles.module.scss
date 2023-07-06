@@ -1,14 +1,13 @@
 .wrapper {
-    background-color: #dbd9d9;
+    background-color: #fff;
     border-radius: 10px;
     padding: 10px 20px;
-    border: 1px solid gray;
-    margin: 40px;
+    border: 1px solid #cccccc;
 
 
 
     li {
-        margin: 24px 0;
+        margin: 12px 0;
     }
 
     label {
@@ -76,5 +75,12 @@
         &_disabled {
             color: #8e8e8e
         }
+    }
+
+    .colorGreen{
+        color: rgb(30, 139, 30);
+    }
+    .colorRed {
+        color: rgb(155, 30, 30);
     }
 }

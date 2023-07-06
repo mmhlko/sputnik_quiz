@@ -19,9 +19,6 @@ export function quizGameReducer(state = initialState, action:TResultAction) {
             return {...state, score: state.score - action.payload}
         case SHOW_RESULT:
             return {...state, showResult: true}
-        
-        case QUIZ_RESET:
-            return {...state, showResult: false, score: 0}
         default:
             return state
     }

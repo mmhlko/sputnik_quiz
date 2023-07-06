@@ -1,5 +1,11 @@
 @import "~normalize.css";
 
 body {
-    /* background-color: #7cc6fe; */
+    background-color: #ececec;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 15px;
 }

@@ -1,7 +1,7 @@
 import Question from "components/question"
 import s from "./styles.module.scss"
 import { useAppDispatch, useAppSelector} from "storage/hook";
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { TQuizQuestion } from "storage/quizData";
 import { showResultAction } from "storage/actions/quizGame-actions";
 import { Pagination } from 'antd';
@@ -36,10 +36,12 @@ function QuestionList({questions, totalQuestions}:TQuestionListProps) {
             setStartItem(0)
         } else {
             setStartItem((page - 1) * PAGE_SIZE)
-        }
-        
-
+        }       
     }
+
+    useEffect(()=>{
+        window.scrollTo({top: 0});
+    },[startItem])
 
     return (
         <>
@@ -47,7 +49,6 @@ function QuestionList({questions, totalQuestions}:TQuestionListProps) {
             {questions.slice(startItem, endItem).map((question) => (
                 <Question key={question.id} question={question} isDisable={isDisable}/>
             ))}
-            <input type="reset" />         
         </form>
         {totalQuestions / PAGE_SIZE > 1 && 
         <Pagination 

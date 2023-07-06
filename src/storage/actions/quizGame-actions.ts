@@ -25,10 +25,5 @@ export function showResultAction():TResultAction {
     }
 }
 
-export function resetQuizAction():TResultAction {
-    return {
-        type: QUIZ_RESET,        
-    }
-}
 
 

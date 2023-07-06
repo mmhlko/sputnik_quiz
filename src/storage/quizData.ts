@@ -14,7 +14,7 @@ export const quizData: TQuizQuestion[] = [
     },
     {
         title: 'Сколько синих полос на флаге США?',
-        variants: ['6', '7','13','0'],
+        variants: ['6', '7','13','0', '12'],
         correctAnswer: 4,
         id: 2,
     },
@@ -26,7 +26,7 @@ export const quizData: TQuizQuestion[] = [
     },
     {
         title: 'Какое животное не фигурирует в китайском зодиаке?',
-        variants: ['Дракон', 'Кролик','Собака','Колибри'],
+        variants: ['Дракон', 'Кролик','Собака','Колибри', 'Бегемот'],
         correctAnswer: 4,
         id: 4,
     },
@@ -38,7 +38,7 @@ export const quizData: TQuizQuestion[] = [
     },
     {
         title: 'Какая планета самая горячая?',
-        variants: ['Венера', 'Сатурн','Меркурий','Марс'],
+        variants: ['Венера','Меркурий','Марс'],
         correctAnswer: 1,
         id: 6,
     },
@@ -59,12 +59,6 @@ export const quizData: TQuizQuestion[] = [
         variants: ['Рэйчел', 'Джоуи','Гюнтер','Моника'],
         correctAnswer: 3,
         id: 9,
-    },
-    {
-        title: 'Кто из этих персонажей не входит в группу друзей из сериала "Друзья"?',
-        variants: ['Рэйчел', 'Джоуи','Гюнтер','Моника'],
-        correctAnswer: 3,
-        id: 10,
     },
     {
         title: 'Сколько костей в теле человека?',

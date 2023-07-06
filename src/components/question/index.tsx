@@ -4,6 +4,10 @@ import { TQuizQuestion } from 'storage/quizData';
 import { useRef, useState } from 'react';
 import { decrementAction, incrementAction } from 'storage/actions/quizGame-actions';
 import { Checkbox } from 'antd';
+import { Typography } from 'antd';
+import cn from 'classnames';
+
+const { Title, Text } = Typography;
 
 
 export type TQuestionProps = {
@@ -14,9 +18,10 @@ export type TQuestionProps = {
 function Question({ question, isDisable }: TQuestionProps) {
 
     const [activeCheckbox, setActiveCheckbox] = useState<number | null>(null);
+    const showResult = useAppSelector(state => state.result.showResult) 
     const { title, variants, id, correctAnswer } = question;
     const dispatch = useAppDispatch();
-    const ref:any = useRef([]);
+    
 
     const handleClickVariant = (answer: number) => {
 
@@ -53,11 +58,13 @@ function Question({ question, isDisable }: TQuestionProps) {
     return (
 
         <div className={s.wrapper}>
-            <h3>{title}</h3>
+            <Title level={3}>{title}</Title>
             <ul className={s.variants}>
                 {variants.map((variant, index) => (
                     <li key={index} className={s.variant}>
-                        <Checkbox ref={(element) => { ref.current[index] = element }} disabled={isDisable} onChange={() => handleClickVariant(index + 1)} /* checked={index + 1 === activeCheckbox} */>{variant}</Checkbox>
+                        <Checkbox disabled={isDisable} onChange={() => handleClickVariant(index + 1)} checked={index + 1 === activeCheckbox}>
+                            <Text className={cn({ [s['colorGreen']]: showResult && index + 1 === correctAnswer }, { [s['colorRed']]: showResult && index + 1 !== correctAnswer } )}>{variant}</Text>
+                        </Checkbox>
                     </li>
                     
                 ))}
