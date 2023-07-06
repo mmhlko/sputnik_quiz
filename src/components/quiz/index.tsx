@@ -4,6 +4,7 @@ import QuestionList from 'components/question-list';
 import QuizResult from 'components/quiz-result';
 import { Button } from 'antd';
 import { Typography } from 'antd';
+import useCheckbox from 'hooks/useCheckbox';
 
 const { Title } = Typography;
 
@@ -11,6 +12,8 @@ function Quiz() {
 
     const { score, showResult } = useAppSelector(state => state.result);
     const { data: questions, totalQuestions } = useAppSelector(state => state.questions);
+
+    
 
     return (
         <div className={s.quizWrapper}>
