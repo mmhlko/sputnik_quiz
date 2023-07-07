@@ -14,17 +14,14 @@ export type TQuestionProps = {
 }
 
 function Question({ question, isDisable }: TQuestionProps) {
+    
     const dispatch = useAppDispatch();
     const [activeCheckbox, setActiveCheckbox] = useState<number | null>(null);
     const { title, variants, correctAnswer } = question;
-
     const { value, onChange} = useCheckbox(null);
 
-    //логика определения правильного ответа
-    useEffect(() => {
-
-        setActiveCheckbox(value);     
-
+    const getCorrectAnswerFn = () => {
+        //логика определения правильного ответа
         if (activeCheckbox) {
             if (value === correctAnswer) {
                 if (activeCheckbox === correctAnswer) {
@@ -42,11 +39,16 @@ function Question({ question, isDisable }: TQuestionProps) {
         } else {
             if (value === correctAnswer) {
                 dispatch(incrementAction(1))
-
             } else {
                 return
             }
         }
+    }
+    
+    useEffect(() => {
+
+        setActiveCheckbox(value);  
+        getCorrectAnswerFn()
         
     }, [value])
     

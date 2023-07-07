@@ -8,13 +8,8 @@ export function App() {
 
     const dispatch = useAppDispatch();
 
-    const getQuizData = () => {
-        dispatch(getQuestionsAction(quizData))
-    }
-
     useEffect(() => {
-        getQuizData()
-
+        dispatch(getQuestionsAction(quizData))
     }, [])
 
     return (
