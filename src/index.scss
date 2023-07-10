@@ -1,11 +1,28 @@
 @import "~normalize.css";
 
+html {
+    box-sizing: border-box;
+    height: 100%;  
+}
+
 body {
     background-color: #ececec;
+    height: 100%;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+main {
+    flex: 1;
 }
