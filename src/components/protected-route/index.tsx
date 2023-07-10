@@ -6,18 +6,21 @@ import { useAppSelector } from "storage/hook";
 
 
 interface IProtectedRouteProps {
-  onlyUnAuth?: boolean; 
+  onlyOnAuth?: boolean; 
   children: ReactNode;
+  ReplaceElement: ReactNode;
 }
 
-function ProtectedRoute({onlyUnAuth, children}: IProtectedRouteProps) {
+function ProtectedRoute({onlyOnAuth, children, ReplaceElement}: IProtectedRouteProps) {
   const user = useAppSelector(state => state.user.data);
   const isAuthChecked = useAppSelector(state => state.user.isAuthChecked);;
   /* const location = useLocation(); */
   
-  if (null/* !isAuthChecked */) return <Spiner />
+  if (null/* !isAuthChecked */) return <Spiner /> //если идет ожидание от сервера при авторизации
   
-  if (onlyUnAuth && user) {
+  if (onlyOnAuth && user) {
+    //если это компонент авторизации => редирект на главную или куда заходили по прямому url
+
     //const { from } = location?.state || { from: {pathname: '/'} } не работает
     /* const from  = location.state.from || {pathname: '/'};  
     const { backgroundLocation } = location?.state?.from?.state || { backgroundLocation: null }
@@ -25,10 +28,11 @@ function ProtectedRoute({onlyUnAuth, children}: IProtectedRouteProps) {
     return <><h2>Залогинился</h2></>
   }
 
-  if (!onlyUnAuth && !user) {
+  if (!onlyOnAuth && !user) {
+    //если компонент защищен то редирект на логин
     return (
       //<Navigate replace to={{ pathname: '/login' }} state={{ from: location }} />
-      <><h2>Надо залогиниться</h2></>
+      <><h2>Надо залогиниться</h2>{ReplaceElement}</>
     )
   }
   return <>{children}</>

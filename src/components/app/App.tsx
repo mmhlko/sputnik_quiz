@@ -4,7 +4,7 @@ import { useAppDispatch } from 'storage/hook';
 import { quizData } from 'storage/quizData';
 import Quiz from 'components/quiz';
 import HeaderBlock from 'components/header';
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 import ProtectedRoute from 'components/protected-route';
 import Header from 'components/header';
 
@@ -15,7 +15,7 @@ const {Footer } = Layout;
 export function App() {
 
     const dispatch = useAppDispatch();
-    const [onlyUnAuth, setOnlyUnAuth] = useState(true)
+    const [onlyOnAuth, setOnlyOnAuth] = useState(true)
 
     useEffect(() => {
         dispatch(getQuestionsAction(quizData))
@@ -25,8 +25,8 @@ export function App() {
         <>
             <Header />
             <main className='container'>
-                <button onClick={() => setOnlyUnAuth(!onlyUnAuth)}>Включить</button>
-                <ProtectedRoute onlyUnAuth={onlyUnAuth}><Quiz /></ProtectedRoute>               
+                <button onClick={() => setOnlyOnAuth(!onlyOnAuth)}>Включить</button>
+                <ProtectedRoute ReplaceElement={<Button type='link' href='/login'>Авторизироваться</Button>}><Quiz /></ProtectedRoute>               
                 
             </main>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
