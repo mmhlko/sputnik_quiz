@@ -8,7 +8,7 @@ import { useAppSelector } from "storage/hook";
 interface IProtectedRouteProps {
   onlyOnAuth?: boolean; 
   children: ReactNode;
-  ReplaceElement: ReactNode;
+  ReplaceElement?: ReactNode;
 }
 
 function ProtectedRoute({onlyOnAuth, children, ReplaceElement}: IProtectedRouteProps) {

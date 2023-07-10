@@ -46,18 +46,6 @@ function RegisterForm({onSubmit, onNavigate}: IRegisterFormProps) {
             message: "Пароль должен содержать минимум восемь символов, одну букву латинского алфавита и одну цифру" 
         }
     })
-
-    const groupRegister = register('group', {
-        required: {
-            value: true,
-            message: "Обязательное поле"
-        },
-        pattern: {
-            value: /^group-[0-9]{1,3}$/,
-            message: "Номер группы в формате group-номер" 
-        }
-    })
-
         
     return ( 
         <>
@@ -69,13 +57,7 @@ function RegisterForm({onSubmit, onNavigate}: IRegisterFormProps) {
                 placeholder='email'
             />
             {errors?.email && <p className='errorMessage'>{errors.email.message}</p>}
-            <FormInput 
-                {...groupRegister}
-                id='group'
-                type='text'
-                placeholder='номер группы'
-            />
-            {errors?.group && <p className='errorMessage'>{errors.group.message}</p>}
+            
             <FormInput 
                 {...passwordRegister}
                 id='password'

@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom'
 import { Provider } from "react-redux";
 import store from 'storage/store'
 import 'index.scss'
+import { BrowserRouter } from "react-router-dom";
 
 
 
 const root = (
     <Provider store={store}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>
 )
 
