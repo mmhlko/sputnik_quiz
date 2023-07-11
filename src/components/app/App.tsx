@@ -12,6 +12,7 @@ import LoginForm from 'components/login-form';
 import { TUserDTO } from 'storage/redusers/user-reducer';
 import { SubmitHandler } from 'react-hook-form';
 import RegisterForm from 'components/register-form';
+import api, { TUserAuthBody, TUserRegisterBody,  } from 'utils/api';
 
 
 
@@ -24,15 +25,20 @@ export function App() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        dispatch(getQuestionsAction(quizData))
+        api.getAllUsers();      
+        
+        //dispatch(getQuestionsAction(quizData))
+        
     }, [])
 
-    const cbSubmitFormRegister: SubmitHandler<TUserDTO> = (dataForm) => {
+    const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
         console.log('cbSubmitFormLoginRegister', dataForm);
+        api.register(dataForm)
         // dispatch(fetchRegisterUser(dataForm))
     }
-    const cbSubmitFormLogin: SubmitHandler<TUserDTO> = (dataForm) => {
+    const cbSubmitFormLogin: SubmitHandler<TUserAuthBody> = (dataForm) => {
         console.log('cbSubmitFormLogin', dataForm);
+        api.authorize(dataForm)
         //dispatch(fetchLoginUser(dataForm))        
     }
     const handleClickNavigate = (to: string) => {
