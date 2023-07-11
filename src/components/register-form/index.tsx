@@ -4,13 +4,13 @@ import s from './styles.module.scss'
 import Form from '../form';
 import FormInput from '../form-input';
 import FormButton from '../form-button';
-import { TUser } from 'utils/api';
+import { TUser, TUserRegisterBody } from 'utils/api';
 /* import { UserRegisterBodyDto } from '../../utils/api'; */
 
  
 
 interface IRegisterFormProps {
-    onSubmit:  (dataform: TUser) => void;
+    onSubmit:  (dataform: TUserRegisterBody) => void;
     onNavigate: (value: string) => void;
 }
 

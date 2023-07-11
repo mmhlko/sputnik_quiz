@@ -1,6 +1,10 @@
 export type TUser = {
     email: string,
-    password: string,
+    id: string
+}
+
+export type TUserResponce = {
+    email: string,
     id: string
 }
 
@@ -11,17 +15,18 @@ export type TUserAuthBody = {
 }
 
 export type TUserRegisterBody = {
-    //some reg types
-} & TUserAuthBody
+    email: string,
+    password: string,
+}
 
 type TApiConfig = {
     baseUrl: string;
     headers: any;
 }
 //тип данных при получении ответа от сервера после авторизации
-export type TAuthResponseDto = {
-    data: TUser;
-    token: string;
+export type TAuthResponse = {
+    user: TUser;
+    accessToken: string;
 }
 
 
@@ -57,7 +62,7 @@ export class Api {
             headers: this.headers,
             body: JSON.stringify(bodyData)
         })
-            .then(this.onResponce<TUser>)
+            .then(this.onResponce<TAuthResponse>)
             .catch((err) => console.log(err)
             )
     }
@@ -69,14 +74,18 @@ export class Api {
             headers: this.headers,
             body: JSON.stringify(bodyData)
         })
-            .then(this.onResponce<TAuthResponseDto>)
+            .then(this.onResponce<TAuthResponse>)
+            .catch((err) => console.log(err)
+            )
     }
 
     checkToken(token:string) { //изменение пользователя
         return fetch(`${this.baseUrl}/users/me`, {
             headers: {...this.headers, authorization: `Bearer ${token}`}            
         })
-            .then(this.onResponce<TAuthResponseDto>)
+            .then(this.onResponce<TAuthResponse>)
+            .catch((err) => console.log(err)
+            )
     }
 
 

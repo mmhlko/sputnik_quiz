@@ -12,7 +12,9 @@ import LoginForm from 'components/login-form';
 import { TUserDTO } from 'storage/redusers/user-reducer';
 import { SubmitHandler } from 'react-hook-form';
 import RegisterForm from 'components/register-form';
-import api, { TUserAuthBody, TUserRegisterBody,  } from 'utils/api';
+import api, { TUserAuthBody, TUserRegisterBody, TUserResponce,  } from 'utils/api';
+import { registerAction } from 'storage/actions/user-actions';
+import { fetchLoginUser, fetchRegisterUser } from 'storage/asyncActions/user-slice';
 
 
 
@@ -31,14 +33,13 @@ export function App() {
         
     }, [])
 
-    const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
-        console.log('cbSubmitFormLoginRegister', dataForm);
-        api.register(dataForm)
-        // dispatch(fetchRegisterUser(dataForm))
+    const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {        
+
+        dispatch(fetchRegisterUser(dataForm))
     }
     const cbSubmitFormLogin: SubmitHandler<TUserAuthBody> = (dataForm) => {
-        console.log('cbSubmitFormLogin', dataForm);
-        api.authorize(dataForm)
+        // console.log('cbSubmitFormLogin', dataForm);
+        dispatch(fetchLoginUser(dataForm))
         //dispatch(fetchLoginUser(dataForm))        
     }
     const handleClickNavigate = (to: string) => {
