@@ -1,11 +1,13 @@
 export type TUser = {
     email: string,
-    id: string
+    id: string,
+    name?: string
 }
 
 export type TUserResponce = {
     email: string,
-    id: string
+    id: string,
+    name?: string
 }
 
 //тип данных при авторизации
@@ -29,6 +31,15 @@ export type TAuthResponse = {
     accessToken: string;
 }
 
+//тип вопроса квиза
+export type TQuestion = {
+    title: string,
+    variants: string[],
+    correctAnswer: number,
+    id: number
+}
+//тип ответа от бд для списка вопросов
+export type TQuestionResponse = TQuestion[];
 
 export class Api {
 
@@ -63,7 +74,7 @@ export class Api {
             body: JSON.stringify(bodyData)
         })
             .then(this.onResponce<TAuthResponse>)
-            .catch((err) => console.log(err)
+            .catch((err) => alert(err)
             )
     }
 
@@ -75,7 +86,7 @@ export class Api {
             body: JSON.stringify(bodyData)
         })
             .then(this.onResponce<TAuthResponse>)
-            .catch((err) => console.log(err)
+            .catch((err) => alert(err)
             )
     }
 
@@ -87,6 +98,17 @@ export class Api {
             .catch((err) => console.log(err)
             )
     }
+
+    getQuestions(token:string) { //изменение пользователя
+        return fetch(`${this.baseUrl}/questions`, {
+            headers: {...this.headers, authorization: `Bearer ${token}`}            
+        })
+            .then(this.onResponce<TQuestionResponse>)
+            .catch((err) => console.log(err)
+            )
+    }
+
+
 
 
 }

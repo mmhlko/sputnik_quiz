@@ -13,10 +13,12 @@ interface IFormProps {
 function Form({handleForm, children, title, align='center'}: IFormProps) {
    
     return ( 
-        <form onSubmit={handleForm} className={classNames(s.form, {[s[align]]: !!align}) }>
-            {title && <h3 className={s.title}>{title}</h3>}
-            {children}
-        </form>
+        <div className={s.container}>
+            <form onSubmit={handleForm} className={classNames(s.form, {[s[align]]: !!align}) }>
+                {title && <h3 className={s.title}>{title}</h3>}
+                {children}
+            </form>
+        </div>
      );
 }
 

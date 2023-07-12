@@ -7,8 +7,8 @@
     margin: 8px 0px;
 
     position: static;
-    /* width: 356px; */
-    border-radius: 55px;
+    width: 100%;
+    border-radius: 6px;
 
     color: #1A1A1A;
     font-family: Arial, Helvetica, sans-serif;
@@ -21,7 +21,8 @@
 }
 
 .primary {
-    background: #FFE44D;
+    background: #1677ff;
+    color: #fff;
     border: none;
 }
 

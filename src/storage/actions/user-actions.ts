@@ -1,5 +1,5 @@
-import { USER_LOGIN, USER_REGISTER } from "storage/types"
-import { TUserRegisterBody, TUserResponce } from "utils/api"
+import { USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "storage/types"
+import { TUser, TUserRegisterBody, TUserResponce } from "utils/api"
 
 
 export type TRegisterAction = {
@@ -23,5 +23,18 @@ export function authorizeAction(data:TUserResponce):TAuthAction {
     return {
         type: USER_LOGIN,
         payload: data,
+    }
+}
+
+export function getUser(data:TUserResponce):TAuthAction {
+    return {
+        type: USER_LOCAL_STORAGE,
+        payload: data,
+    }
+}
+
+export function userLogout() {
+    return {
+        type: USER_LOGOUT
     }
 }

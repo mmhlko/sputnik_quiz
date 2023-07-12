@@ -12,9 +12,11 @@ import LoginForm from 'components/login-form';
 import { TUserDTO } from 'storage/redusers/user-reducer';
 import { SubmitHandler } from 'react-hook-form';
 import RegisterForm from 'components/register-form';
-import api, { TUserAuthBody, TUserRegisterBody, TUserResponce,  } from 'utils/api';
-import { registerAction } from 'storage/actions/user-actions';
+import api, { TUser, TUserAuthBody, TUserRegisterBody, TUserResponce,  } from 'utils/api';
+import { getUser, registerAction } from 'storage/actions/user-actions';
 import { fetchLoginUser, fetchRegisterUser } from 'storage/asyncActions/user-slice';
+import { getLocalData } from 'utils/local-storage';
+import { fetchGetQuestions } from 'storage/asyncActions/questions-slice';
 
 
 
@@ -24,14 +26,33 @@ export function App() {
 
     const dispatch = useAppDispatch();
     const [onlyOnAuth, setOnlyOnAuth] = useState(true)
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    
+    
 
     useEffect(() => {
-        api.getAllUsers();      
-        
-        //dispatch(getQuestionsAction(quizData))
+        const token:string = getLocalData('accessToken');
+        const userFromLS:TUser = getLocalData('user')
+        dispatch(getUser(userFromLS))
+        if(token) {
+            dispatch(fetchGetQuestions(token))
+        }
         
     }, [])
+
+    // useEffect(() => { //когда 2 диспатча идут друг за другом, она асинхронные и возвращаются данные кто вперед, если сделать через then то они выполняются по очереди
+    //     const token = getLocalData('token')
+
+    //     dispatch(fetchCheckToken(token)) //диспатч возвращает промис, поэтому можно применить then
+    //       .then(() => {
+    //         if (token) {        
+    //           dispatch(fetchProducts())
+    //         }
+           
+    //       })   
+        
+    //   }, [dispatch, token])
 
     const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {        
 

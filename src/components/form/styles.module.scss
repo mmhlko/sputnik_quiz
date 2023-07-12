@@ -1,7 +1,14 @@
+.container {
+    display: flex;
+}
+
 .form {
     display: flex;
     flex-direction: column;    
     padding: 0 20px;
+    width: 100%;
+    max-width: 420px;
+    min-width: 340px;
 }
 
 .title {

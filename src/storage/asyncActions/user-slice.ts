@@ -21,12 +21,23 @@ export const fetchLoginUser = (dataForm: TUserRegisterBody):any => {
     return (dispatch:Dispatch<TRegisterAction>) => {
         api.authorize(dataForm)
             .then((data:TAuthResponse) => {
-                setLocalData('accessToken', data.accessToken)
-                dispatch(authorizeAction(data.user))
+                if(data?.accessToken) {
+                    setLocalData('accessToken', data.accessToken)
+                    setLocalData('user', data.user)
+                    dispatch(authorizeAction(data.user))
+                }
+                
             })
     }
 }
 
-export const fetchCheckToken = () => {
+// export const fetchCheckToken = () => {
     
-}
+//     return (dispatch:Dispatch<TRegisterAction>) => {
+//         api.authorize(dataForm)
+//             .then((data:TAuthResponse) => {
+//                 setLocalData('accessToken', data.accessToken)
+//                 dispatch(authorizeAction(data.user))
+//             })
+//     }
+// }

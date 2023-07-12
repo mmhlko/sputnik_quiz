@@ -16,7 +16,7 @@ interface IFormButtonProps extends DetailedHTMLProps<HTMLAttributes<HTMLButtonEl
 }
 
 
-function FormButton({children, color, size=FormButtonSize.minContent ,extraClass, ...props}: IFormButtonProps) {
+function FormButton({children, color, size=FormButtonSize.full ,extraClass, ...props}: IFormButtonProps) {
     return ( 
         <button 
         {...props} 

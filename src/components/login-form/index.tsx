@@ -44,7 +44,7 @@ function LoginForm({onSubmit, onNavigate}: ILoginFormProps) {
     })
     
     return ( 
-        <>
+        
         <Form title={'Вход'} handleForm={handleSubmit(onSubmit)}>
             <FormInput 
                 {...emailRegister}
@@ -66,9 +66,7 @@ function LoginForm({onSubmit, onNavigate}: ILoginFormProps) {
             
             <FormButton type='submit' color='primary' extraClass={s.formButton}>Войти</FormButton>
             <FormButton onClick={() => onNavigate('/register')} type='button' color='secondary' extraClass={s.formButton}>Зарегистрироваться</FormButton>
-        </Form>
-
-        </>
+        </Form>   
         
      );
 }

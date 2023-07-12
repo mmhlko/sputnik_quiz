@@ -7,24 +7,33 @@ import FormButton from '../form-button';
 import { TUser, TUserRegisterBody } from 'utils/api';
 /* import { UserRegisterBodyDto } from '../../utils/api'; */
 
- 
+
 
 interface IRegisterFormProps {
-    onSubmit:  (dataform: TUserRegisterBody) => void;
+    onSubmit: (dataform: TUserRegisterBody) => void;
     onNavigate: (value: string) => void;
 }
 
-function RegisterForm({onSubmit, onNavigate}: IRegisterFormProps) {
+function RegisterForm({ onSubmit, onNavigate }: IRegisterFormProps) {
 
-    const {register, handleSubmit, formState: {errors}} = useForm<any>({mode: 'onBlur'});
-    
-/*     const navigate = useNavigate();
-    const location = useLocation();
-    const initialPath = location.state?.initialPath; */
+    const { register, handleSubmit, formState: { errors } } = useForm<any>({ mode: 'onBlur' });
+
+    /*     const navigate = useNavigate();
+        const location = useLocation();
+        const initialPath = location.state?.initialPath; */
 
     //Переход на страницу  авторизации
 
-
+    const nameRegister = register('name', {
+        required: {
+            value: false,
+            message: "Обязательное поле"
+        },
+        pattern: {
+            value: /^[A-Za-z]{3,}/,
+            message: "Имя должно быть не менее 3 букв"
+        }
+    })
 
     const emailRegister = register('email', {
         required: {
@@ -44,87 +53,40 @@ function RegisterForm({onSubmit, onNavigate}: IRegisterFormProps) {
         },
         pattern: {
             value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            message: "Пароль должен содержать минимум восемь символов, одну букву латинского алфавита и одну цифру" 
+            message: "Пароль должен содержать минимум восемь символов, одну букву латинского алфавита и одну цифру"
         }
     })
-        
-    return ( 
-        <>
-        <Form title={'Регистрация'} handleForm={handleSubmit(onSubmit)}>
-            <FormInput 
-                {...emailRegister}
-                id='email'
-                type='text'
-                placeholder='email'
-            />
-            {errors?.email && <p className='errorMessage'>{errors.email.message}</p>}
-            
-            <FormInput 
-                {...passwordRegister}
-                id='password'
-                type='password'
-                placeholder='Пароль'
-            />
-            {errors?.password && <p className='errorMessage'>{errors.password.message}</p>}
-            <p className='infoText'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
-            <FormButton type='submit' color='primary' extraClass={s.formButton}>Зарегистрироваться</FormButton>
-            <FormButton onClick={() => onNavigate('/login')} type='button' color='secondary' extraClass={s.formButton}>Войти</FormButton>
-        </Form>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        {/* <form onSubmit={handleSubmit(handleSubmitForm)} noValidate>
-            <h3>Регистрация</h3>
-            <input 
-                {...register('name', {
-                    required: {
-                        value: true,
-                        message: 'Обязательное поле'
-                    },
-                    min: {
-                        value: 3,
-                        message: 'Минимальное число 3'
-                    }
-                })}
-                type="text"                 
-                placeholder="Имя" 
 
-            />
-            {errors.name && <p>{errors.name.message}</p>}
-            <input 
-                {...emailRegister}
-                type="email"                 
-                placeholder="email" 
-                autoComplete='none'
+    return (
+            <Form title={'Регистрация'} handleForm={handleSubmit(onSubmit)}>
+                <FormInput
+                    {...nameRegister}
+                    id='username'
+                    type='text'
+                    placeholder='Имя'
+                />
+                {errors?.email && <p className='error-message'>{errors.email.message}</p>}
+                <FormInput
+                    {...emailRegister}
+                    id='email'
+                    type='email'
+                    placeholder='email'
+                />
+                {errors?.email && <p className='error-message'>{errors.email.message}</p>}
 
-            />
-            {errors.email && <p>{errors.email.message}</p>}
-            <input
-                {...register('password', {
-                    required: true,
-                    pattern: {
-                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                        message: "Пароль должен содержать минимум восемь символов, одну букву латинского алфавита и одну цифру" 
-                    }
-                })} 
-                type="password"                 
-                placeholder="Введите пароль"
-                autoComplete='none' 
+                <FormInput
+                    {...passwordRegister}
+                    id='password'
+                    type='password'
+                    placeholder='Пароль'
+                />
+                {errors?.password && <p className='error-message'>{errors.password.message}</p>}
+                <p className='info-text'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
+                <FormButton type='submit' color='primary' extraClass={s.formButton}>Зарегистрироваться</FormButton>
+                <FormButton onClick={() => onNavigate('/login')} type='button' color='secondary' extraClass={s.formButton}>Войти</FormButton>
+            </Form>            
 
-            />
-            {errors.password && <p>{errors.password.message}</p>}
-            <button>Зарегистрироваться</button>
-        </form> */}
-        </>
-        
-     );
+    );
 }
 
 export default RegisterForm;
