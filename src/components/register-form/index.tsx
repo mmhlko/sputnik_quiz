@@ -1,6 +1,5 @@
 
 import { useForm } from 'react-hook-form';
-import s from './styles.module.scss'
 import Form from '../form';
 import FormInput from '../form-input';
 import FormButton from '../form-button';
@@ -17,12 +16,6 @@ interface IRegisterFormProps {
 function RegisterForm({ onSubmit, onNavigate }: IRegisterFormProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm<any>({ mode: 'onBlur' });
-
-    /*     const navigate = useNavigate();
-        const location = useLocation();
-        const initialPath = location.state?.initialPath; */
-
-    //Переход на страницу  авторизации
 
     const nameRegister = register('name', {
         required: {
@@ -82,8 +75,8 @@ function RegisterForm({ onSubmit, onNavigate }: IRegisterFormProps) {
                 />
                 {errors?.password && <p className='error-message'>{errors.password.message}</p>}
                 <p className='info-text'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
-                <FormButton type='submit' color='primary' extraClass={s.formButton}>Зарегистрироваться</FormButton>
-                <FormButton onClick={() => onNavigate('/login')} type='button' color='secondary' extraClass={s.formButton}>Войти</FormButton>
+                <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
+                <FormButton onClick={() => onNavigate('/login')} type='button' color='secondary'>Войти</FormButton>
             </Form>            
 
     );

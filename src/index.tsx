@@ -5,7 +5,7 @@ import store from 'storage/store'
 import 'index.scss'
 import { BrowserRouter } from "react-router-dom";
 
-
+//window.ResizeObserver = undefined;
 
 const root = (
     <Provider store={store}>

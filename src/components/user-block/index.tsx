@@ -2,23 +2,21 @@ import { Button } from 'antd';
 import s from './styles.module.scss'
 import { useAppDispatch, useAppSelector } from 'storage/hook';
 import { UserOutlined } from '@ant-design/icons';
-import { fetchLoginUser } from 'storage/asyncActions/user-slice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { userLogout } from 'storage/actions/user-actions';
+import { Link } from 'react-router-dom';
+import { resetAction } from 'storage/actions/quizGame-actions';
 
 
 function UserBlock() {
 
     const user = useAppSelector(state => state.user.data);
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    const loginFn = () => {
-        navigate('/login')
-    }
+    const location = useLocation();
 
     const logoutFn = () => {
-        dispatch(userLogout())
+        dispatch(userLogout());
+        dispatch(resetAction());
     }
 
     return ( 
@@ -26,8 +24,9 @@ function UserBlock() {
             {user?.email && <span><UserOutlined className={s.userIcon}/>{user.email}</span>}            
 
             {!user 
-                ? <Button type='primary' onClick={loginFn}>Войти</Button>
-                : <Button type='primary' onClick={logoutFn}>Выйти</Button>}
+                ? <Link replace to={'/login'}  state={{backgroundLocation: location, initialPath: location.pathname}}><Button type='primary'>Войти</Button></Link>
+                : <Link to='/'><Button type='primary' onClick={logoutFn}>Выйти</Button></Link>
+            }
 
         </div>
      );

@@ -62,8 +62,7 @@ function LoginForm({onSubmit, onNavigate}: ILoginFormProps) {
                 placeholder='Пароль'
             />
             {errors?.password && <p className='errorMessage'>{errors.password.message}</p>}
-            <p onClick={() => onNavigate('/reset-password')} className={classNames('infoText', s.link)}>Восстановить пароль</p>
-            
+                       
             <FormButton type='submit' color='primary' extraClass={s.formButton}>Войти</FormButton>
             <FormButton onClick={() => onNavigate('/register')} type='button' color='secondary' extraClass={s.formButton}>Зарегистрироваться</FormButton>
         </Form>   

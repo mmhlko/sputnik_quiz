@@ -1,5 +1,4 @@
 import { Rate, Typography } from "antd"
-import s from "./styles.module.scss";
 const { Title } = Typography;
 
 export type TQuizResultProps = {
@@ -13,7 +12,7 @@ function QuizResult({ result, total }: TQuizResultProps) {
 
     return (
         <>
-            <Title level={3} className={s.text}>Ваш результат {result} из {total}</Title>
+            <Title level={3}>Ваш результат {result} из {total}</Title>
             <Rate disabled allowHalf defaultValue={stars} />
         </>
     )

@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT, SHOW_RESULT } from "storage/types"
+import { DECREMENT, INCREMENT, RESET_GAME, SHOW_RESULT } from "storage/types"
 
 export type TResultAction = {
     type: string,
@@ -24,6 +24,14 @@ export function showResultAction():TResultAction {
         type: SHOW_RESULT,        
     }
 }
+
+export function resetAction():TResultAction {
+    return {
+        type: RESET_GAME,        
+    }
+}
+
+
 
 
 

@@ -11,5 +11,6 @@ export const fetchGetQuestions = (token:string):any => {
             .then((questions:TQuestionResponse) => {
                 dispatch(getQuestionsAction(questions))
             })
+            .catch(err => Error(err))
     }
 }

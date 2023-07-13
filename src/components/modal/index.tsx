@@ -1,4 +1,4 @@
-import s from './styles.module.css';
+import s from './styles.module.scss';
 import classNames from 'classnames';
 import { createPortal } from 'react-dom'
 import { useRef, ReactNode } from 'react'
@@ -28,7 +28,7 @@ function Modal({children, isOpen, onClose}: IModalProps) {
     }
 
     return createPortal(renderContent(), document.getElementById('modal-root') as HTMLDivElement)
-    //TS ругается на document.getElementById('modal-root'), т.к. он ожидает что там будет ли элемент или документ.фрагмент, но по факту возиожен и null(если нет его в разметке)
+    
 }
 
 export default Modal;

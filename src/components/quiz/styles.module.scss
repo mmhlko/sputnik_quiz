@@ -13,3 +13,19 @@
     gap: 20px;
     margin: 15px 0;
 }
+
+.modalContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 320px;
+    max-width: 480px;
+    width: 100%;
+    
+    gap: 8px;
+
+    a {
+        margin: 8px 0;
+    }
+}

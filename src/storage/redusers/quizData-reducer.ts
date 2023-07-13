@@ -1,7 +1,12 @@
 import { TQuizDataAction } from "storage/actions/quizData-actions"
-import { TQuizQuestion } from "storage/quizData"
 import { GET_QUESTIONS } from "storage/types"
 
+export type TQuizQuestion = {
+    title: string,
+    variants: string[],
+    correctAnswer: number,
+    id: number
+}
 
 export type TQuizDataState = {
     data: TQuizQuestion[],

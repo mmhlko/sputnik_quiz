@@ -1,4 +1,4 @@
-import { USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "storage/types"
+import { USER_AUTH_CHECK, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "storage/types"
 import { TUser, TUserRegisterBody, TUserResponce } from "utils/api"
 
 
@@ -36,5 +36,11 @@ export function getUser(data:TUserResponce):TAuthAction {
 export function userLogout() {
     return {
         type: USER_LOGOUT
+    }
+}
+
+export function authCheck() {
+    return {
+        type: USER_AUTH_CHECK
     }
 }
