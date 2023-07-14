@@ -7,7 +7,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import LoginForm from 'components/login-form';
 import { SubmitHandler } from 'react-hook-form';
 import RegisterForm from 'components/register-form';
-import api, { TUser, TUserAuthBody, TUserRegisterBody} from 'utils/api';
+import { TUser, TUserAuthBody, TUserRegisterBody} from 'utils/api';
 import { getUser } from 'storage/actions/user-actions';
 import { fetchLoginUser, fetchRegisterUser } from 'storage/asyncActions/user-slice';
 import { getLocalData } from 'utils/local-storage';
@@ -45,10 +45,7 @@ export function App() {
         dispatch(getUser(userFromLS))
         if (token) {
             dispatch(fetchGetQuestions(token))
-        }
-        
-        api.refreshToken(token)
-        
+        }               
 
     }, [token, dispatch])
 
