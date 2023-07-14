@@ -1,3 +1,5 @@
+//в разработке, в приложении пока не используется
+
 import { TCountDown } from "storage/redusers/countDown-reducer"
 import { START_TIMER, STOP_TIMER, TICK_TIMER } from "storage/types"
 

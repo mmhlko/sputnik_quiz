@@ -2,7 +2,7 @@ import Question from "components/question"
 import s from "./styles.module.scss"
 import { useAppDispatch, useAppSelector } from "storage/hook";
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { TQuizQuestion } from "storage/quizData";
+import { TQuizQuestion } from "storage/redusers/quizData-reducer"; 
 import { showResultAction } from "storage/actions/quizGame-actions";
 import { Pagination } from 'antd';
 

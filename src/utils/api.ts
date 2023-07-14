@@ -38,6 +38,7 @@ export type TQuestion = {
     correctAnswer: number,
     id: number
 }
+
 //тип ответа от бд для списка вопросов
 export type TQuestionResponse = TQuestion[];
 
@@ -45,28 +46,18 @@ export class Api {
 
     private baseUrl;
     private headers;
-    
 
-    constructor({baseUrl, headers}:TApiConfig) {
+
+    constructor({ baseUrl, headers }: TApiConfig) {
         this.baseUrl = baseUrl;
         this.headers = headers;
     }
 
     private onResponce<T>(res: Response): Promise<T> { //метод обрабатывает запросы с сервера при получении ответа с него
-        return res.ok ? res.json() : res.json().then(err => Promise.reject(err)) 
+        return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
     }
 
-    getAllUsers() { //изменение пользователя
-
-        return fetch(`${this.baseUrl}/users`, {
-            method: 'GET',
-            headers: this.headers,
-        })
-            .then(this.onResponce<TUser>)
-    }    
-
-
-    register(bodyData:TUserRegisterBody) { //изменение пользователя
+    register(bodyData: TUserRegisterBody) {
 
         return fetch(`${this.baseUrl}/register`, {
             method: 'POST',
@@ -78,7 +69,7 @@ export class Api {
             )
     }
 
-    authorize(bodyData:TUserAuthBody) { //изменение пользователя
+    authorize(bodyData: TUserAuthBody) {
 
         return fetch(`${this.baseUrl}/signin`, {
             method: 'POST',
@@ -90,36 +81,30 @@ export class Api {
             )
     }
 
-    checkToken(token:string) { //изменение пользователя
-        return fetch(`${this.baseUrl}/users/me`, {
-            headers: {...this.headers, authorization: `Bearer ${token}`}            
+    refreshToken(token: string) {
+        return fetch(`http://localhost:4000/users/me`, {
+            headers: { ...this.headers, authorization: `Bearer ${token}` }
         })
             .then(this.onResponce<TAuthResponse>)
             .catch((err) => console.log(err)
             )
     }
 
-    getQuestions(token:string) { //изменение пользователя
+    getQuestions(token: string) {
         return fetch(`${this.baseUrl}/questions`, {
-            headers: {...this.headers, authorization: `Bearer ${token}`}            
+            headers: { ...this.headers, authorization: `Bearer ${token}` }
         })
             .then(this.onResponce<TQuestionResponse>)
             .catch((err) => console.log(err)
             )
     }
-
-
-
-
 }
 
 
 const api = new Api({
-    baseUrl: 'http://localhost:4000', //далее добавляется эндпоинт
+    baseUrl: 'http://localhost:4000',
     headers: {
         'content-type': 'application/json',
-        //authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOWFhMzk3MTIxODM4ZjI4ZWMiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQ4LCJleHAiOjE3MTAzMzg0NDh9.Ij9HtsP55BsI2ukV4SgqqSWxsEjpcJz53Avty8LEgKE',
-        
     }
 
 })

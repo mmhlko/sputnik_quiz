@@ -2,10 +2,10 @@ import s from './styles.module.scss';
 import cn from 'classnames';
 import useCheckbox from 'hooks/useCheckbox';
 import { useAppDispatch } from 'storage/hook';
-import { TQuizQuestion } from 'storage/quizData';
 import { useEffect, useState } from 'react';
 import { decrementAction, incrementAction } from 'storage/actions/quizGame-actions';
 import { Checkbox, Typography, Card } from 'antd';
+import { TQuizQuestion } from 'storage/redusers/quizData-reducer';
 const { Title, Text } = Typography;
 
 export type TQuestionProps = {

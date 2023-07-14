@@ -1,5 +1,5 @@
-import { TQuizQuestion } from "storage/quizData"
-import { GET_QUESTIONS } from "storage/types"
+import { TQuizQuestion } from "storage/redusers/quizData-reducer";
+import { GET_QUESTIONS } from "storage/types";
 
 export type TQuizDataAction = {
     type: string,

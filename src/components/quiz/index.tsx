@@ -7,7 +7,7 @@ import { Typography } from 'antd';
 import { Spiner } from 'components/spiner';
 import { Statistic } from 'antd';
 import { resetAction, showResultAction } from 'storage/actions/quizGame-actions';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 const { Countdown } = Statistic;
 const { Title } = Typography;
@@ -19,7 +19,10 @@ function Quiz() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation()
   const dispatch = useAppDispatch();
-  const deadline = !showResult ? new Date().setSeconds(new Date().getSeconds() + 60) : 0;
+
+  const setDeadline = useMemo(() => {
+    return !showResult ? Date.now() + 60000 : 0;
+  } , [])
 
   const onFinish: CountdownProps['onFinish'] = () => {
     dispatch(showResultAction())
@@ -38,13 +41,16 @@ function Quiz() {
     dispatch(resetAction())
   }, [location])
 
+  console.log('rerender');
+  
+
   return (
     <>
       {questions.length !== 0
         ? <div className={s.quizWrapper}>
           <Title level={2}>Викторина</Title>
           <Title level={4}>Всего {totalQuestions} вопросов</Title>
-          <Countdown title="Осталось времени" value={deadline} onFinish={onFinish} />
+          <Countdown title="Осталось времени" value={setDeadline} onFinish={onFinish} />
           <QuestionList questions={questions} totalQuestions={totalQuestions} />
           {showResult && <QuizResult result={score} total={totalQuestions} />}
           <div className={s.buttons}>

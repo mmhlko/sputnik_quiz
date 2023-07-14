@@ -7,7 +7,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import LoginForm from 'components/login-form';
 import { SubmitHandler } from 'react-hook-form';
 import RegisterForm from 'components/register-form';
-import { TUser, TUserAuthBody, TUserRegisterBody} from 'utils/api';
+import api, { TUser, TUserAuthBody, TUserRegisterBody} from 'utils/api';
 import { getUser } from 'storage/actions/user-actions';
 import { fetchLoginUser, fetchRegisterUser } from 'storage/asyncActions/user-slice';
 import { getLocalData } from 'utils/local-storage';
@@ -15,7 +15,6 @@ import { fetchGetQuestions } from 'storage/asyncActions/questions-slice';
 import HomePage from 'pages/home-page';
 import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
-
 
 
 const { Footer } = Layout;
@@ -38,13 +37,18 @@ export function App() {
     }
 
     const token: string = getLocalData('accessToken');
-    const userFromLS: TUser = getLocalData('user');
+    const userFromLS: TUser = getLocalData('user');   
+
+    
     useEffect(() => {
 
         dispatch(getUser(userFromLS))
         if (token) {
             dispatch(fetchGetQuestions(token))
         }
+        
+        api.refreshToken(token)
+        
 
     }, [token, dispatch])
 
@@ -91,7 +95,7 @@ export function App() {
         { path: '*', element: null },
     ]
 
-    console.log(location);
+
     
     return (
         <>
