@@ -82,7 +82,7 @@ export class Api {
     }
 
     refreshToken(token: string) {
-        return fetch(`http://localhost:4000/users/me`, {
+        return fetch(`${this.baseUrl}/users/me`, {
             headers: { ...this.headers, authorization: `Bearer ${token}` }
         })
             .then(this.onResponce<TAuthResponse>)

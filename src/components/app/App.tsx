@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch } from 'storage/hook';
 import { Layout } from 'antd';
 import ProtectedRoute from 'components/protected-route';
