@@ -39,10 +39,7 @@ function Quiz() {
 
   useEffect(() => {
     dispatch(resetAction())
-  }, [location])
-
-  console.log('rerender');
-  
+  }, [location]) 
 
   return (
     <>
