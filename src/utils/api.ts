@@ -54,7 +54,22 @@ export class Api {
     }
 
     private onResponce<T>(res: Response): Promise<T> { //метод обрабатывает запросы с сервера при получении ответа с него
-        return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
+
+/*         if (!res.ok) {
+            throw new Response("", {status: res.status, statusText: 'this is statusText'})
+        }
+
+        return res.json() */
+        /* return res.ok ? res.json() : res.json().then(err => {
+            return Promise.reject(err)            
+        }) */
+
+        if(!res.ok){
+            throw new Error(`${res.status} - ${res.statusText}`);
+        } else{
+            return res.json()
+        }
+
     }
 
     register(bodyData: TUserRegisterBody) {
@@ -86,7 +101,7 @@ export class Api {
             headers: { ...this.headers, authorization: `Bearer ${token}` }
         })
             .then(this.onResponce<TAuthResponse>)
-            .catch((err) => console.log(err)
+            .catch((err) => alert(err)
             )
     }
 
@@ -94,9 +109,20 @@ export class Api {
         return fetch(`${this.baseUrl}/questions`, {
             headers: { ...this.headers, authorization: `Bearer ${token}` }
         })
-            .then(this.onResponce<TQuestionResponse>)
-            .catch((err) => console.log(err)
-            )
+        .then(this.onResponce<TQuestionResponse>)  
+        
+/*         .then(response => {
+            if(!response.ok){
+                throw new Error(`${response.status} - ${response.statusText}`);
+            } else{
+                return response.json()
+            }
+          }) */
+          
+            /* .then(this.onResponce<TQuestionResponse>) */
+            
+            
+            
     }
 }
 

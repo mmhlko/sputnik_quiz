@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import s from './styles.module.scss'
 import classNames from 'classnames';
 

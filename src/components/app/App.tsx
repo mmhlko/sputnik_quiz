@@ -7,7 +7,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import LoginForm from 'components/login-form';
 import { SubmitHandler } from 'react-hook-form';
 import RegisterForm from 'components/register-form';
-import { TUser, TUserAuthBody, TUserRegisterBody} from 'utils/api';
+import api, { TUser, TUserAuthBody, TUserRegisterBody} from 'utils/api';
 import { getUser } from 'storage/actions/user-actions';
 import { fetchLoginUser, fetchRegisterUser } from 'storage/asyncActions/user-slice';
 import { getLocalData } from 'utils/local-storage';
@@ -15,6 +15,10 @@ import { fetchGetQuestions } from 'storage/asyncActions/questions-slice';
 import HomePage from 'pages/home-page';
 import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
+import { isLoading } from 'storage/actions/quizData-actions';
+import { resolve } from 'path';
+import { rejects } from 'assert';
+/* import ErrorPage from 'pages/error-page'; */
 
 
 const { Footer } = Layout;
@@ -39,12 +43,13 @@ export function App() {
     const token: string = getLocalData('accessToken');
     const userFromLS: TUser = getLocalData('user');   
 
+    /* api.authorize({email: 'fdsfds', password: 'fdsfs'}) */
     
     useEffect(() => {
 
         dispatch(getUser(userFromLS))
         if (token) {
-            dispatch(fetchGetQuestions(token))
+            dispatch(fetchGetQuestions(token))  
         }               
 
     }, [token, dispatch])
@@ -66,7 +71,7 @@ export function App() {
 
     const mainRoutes = [
         { path: '/', element: <HomePage /> },
-        { path: '/quiz', element: <ProtectedRoute><QuizPage /></ProtectedRoute> },
+        { path: '/quiz', element: <ProtectedRoute><QuizPage /></ProtectedRoute>, errorElement: <h2>ОШИБКА !!! </h2>},
         { path: '/login', element: <ProtectedRoute onlyOnAuth><LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigate} /></ProtectedRoute> },
         { path: '/register', element: <ProtectedRoute onlyOnAuth><RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigate} /></ProtectedRoute> },
         { path: '*', element: <h2>NOT FOUNT PAGE</h2> },
@@ -91,7 +96,7 @@ export function App() {
         },
         { path: '*', element: null },
     ]
-
+    
 
     
     return (

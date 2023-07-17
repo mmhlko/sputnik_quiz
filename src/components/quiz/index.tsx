@@ -7,15 +7,21 @@ import { Typography } from 'antd';
 import { Spiner } from 'components/spiner';
 import { Statistic } from 'antd';
 import { resetAction, showResultAction } from 'storage/actions/quizGame-actions';
-import { useEffect, useMemo, useState } from 'react';
+import { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { ErrorBoundary, FallbackProps  } from 'react-error-boundary';
 const { Countdown } = Statistic;
 const { Title } = Typography;
+
+
+
+
+
 
 function Quiz() {
 
   const { score, showResult } = useAppSelector(state => state.result);
-  const { data: questions, totalQuestions } = useAppSelector(state => state.questions);
+  const { data: questions, totalQuestions, loading } = useAppSelector(state => state.questions);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation()
   const dispatch = useAppDispatch();
@@ -43,12 +49,12 @@ function Quiz() {
 
   return (
     <>
-      {questions.length !== 0
+      {!loading
         ? <div className={s.quizWrapper}>
           <Title level={2}>Викторина</Title>
           <Title level={4}>Всего {totalQuestions} вопросов</Title>
-          <Countdown title="Осталось времени" value={setDeadline} onFinish={onFinish} />
-          <QuestionList questions={questions} totalQuestions={totalQuestions} />
+          <Countdown title="Осталось времени" value={setDeadline} onFinish={onFinish} />          
+          <QuestionList questions={questions} totalQuestions={totalQuestions} />                   
           {showResult && <QuizResult result={score} total={totalQuestions} />}
           <div className={s.buttons}>
             <Button disabled={showResult} form='quiz-form' type="primary" htmlType='submit' block={false}>Узнать результат</Button>
@@ -63,7 +69,6 @@ function Quiz() {
           {showResult && <QuizResult result={score} total={totalQuestions} />}
           <Button type='primary' href='/quiz'>Начать сначала</Button>
         </div>
-
       </Modal>
     </>
 

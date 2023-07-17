@@ -21,7 +21,9 @@ function QuestionList({ questions, totalQuestions }: TQuestionListProps) {
     const PAGE_SIZE = 5;
     const endItem = startItem + PAGE_SIZE;
     const isPaginated = totalQuestions / PAGE_SIZE > 1;
-
+    
+    
+    
 
 
     function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
@@ -43,6 +45,8 @@ function QuestionList({ questions, totalQuestions }: TQuestionListProps) {
     useEffect(() => {
         window.scrollTo({ top: 0 });
     }, [startItem])
+
+    
 
     return (
         <>
