@@ -15,9 +15,7 @@ import { fetchGetQuestions } from 'storage/asyncActions/questions-slice';
 import HomePage from 'pages/home-page';
 import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
-import { isLoading } from 'storage/actions/quizData-actions';
-import { resolve } from 'path';
-import { rejects } from 'assert';
+import supabase from 'subabase'
 /* import ErrorPage from 'pages/error-page'; */
 
 
@@ -53,6 +51,29 @@ export function App() {
         }               
 
     }, [token, dispatch])
+
+
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            
+        let { data: questions, error } = await supabase
+            .from('questions')
+            .select()
+
+
+            if(error) {
+                console.log(error)                
+            }            
+            if(questions) {
+                console.log(questions)                
+            }             
+        }
+
+        fetchQuestions()
+    } ,[])
+
+
+       
 
     const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
         dispatch(fetchRegisterUser(dataForm))
