@@ -28,9 +28,7 @@ export function userReducer(state = initialState, action:TRegisterAction) {
             return {...state, data: action.payload}
         case USER_CHECKTOKEN:
             return {...state, data: action.payload}
-        case USER_LOGOUT:
-            setLocalData('accessToken', null);
-            setLocalData('user', null);            
+        case USER_LOGOUT:           
             return {...state, data: null, isAuthChecked: false}
         case USER_AUTH_CHECK:
             return {...state, isAuthChecked: true}

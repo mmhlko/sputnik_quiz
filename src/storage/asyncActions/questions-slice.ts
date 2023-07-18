@@ -5,13 +5,13 @@ import api, { TQuestionResponse } from "utils/api"
 type QuizActions = TQuizDataAction | TQuizDataLoading | TQuizDataError
 
 
-export const fetchGetQuestions = (token:string):any => {    
+export const fetchGetQuestionsSupabase = ():any => {    
     
     return (dispatch:Dispatch<QuizActions>) => {   
         
         dispatch(isLoading(true))
         
-        api.getQuestions(token)
+        api.fetchQuestions()
             .then((questions:TQuestionResponse) => {                
                 dispatch(getQuestionsAction(questions))
             })

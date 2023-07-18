@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 import { userLogout } from 'storage/actions/user-actions';
 import { Link } from 'react-router-dom';
 import { resetAction } from 'storage/actions/quizGame-actions';
+import api from 'utils/api';
+import { fetchUserLogout } from 'storage/asyncActions/user-slice';
 
 
 function UserBlock() {
@@ -15,8 +17,7 @@ function UserBlock() {
     const location = useLocation();
 
     const logoutFn = () => {
-        dispatch(userLogout());
-        dispatch(resetAction());
+        dispatch(fetchUserLogout())
     }
 
     return ( 

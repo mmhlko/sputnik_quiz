@@ -1,6 +1,8 @@
 import { Dispatch } from "react"
 import { Middleware } from "redux"
-import { TRegisterAction, authCheck, authorizeAction, registerAction } from "storage/actions/user-actions"
+import { TQuizDataAction } from "storage/actions/quizData-actions"
+import { TResultAction, resetAction } from "storage/actions/quizGame-actions"
+import { TRegisterAction, authCheck, authorizeAction, registerAction, userLogout } from "storage/actions/user-actions"
 import { useAppDispatch } from "storage/hook"
 import api, { TAuthResponse, TUserRegisterBody, TUserResponce } from "utils/api"
 import { setLocalData } from "utils/local-storage"
@@ -9,26 +11,32 @@ import { setLocalData } from "utils/local-storage"
 export const fetchRegisterUser = (dataForm: TUserRegisterBody):any => {
     
     return (dispatch:Dispatch<TRegisterAction>) => {
-        api.register(dataForm)
-            .then((data:TAuthResponse) => {
+        api.userRegister(dataForm)
+            .then((data) => {
                 dispatch(registerAction(data.user))
             })
     }
 }
 
-export const fetchLoginUser = (dataForm: TUserRegisterBody):any => {
+
+export const fetchLoginUserSupabase = (dataForm: TUserRegisterBody):any => {
 
     return (dispatch:Dispatch<TRegisterAction>) => {
-        api.authorize(dataForm)
-            .then((data:TAuthResponse) => {
-                if(data?.accessToken) {
-                    setLocalData('accessToken', data.accessToken)
-                    setLocalData('user', data.user)
-                    dispatch(authorizeAction(data.user))
-                    
-                }
+        api.userLogin(dataForm)
+            .then((data) => {
+                dispatch(authorizeAction(data.user))                   
             })
             .finally(() => {dispatch(authCheck())})
+    }
+}
+
+
+export const fetchUserLogout = ():any => {    
+
+    return (dispatch:Dispatch<TResultAction>) => {
+        dispatch(userLogout())
+        dispatch(resetAction())
+        api.userLogout()    
     }
 }
 

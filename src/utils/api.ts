@@ -1,3 +1,5 @@
+import supabase from "subabase"
+
 export type TUser = {
     email: string,
     id: string,
@@ -5,7 +7,7 @@ export type TUser = {
 }
 
 export type TUserResponce = {
-    email: string,
+    email?: string,
     id: string,
     name?: string
 }
@@ -44,74 +46,50 @@ export type TQuestionResponse = TQuestion[];
 
 export class Api {
 
-    private baseUrl;
-    private headers;
+    userRegister = async (bodyData: TUserRegisterBody) => {
 
-
-    constructor({ baseUrl, headers }: TApiConfig) {
-        this.baseUrl = baseUrl;
-        this.headers = headers;
+        const { data, error } = await supabase
+            .auth.signUp(bodyData)
+        
+            if(error) {
+                throw new Error(error.toString())
+            }            
+            return data   
     }
 
-    private onResponce<T>(res: Response): Promise<T> { //метод обрабатывает запросы с сервера при получении ответа с него
 
-        if(!res.ok){
-            throw new Error(`${res.status} - ${res.statusText}`);
-        } else{
-            return res.json()
+    userLogin = async (bodyData: TUserAuthBody) => {
+        
+        const { data, error } = await supabase
+            .auth.signInWithPassword(bodyData)
+        
+            if(error) {
+                throw new Error(error.toString())
+            }            
+            return data                    
+    }
+
+    userLogout = async () => {
+        await supabase.auth.signOut()        
+    }
+
+    fetchQuestions = async () => {
+            
+        const { data, error } = await supabase
+            .from('questions')
+            .select()
+
+            if(error || data.length === 0) {
+                const err = error || 'Нет данных'
+                throw new Error(err.toString())
+            }            
+            
+            return data           
         }
-
-    }
-
-    register(bodyData: TUserRegisterBody) {
-
-        return fetch(`${this.baseUrl}/register`, {
-            method: 'POST',
-            headers: this.headers,
-            body: JSON.stringify(bodyData)
-        })
-            .then(this.onResponce<TAuthResponse>)
-            .catch((err) => alert(err)
-            )
-    }
-
-    authorize(bodyData: TUserAuthBody) {
-
-        return fetch(`${this.baseUrl}/signin`, {
-            method: 'POST',
-            headers: this.headers,
-            body: JSON.stringify(bodyData)
-        })
-            .then(this.onResponce<TAuthResponse>)
-            .catch((err) => alert(err)
-            )
-    }
-
-    refreshToken(token: string) {
-        return fetch(`${this.baseUrl}/users/me`, {
-            headers: { ...this.headers, authorization: `Bearer ${token}` }
-        })
-            .then(this.onResponce<TAuthResponse>)
-            .catch((err) => alert(err)
-            )
-    }
-
-    getQuestions(token: string) {
-        return fetch(`${this.baseUrl}/questions`, {
-            headers: { ...this.headers, authorization: `Bearer ${token}` }
-        })
-        .then(this.onResponce<TQuestionResponse>)        
-    }
 }
 
 
-const api = new Api({
-    baseUrl: 'http://localhost:4000',
-    headers: {
-        'content-type': 'application/json',
-    }
-
-})
+const api = new Api()
 
 
 export default api;

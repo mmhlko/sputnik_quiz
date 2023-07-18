@@ -7,15 +7,15 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import LoginForm from 'components/login-form';
 import { SubmitHandler } from 'react-hook-form';
 import RegisterForm from 'components/register-form';
-import api, { TUser, TUserAuthBody, TUserRegisterBody} from 'utils/api';
+import { TUserAuthBody, TUserRegisterBody} from 'utils/api';
 import { getUser } from 'storage/actions/user-actions';
-import { fetchLoginUser, fetchRegisterUser } from 'storage/asyncActions/user-slice';
+import { fetchLoginUserSupabase, fetchRegisterUser } from 'storage/asyncActions/user-slice';
 import { getLocalData } from 'utils/local-storage';
-import { fetchGetQuestions } from 'storage/asyncActions/questions-slice';
+import { fetchGetQuestionsSupabase } from 'storage/asyncActions/questions-slice';
 import HomePage from 'pages/home-page';
 import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
-import supabase from 'subabase'
+import NotFoundPage from 'pages/not-found-page';
 /* import ErrorPage from 'pages/error-page'; */
 
 
@@ -38,48 +38,27 @@ export function App() {
         navigate(initialPath || '/', { replace: true }) //вторым полем удаляем из истории переход обратно
     }
 
-    const token: string = getLocalData('accessToken');
-    const userFromLS: TUser = getLocalData('user');   
-
+    const token = getLocalData('sb-bomuwhgrujvwagkdtdrd-auth-token')?.access_token;
+    const userFromLS = getLocalData('sb-bomuwhgrujvwagkdtdrd-auth-token')?.user;  
+    
     /* api.authorize({email: 'fdsfds', password: 'fdsfs'}) */
     
     useEffect(() => {
 
         dispatch(getUser(userFromLS))
         if (token) {
-            dispatch(fetchGetQuestions(token))  
-        }               
+            /* dispatch(fetchGetQuestions(token)) */  
+            dispatch(fetchGetQuestionsSupabase())
+        }      
 
-    }, [token, dispatch])
-
-
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            
-        let { data: questions, error } = await supabase
-            .from('questions')
-            .select()
-
-
-            if(error) {
-                console.log(error)                
-            }            
-            if(questions) {
-                console.log(questions)                
-            }             
-        }
-
-        fetchQuestions()
-    } ,[])
-
-
-       
+    }, [token, dispatch])       
 
     const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
         dispatch(fetchRegisterUser(dataForm))
     }
     const cbSubmitFormLogin: SubmitHandler<TUserAuthBody> = (dataForm) => {
-        dispatch(fetchLoginUser(dataForm))
+        /* dispatch(fetchLoginUser(dataForm)) */
+        dispatch(fetchLoginUserSupabase(dataForm))
     }
     const handleClickNavigate = (to: string) => {
         navigate(to)
@@ -95,7 +74,7 @@ export function App() {
         { path: '/quiz', element: <ProtectedRoute><QuizPage /></ProtectedRoute>, errorElement: <h2>ОШИБКА !!! </h2>},
         { path: '/login', element: <ProtectedRoute onlyOnAuth><LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigate} /></ProtectedRoute> },
         { path: '/register', element: <ProtectedRoute onlyOnAuth><RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigate} /></ProtectedRoute> },
-        { path: '*', element: <h2>NOT FOUNT PAGE</h2> },
+        { path: '*', element: <NotFoundPage /> },
     ]
 
     const modalRoutes = [

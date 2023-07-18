@@ -1,12 +1,10 @@
 
 import { useForm } from 'react-hook-form';
 import s from './styles.module.scss'
-import classNames from 'classnames';
 import Form from '../form';
 import FormInput from '../form-input';
-import FormButton, { FormButtonSize } from '../form-button';
-import { MouseEvent, useEffect } from 'react';
-/* import { UserAuthBodyDto } from '../../utils/api'; */
+import FormButton from '../form-button';
+
 
 
 
@@ -38,7 +36,7 @@ function LoginForm({onSubmit, onNavigate}: ILoginFormProps) {
             message: "Обязательное поле"
         },
         pattern: {
-            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            value: /^.{8,}$/,
             message: "Пароль должен содержать минимум восемь символов, одну букву латинского алфавита и одну цифру" 
         }
     })
