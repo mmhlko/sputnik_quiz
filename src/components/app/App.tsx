@@ -16,40 +16,35 @@ import HomePage from 'pages/home-page';
 import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
 import NotFoundPage from 'pages/not-found-page';
-/* import ErrorPage from 'pages/error-page'; */
-
 
 const { Footer } = Layout;
 
 export function App() {
 
     const dispatch = useAppDispatch();
+
     //routing + modal
     const location = useLocation();
     const backgroundLocation = location.state?.backgroundLocation;
     const initialPath = location.state?.initialPath;
     const navigate = useNavigate();
 
-
-
-
     //закрытие модального окна ведет на страницу открытия модального окна или на главную
     const onCloseRoutingModal = () => {
         navigate(initialPath || '/', { replace: true }) //вторым полем удаляем из истории переход обратно
     }
 
-    const token = getLocalData('sb-bomuwhgrujvwagkdtdrd-auth-token')?.access_token;
-    const userFromLS = getLocalData('sb-bomuwhgrujvwagkdtdrd-auth-token')?.user;  
-    
-    /* api.authorize({email: 'fdsfds', password: 'fdsfs'}) */
+    const AUTH_LOCAL_STORAGE = 'sb-bomuwhgrujvwagkdtdrd-auth-token';
+
+    const token = getLocalData(AUTH_LOCAL_STORAGE)?.access_token;
+    const userFromLS = getLocalData(AUTH_LOCAL_STORAGE)?.user; 
     
     useEffect(() => {
 
         dispatch(getUser(userFromLS))
-        if (token) {
-            /* dispatch(fetchGetQuestions(token)) */  
+        if (token) {             
             dispatch(fetchGetQuestionsSupabase())
-        }      
+        }     
 
     }, [token, dispatch])       
 
@@ -57,7 +52,6 @@ export function App() {
         dispatch(fetchRegisterUser(dataForm))
     }
     const cbSubmitFormLogin: SubmitHandler<TUserAuthBody> = (dataForm) => {
-        /* dispatch(fetchLoginUser(dataForm)) */
         dispatch(fetchLoginUserSupabase(dataForm))
     }
     const handleClickNavigate = (to: string) => {
@@ -94,10 +88,9 @@ export function App() {
                             </Modal>
                         </ProtectedRoute>
         },
-        { path: '*', element: null },
-    ]
-    
+        { path: '*', element: null },   ]
 
+           
     
     return (
         <>
@@ -107,7 +100,7 @@ export function App() {
                     {mainRoutes.map(({ path, element }) => <Route path={path} element={element} key={path} />)}
                 </Routes>
             </main>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+            <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Maxim Mikhaylenko</Footer>
             {backgroundLocation &&
                 <Routes>
                     {modalRoutes.map(({ path, element }) => <Route path={path} element={element} key={path} />)}

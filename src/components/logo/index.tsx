@@ -1,9 +1,15 @@
+import { Link } from 'react-router-dom';
 import s from './styles.module.scss'
+import { Typography } from 'antd';
+
+const { Title } = Typography;
+
 
 
 function Logo() {
     return ( 
-        <a style={{color: '#fff', textDecoration: 'none'}} href="/">Quiz Logo</a>
+        <Link to='/' className={s.logo}><Title level={2} className={s.text}>QUIZ LOGO</Title></Link>
+        
      );
 }
 

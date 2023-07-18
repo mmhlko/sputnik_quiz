@@ -2,8 +2,11 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import webpack, {HotModuleReplacementPlugin} from "webpack";
 import {BuildOptions} from "./types/config";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+const Dotenv = require('dotenv-webpack');
 
 export function buildPlugins({paths}: BuildOptions): webpack.WebpackPluginInstance[] {
+
+    
 
     return [
         new HtmlWebpackPlugin({
@@ -14,6 +17,10 @@ export function buildPlugins({paths}: BuildOptions): webpack.WebpackPluginInstan
             filename: 'css/[name].[contenthash:8].css',
             chunkFilename: 'css/[name].[contenthash:8].css',
         }),
-        new HotModuleReplacementPlugin()
+        new HotModuleReplacementPlugin(),
+        new Dotenv(),
+        new webpack.DefinePlugin({
+            'process.env.REACT_APP_GH_PAGES': JSON.stringify(process.env.REACT_APP_GH_PAGES)
+          }),
     ]
 }
