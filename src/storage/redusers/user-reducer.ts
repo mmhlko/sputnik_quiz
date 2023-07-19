@@ -1,15 +1,12 @@
+import { User } from "@supabase/supabase-js"
 import { TRegisterAction } from "storage/actions/user-actions"
-import { USER_AUTH_CHECK, USER_CHECKTOKEN, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "storage/types"
-import { setLocalData } from "utils/local-storage"
+import { USER_AUTH_CHECK, USER_CHECKTOKEN, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../types"
 
-export type TUserDTO = {
-    email: string,
-    name: string,
-}
+
 
 export type TUserState = {
     isAuthChecked: boolean,
-    data: TUserDTO | null
+    data: User | null
 }
 
 const initialState: TUserState = {

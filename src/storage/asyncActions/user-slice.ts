@@ -1,11 +1,7 @@
-import { Dispatch } from "react"
-import { Middleware } from "redux"
-import { TQuizDataAction } from "storage/actions/quizData-actions"
-import { TResultAction, resetAction } from "storage/actions/quizGame-actions"
-import { TRegisterAction, authCheck, authorizeAction, registerAction, userLogout } from "storage/actions/user-actions"
-import { useAppDispatch } from "storage/hook"
-import api, { TAuthResponse, TUserRegisterBody, TUserResponce } from "utils/api"
-import { setLocalData } from "utils/local-storage"
+import { Dispatch } from "react";
+import { TResultAction, resetAction } from "storage/actions/quizGame-actions";
+import { TRegisterAction, authCheck, authorizeAction, registerAction, userLogout } from "storage/actions/user-actions";
+import api, { TUserRegisterBody } from "utils/api";
 
 
 export const fetchRegisterUser = (dataForm: TUserRegisterBody):any => {
@@ -18,7 +14,6 @@ export const fetchRegisterUser = (dataForm: TUserRegisterBody):any => {
     }
 }
 
-
 export const fetchLoginUserSupabase = (dataForm: TUserRegisterBody):any => {
 
     return (dispatch:Dispatch<TRegisterAction>) => {
@@ -30,7 +25,6 @@ export const fetchLoginUserSupabase = (dataForm: TUserRegisterBody):any => {
     }
 }
 
-
 export const fetchUserLogout = ():any => {    
 
     return (dispatch:Dispatch<TResultAction>) => {
@@ -40,6 +34,7 @@ export const fetchUserLogout = ():any => {
     }
 }
 
+//пока в разработке
 // export const fetchCheckToken = () => {
     
 //     return (dispatch:Dispatch<TRegisterAction>) => {

@@ -1,5 +1,4 @@
-import { TQuizDataAction, TQuizDataError, TQuizDataLoading } from "storage/actions/quizData-actions"
-import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR} from "storage/types"
+import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR} from "../../storage/types"
 
 export type TQuizQuestion = {
     title: string,

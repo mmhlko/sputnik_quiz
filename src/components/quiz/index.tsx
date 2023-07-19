@@ -7,16 +7,12 @@ import { Typography } from 'antd';
 import { Spiner } from 'components/spiner';
 import { Statistic } from 'antd';
 import { resetAction, showResultAction } from 'storage/actions/quizGame-actions';
-import { ReactElement, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ErrorBoundary, FallbackProps  } from 'react-error-boundary';
+import { Link } from 'react-router-dom';
+
 const { Countdown } = Statistic;
 const { Title } = Typography;
-
-
-
-
-
 
 function Quiz() {
 
@@ -28,7 +24,7 @@ function Quiz() {
 
   const setDeadline = useMemo(() => {
     return !showResult ? Date.now() + 60000 : 0;
-  } , [])
+  } , [showResult])
 
   const onFinish: CountdownProps['onFinish'] = () => {
     dispatch(showResultAction())
@@ -58,7 +54,7 @@ function Quiz() {
           {showResult && <QuizResult result={score} total={totalQuestions} />}
           <div className={s.buttons}>
             <Button disabled={showResult} form='quiz-form' type="primary" htmlType='submit' block={false}>Узнать результат</Button>
-            <Button type='link' href='/quiz'>Начать сначала</Button>
+            <Link to='/'><Button type='primary'>Начать сначала</Button></Link>
           </div>
         </div>
         : <Spiner />
@@ -67,7 +63,7 @@ function Quiz() {
         <div className={s.modalContent}>
           <Title level={2}>Время вышло</Title>
           {showResult && <QuizResult result={score} total={totalQuestions} />}
-          <Button type='primary' href='/quiz'>Начать сначала</Button>
+          <Link to='/'><Button type='primary'>Начать сначала</Button></Link>
         </div>
       </Modal>
     </>

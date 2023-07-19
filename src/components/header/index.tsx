@@ -5,11 +5,6 @@ import UserBlock from 'components/user-block';
 import cn from 'classnames';
 
 
-
-const items = ['ссылка1', 'ссылка2', 'ссылка3', 'ссылка4']
-
-
-
 function Header() {
 
 

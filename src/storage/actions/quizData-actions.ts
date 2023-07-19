@@ -1,5 +1,5 @@
-import { TQuizQuestion } from "storage/redusers/quizData-reducer";
-import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR } from "storage/types";
+import { TQuizQuestion } from "../../storage/redusers/quizData-reducer";
+import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR } from "../../storage/types";
 
 export type TQuizDataAction = {
     type: string,
@@ -24,8 +24,7 @@ export function getQuestionsAction(data: TQuizQuestion[]):TQuizDataAction {
 export function isLoading(isLoading: boolean): TQuizDataLoading{
     return {
         type: IS_LOADING,
-        payload: isLoading
-        
+        payload: isLoading        
     }
 }
 

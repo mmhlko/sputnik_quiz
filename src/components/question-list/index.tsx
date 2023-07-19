@@ -20,11 +20,7 @@ function QuestionList({ questions, totalQuestions }: TQuestionListProps) {
 
     const PAGE_SIZE = 5;
     const endItem = startItem + PAGE_SIZE;
-    const isPaginated = totalQuestions / PAGE_SIZE > 1;
-    
-    
-    
-
+    const isPaginated = totalQuestions / PAGE_SIZE > 1;    
 
     function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
         // Prevent the browser from reloading the page

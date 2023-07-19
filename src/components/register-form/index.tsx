@@ -3,9 +3,7 @@ import { useForm } from 'react-hook-form';
 import Form from '../form';
 import FormInput from '../form-input';
 import FormButton from '../form-button';
-import { TUser, TUserRegisterBody } from 'utils/api';
-/* import { UserRegisterBodyDto } from '../../utils/api'; */
-
+import { TUserRegisterBody } from 'utils/api';
 
 
 interface IRegisterFormProps {
@@ -58,14 +56,14 @@ function RegisterForm({ onSubmit, onNavigate }: IRegisterFormProps) {
                     type='text'
                     placeholder='Имя'
                 />
-                {errors?.email && <p className='error-message'>{errors.email.message}</p>}
+                {errors?.name && <p className='error-message'>{errors.name.message as string}</p>}
                 <FormInput
                     {...emailRegister}
                     id='email'
                     type='email'
                     placeholder='email'
                 />
-                {errors?.email && <p className='error-message'>{errors.email.message}</p>}
+                {errors?.email && <p className='error-message'>{errors.email.message as string}</p>}
 
                 <FormInput
                     {...passwordRegister}
@@ -73,7 +71,7 @@ function RegisterForm({ onSubmit, onNavigate }: IRegisterFormProps) {
                     type='password'
                     placeholder='Пароль'
                 />
-                {errors?.password && <p className='error-message'>{errors.password.message}</p>}
+                {errors?.password && <p className='error-message'>{errors.password.message as string}</p>}
                 <p className='info-text'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
                 <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
                 <FormButton onClick={() => onNavigate('/login')} type='button' color='secondary'>Войти</FormButton>

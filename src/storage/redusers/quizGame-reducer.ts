@@ -20,8 +20,7 @@ export function quizGameReducer(state = initialState, action:TResultAction) {
         case SHOW_RESULT:
             return {...state, showResult: true}
         case RESET_GAME:
-            return {...state, ...initialState}
-                      
+            return {...state, ...initialState}                      
         default:
             return state
     }

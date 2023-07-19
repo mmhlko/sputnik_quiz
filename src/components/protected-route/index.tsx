@@ -1,10 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { Spiner } from "../spiner";
-import { ReactElement, ReactNode } from "react";
+import { ReactNode } from "react";
 import { useAppSelector } from "storage/hook";
-import { Button } from "antd";
-
-
 
 interface IProtectedRouteProps {
   onlyOnAuth?: boolean; 
@@ -13,10 +9,10 @@ interface IProtectedRouteProps {
 
 function ProtectedRoute({onlyOnAuth, children}: IProtectedRouteProps) {
   const user = useAppSelector(state => state.user.data);
-  const isAuthChecked = useAppSelector(state => state.user.isAuthChecked);;
+  //const isAuthChecked = useAppSelector(state => state.user.isAuthChecked);  в разработке
   const location = useLocation();
   
-  //if (!isAuthChecked) return <Spiner /> //если не прошла проверка
+  //if (!isAuthChecked) return <Spiner /> //если не прошла проверка, в разработке
   
   if (onlyOnAuth && user) {
     //если это компонент авторизации => редирект на главную или куда заходили по прямому url
@@ -37,13 +33,3 @@ function ProtectedRoute({onlyOnAuth, children}: IProtectedRouteProps) {
 }
 
 export default ProtectedRoute;
-
-
-/* простая версия 
-function ProtectedRoute({loggedIn, children}) {
-  return ( 
-    loggedIn === true
-    ? <>{children}</>
-    : <Navigate to={'/login'} />
-   );
-} */

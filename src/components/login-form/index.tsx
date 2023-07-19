@@ -5,9 +5,6 @@ import Form from '../form';
 import FormInput from '../form-input';
 import FormButton from '../form-button';
 
-
-
-
 interface ILoginFormProps {
     onSubmit: (dataform: any) => void; 
     onNavigate: (to:string) => void;
@@ -37,7 +34,7 @@ function LoginForm({onSubmit, onNavigate}: ILoginFormProps) {
         },
         pattern: {
             value: /^.{8,}$/,
-            message: "Пароль должен содержать минимум восемь символов, одну букву латинского алфавита и одну цифру" 
+            message: "Пароль должен содержать минимум восемь символов" 
         }
     })
     
@@ -52,14 +49,14 @@ function LoginForm({onSubmit, onNavigate}: ILoginFormProps) {
                 autoComplete="none"
                 
             />
-            {errors?.email && <p className='errorMessage'>{errors.email.message}</p>}
+            {errors?.email && <p className='errorMessage'>{errors.email.message as string}</p>}
             <FormInput 
                 {...passwordRegister}
                 id='password'
                 type='password'
                 placeholder='Пароль'
             />
-            {errors?.password && <p className='errorMessage'>{errors.password.message}</p>}
+            {errors?.password && <p className='errorMessage'>{errors.password.message as string}</p>}
                        
             <FormButton type='submit' color='primary' extraClass={s.formButton}>Войти</FormButton>
             <FormButton onClick={() => onNavigate('/register')} type='button' color='secondary' extraClass={s.formButton}>Зарегистрироваться</FormButton>

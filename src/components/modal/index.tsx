@@ -11,7 +11,6 @@ interface IModalProps {
     onClose: () => void
 }
 
-
 function Modal({children, isOpen, onClose}: IModalProps) {
     const refModal = useRef<HTMLDivElement>(null);
     

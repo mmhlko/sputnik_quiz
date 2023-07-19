@@ -3,10 +3,7 @@ import s from './styles.module.scss'
 import { useAppDispatch, useAppSelector } from 'storage/hook';
 import { UserOutlined } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
-import { userLogout } from 'storage/actions/user-actions';
 import { Link } from 'react-router-dom';
-import { resetAction } from 'storage/actions/quizGame-actions';
-import api from 'utils/api';
 import { fetchUserLogout } from 'storage/asyncActions/user-slice';
 
 

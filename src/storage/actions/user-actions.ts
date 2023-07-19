@@ -1,32 +1,33 @@
-import { USER_AUTH_CHECK, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "storage/types"
-import { TUser, TUserRegisterBody, TUserResponce } from "utils/api"
+import { User } from "@supabase/supabase-js"
+import { USER_AUTH_CHECK, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../types"
+
 
 
 export type TRegisterAction = {
     type: string,
-    payload?: TUserResponce
+    payload?: User
 }
 
 export type TAuthAction = {
     type: string,
-    payload?: TUserResponce
+    payload?: User
 }
 
-export function registerAction(data:TUserResponce):TRegisterAction {
+export function registerAction(data:User):TRegisterAction {
     return {
         type: USER_REGISTER,
         payload: data,
     }
 }
 
-export function authorizeAction(data:TUserResponce):TAuthAction {
+export function authorizeAction(data:User):TAuthAction {
     return {
         type: USER_LOGIN,
         payload: data,
     }
 }
 
-export function getUser(data:TUserResponce):TAuthAction {
+export function getUser(data:User):TAuthAction {
     return {
         type: USER_LOCAL_STORAGE,
         payload: data,

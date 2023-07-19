@@ -1,5 +1,5 @@
 import { App } from "components/app/App";
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client';
 import { Provider } from "react-redux";
 import store from 'storage/store'
 import 'index.scss'
@@ -9,15 +9,13 @@ window.ResizeObserver = undefined;
 
 const Router = process.env.REACT_APP_GH_PAGES !== 'true' ? BrowserRouter : HashRouter;
 
-const root = (
+const root = createRoot(document.getElementById('root'));    
+
+
+root.render(
     <Provider store={store}>
         <Router>
             <App />
         </Router>
     </Provider>
-)
-
-ReactDOM.render(
-    root,
-    document.getElementById('root')
 );

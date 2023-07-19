@@ -1,9 +1,8 @@
 import { Dispatch } from "react"
-import { TQuizDataAction, TQuizDataError, TQuizDataLoading, getQuestionsAction, isLoading, quizError } from "storage/actions/quizData-actions"
-import api, { TQuestionResponse } from "utils/api"
+import { TQuizDataAction, TQuizDataError, TQuizDataLoading, getQuestionsAction, isLoading, quizError } from "../../storage/actions/quizData-actions"
+import api, { TQuestionResponse } from "../../utils/api"
 
 type QuizActions = TQuizDataAction | TQuizDataLoading | TQuizDataError
-
 
 export const fetchGetQuestionsSupabase = ():any => {    
     

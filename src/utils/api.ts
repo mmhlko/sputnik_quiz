@@ -1,4 +1,4 @@
-import supabase from "subabase"
+import supabase from "../supabase"
 
 export type TUser = {
     email: string,
@@ -86,6 +86,8 @@ export class Api {
             
             return data           
         }
+
+        
 }
 
 
@@ -93,3 +95,10 @@ const api = new Api()
 
 
 export default api;
+
+
+//для расширения функционала
+/*  const { data, error } = supabase.auth.setSession({
+    access_token,
+    refresh_token
+  }) */

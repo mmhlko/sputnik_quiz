@@ -3,11 +3,6 @@ import s from './styles.module.scss'
 import { forwardRef } from 'react';
 
 
-//берет возможные пропсы для элемента инпута
-interface IFormInputProps extends React.HTMLProps<HTMLInputElement>{
-    typeTag: string;
-    
-}
 
 const FormInput = forwardRef<HTMLInputElement, any>(({typeTag, ...props}, ref) => {
     return ( 
