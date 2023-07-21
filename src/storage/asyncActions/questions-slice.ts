@@ -14,7 +14,9 @@ export const fetchGetQuestionsSupabase = ():any => {
             .then((questions: TQuestionResponse) => {
                 dispatch(getQuestionsAction(questions))
             })
-            .catch(err => dispatch(quizError(err.toString())))
+            .catch(err => {
+                dispatch(quizError(err.toString()))
+            })
             .finally(() => dispatch(isQuestionsLoading(false)))
     }
 }

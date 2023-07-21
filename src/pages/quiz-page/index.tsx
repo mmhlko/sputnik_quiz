@@ -4,11 +4,11 @@ import { useAppSelector } from "storage/hook-types";
 
 function QuizPage() {
 
-    const { error } = useAppSelector(state => state.questions);
+    const { error, loading, totalQuestions } = useAppSelector(state => state.questions);
 
     return (
         <>
-            {error
+            {!loading && (error || totalQuestions === 0)
                 ? <ErrorComponent title={error} withButton/>
                 : <Quiz />
             }

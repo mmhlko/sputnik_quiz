@@ -34,9 +34,8 @@ export class Api {
         const { data, error } = await supabase
             .from('questions')
             .select()
-
             if(error || data.length === 0) {
-                const err = error || 'Нет данных'
+                const err = error.message || 'Нет данных'                
                 throw new Error(err.toString())
             }            
             
