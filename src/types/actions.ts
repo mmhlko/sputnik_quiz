@@ -38,7 +38,12 @@ export type UserActions = TUserActions | TUserError | TDataLoading
 
 export type TUserActions = {
     type: string,
-    payload: User | null
+    payload: User | null 
+}
+
+export type TUserRegisterAction = {
+    type: string,
+    payload: string
 }
 
 export type TUserError = {

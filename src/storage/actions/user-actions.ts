@@ -1,8 +1,8 @@
-import { User } from "@supabase/supabase-js"
-import { IS_LOADING, QUIZ_ERROR, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../action-types";
-import { TDataLoading, TUserActions, TUserError } from "types/actions";
+import { User } from "@supabase/supabase-js";
+import { IS_LOADING, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../action-types";
+import { TDataLoading, TUserActions, TUserError, TUserRegisterAction } from "types/actions";
 
-export function registerAction(data:User):TUserActions {
+export function registerAction(data:string):TUserRegisterAction {
     return {
         type: USER_REGISTER,
         payload: data,

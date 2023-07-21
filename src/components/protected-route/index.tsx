@@ -1,18 +1,19 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Location, Navigate, useLocation } from "react-router-dom";
 import { ReactNode } from "react";
 import { useAppSelector } from "storage/hook-types";
+import { User } from "@supabase/supabase-js";
 
 interface IProtectedRouteProps {
   onlyOnAuth?: boolean;
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ onlyOnAuth, children }: IProtectedRouteProps) => {
-  const user = useAppSelector(state => state.user.data);
-  //const isAuthChecked = useAppSelector(state => state.user.isAuthChecked);  в разработке
-  const location = useLocation();
+interface IProtectionConditions extends IProtectedRouteProps {
+  user: User,
+  location: Location
+}
 
-  //if (!isAuthChecked) return <Spiner /> //если не прошла проверка, в разработке
+const protectionConditions = ({onlyOnAuth, user, location, children}:IProtectionConditions) => {
 
   if (onlyOnAuth && user) {
     //если это компонент авторизации => редирект на главную или куда заходили по прямому url    
@@ -27,7 +28,15 @@ const ProtectedRoute = ({ onlyOnAuth, children }: IProtectedRouteProps) => {
       <Navigate replace to={{ pathname: '/login' }} state={{ from: location }} />
     )
   }
+
   return <>{children}</>
+
+}
+
+const ProtectedRoute = ({ onlyOnAuth, children }: IProtectedRouteProps) => {
+  const location = useLocation();
+  const user = useAppSelector(state => state.user.data);  
+  return protectionConditions({onlyOnAuth, user, location, children});
 }
 
 export default ProtectedRoute;

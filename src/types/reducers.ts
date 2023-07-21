@@ -29,5 +29,6 @@ export type TUserState = {
     isAuthChecked: boolean,
     data: User,
     error: string,
-    loading: boolean
+    loading: boolean,
+    authorization: string
 }

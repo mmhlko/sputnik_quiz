@@ -7,6 +7,7 @@ import { TUserRegisterBody } from 'types/api-types';
 import ErrorComponent from 'components/error-component';
 import { useAppSelector } from 'storage/hook-types';
 import Spiner from 'components/spiner';
+import { USER_AUTHENTICATION } from 'utils/constants';
 
 interface IRegisterFormProps {
     onSubmit: (dataform: TUserRegisterBody) => void;
@@ -20,36 +21,41 @@ const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
     const nameRegister = register('name', formValidations.name);
     const emailRegister = register('email', formValidations.email);
     const passwordRegister = register('password', formValidations.password);
-    const { error, loading } = useAppSelector(state => state.user);
+    const { error, loading, authorization } = useAppSelector(state => state.user);
 
     return (
         <Form title={'Регистрация'} handleForm={handleSubmit(onSubmit)}>
-            <FormInput
-                {...nameRegister}
-                id='username'
-                type='text'
-                placeholder='Имя'
-            />
-            {errorMessage('name', errors)}
-            <FormInput
-                {...emailRegister}
-                id='email'
-                type='email'
-                placeholder='email'
-            />
-            {errorMessage('email', errors)}
+            {authorization === USER_AUTHENTICATION
+                ? <h4 style={{color: 'green'}}>Вы успешно зарегистрировались, войдите в систему</h4>
+                : <>
+                    <FormInput
+                        {...nameRegister}
+                        id='username'
+                        type='text'
+                        placeholder='Имя'
+                    />
+                    {errorMessage('name', errors)}
+                    <FormInput
+                        {...emailRegister}
+                        id='email'
+                        type='email'
+                        placeholder='email'
+                    />
+                    {errorMessage('email', errors)}
 
-            <FormInput
-                {...passwordRegister}
-                id='password'
-                type='password'
-                placeholder='Пароль'
-            />
-            {errorMessage('password', errors)}
-            {loading && <Spiner />}
-            {error && <ErrorComponent title='Ошибка авторизации' subtitle={error as string}/>}
-            <p className='info-text'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
-            <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
+                    <FormInput
+                        {...passwordRegister}
+                        id='password'
+                        type='password'
+                        placeholder='Пароль'
+                    />
+                    {errorMessage('password', errors)}
+                    {loading && <Spiner />}
+                    {error && <ErrorComponent title='Ошибка авторизации' subtitle={error as string} />}
+                    <p className='info-text'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
+                    <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
+                </>
+            }
             <FormButton onClick={() => onNavigate('/login')} type='button' color='secondary'>Войти</FormButton>
         </Form>
     );

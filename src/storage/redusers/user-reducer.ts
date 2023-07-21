@@ -7,14 +7,15 @@ const initialState: TUserState = {
     isAuthChecked: false,
     data: null,
     loading: false,
-    error: null
+    error: null,
+    authorization: ''
 }
 
-export function userReducer(state = initialState, action:TUserActions) {
+export function userReducer(state = initialState, action:any) {
 
     switch (action.type) {
         case USER_REGISTER:
-            return {...state, data: action.payload}
+            return {...state, authorization: action.payload}
         case USER_LOGIN:            
             return {...state, data: action.payload, isAuthChecked:true, error: null}
         case USER_LOCAL_STORAGE:            
@@ -22,7 +23,7 @@ export function userReducer(state = initialState, action:TUserActions) {
         case USER_CHECKTOKEN:
             return {...state, data: action.payload}
         case USER_LOGOUT:           
-            return {...state, data: null, isAuthChecked: false}
+            return {...state, data: null, isAuthChecked: false, authorization: ''}
         case USER_AUTH_CHECK:
             return {...state, isAuthChecked: true}
         case USER_ERROR:

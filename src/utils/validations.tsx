@@ -7,8 +7,8 @@ export const formValidations = {
             message: "Обязательное поле"
         },
         pattern: {
-            value: /^[A-Za-z]{3,}/,
-            message: "Имя должно быть не менее 3 букв"
+            value: /^[а-яА-ЯёЁa-zA-Z][а-яА-ЯёЁa-zA-Z0-9-_\.]{1,20}$/,
+            message: "Имя должно быть не менее 2 букв и начинаться с буквы"
         }
     },
     email: {

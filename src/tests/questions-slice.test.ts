@@ -1,5 +1,5 @@
-import { quizDataReducer } from "../../storage/redusers/quizData-reducer";
-import { getQuestionsAction } from "../../storage/actions/quizData-actions";
+import { quizDataReducer } from "../storage/redusers/quizData-reducer";
+import { getQuestionsAction } from "../storage/actions/quizData-actions";
 import { TQuizDataState } from "types/reducers";
 
 const questions = [{

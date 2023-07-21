@@ -1,22 +1,24 @@
 import { Dispatch } from "redux";
 import { resetAction } from "storage/actions/quizGame-actions";
 import { authCheck, authorizeAction, isUserLoading, registerAction, userError, userLogout } from "storage/actions/user-actions";
+import { setTimeout } from "timers/promises";
 import { TEmptyAction, UserActions } from "types/actions";
 import { TUserAuthBody, TUserRegisterBody } from "types/api-types";
 import api from "utils/api";
-
-
 
 export const fetchRegisterUser = (dataForm: TUserRegisterBody):any => {
     
     return (dispatch:Dispatch<UserActions>) => {
         dispatch(isUserLoading(true))
+
         api.userRegister(dataForm)
             .then((data) => {
-                dispatch(registerAction(data.user))
+                dispatch(registerAction(data.user.aud))
             })
             .catch(err => dispatch(userError(err.toString())))
             .finally(() => dispatch(isUserLoading(false)))
+
+            
     }
 }
 
