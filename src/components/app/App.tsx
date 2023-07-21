@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from 'storage/hook';
+import { useAppDispatch } from 'storage/hook-types';
 import { Layout } from 'antd';
 import ProtectedRoute from 'components/protected-route';
 import Header from 'components/header';
@@ -7,7 +7,6 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import LoginForm from 'components/login-form';
 import { SubmitHandler } from 'react-hook-form';
 import RegisterForm from 'components/register-form';
-import { TUserAuthBody, TUserRegisterBody} from 'utils/api';
 import { getUser } from 'storage/actions/user-actions';
 import { fetchLoginUserSupabase, fetchRegisterUser } from 'storage/asyncActions/user-slice';
 import { getLocalData } from 'utils/local-storage';
@@ -16,7 +15,8 @@ import HomePage from 'pages/home-page';
 import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
 import NotFoundPage from 'pages/not-found-page';
-
+import { AUTH_LOCAL_STORAGE } from 'utils/constants';
+import { TUserAuthBody, TUserRegisterBody } from 'types/api';
 const { Footer } = Layout;
 
 export function App() {
@@ -27,26 +27,29 @@ export function App() {
     const location = useLocation();
     const backgroundLocation = location.state?.backgroundLocation;
     const initialPath = location.state?.initialPath;
-    const navigate = useNavigate();
+    const navigate = useNavigate();    
 
+    const token = getLocalData(AUTH_LOCAL_STORAGE)?.access_token;
+    const userFromLS = getLocalData(AUTH_LOCAL_STORAGE)?.user;     
+
+    const getQuestions = () => {
+
+        if (token) {             
+            dispatch(fetchGetQuestionsSupabase())
+        }
+    }
+    
+    useEffect(() => {
+
+        dispatch(getUser(userFromLS));
+        getQuestions();             
+
+    }, [token, dispatch])  
+    
     //закрытие модального окна ведет на страницу открытия модального окна или на главную
     const onCloseRoutingModal = () => {
         navigate(initialPath || '/', { replace: true }) //вторым полем удаляем из истории переход обратно
     }
-
-    const AUTH_LOCAL_STORAGE = 'sb-bomuwhgrujvwagkdtdrd-auth-token';
-
-    const token = getLocalData(AUTH_LOCAL_STORAGE)?.access_token;
-    const userFromLS = getLocalData(AUTH_LOCAL_STORAGE)?.user; 
-    
-    useEffect(() => {
-
-        dispatch(getUser(userFromLS))
-        if (token) {             
-            dispatch(fetchGetQuestionsSupabase())
-        }     
-
-    }, [token, dispatch])       
 
     const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
         dispatch(fetchRegisterUser(dataForm))
@@ -89,7 +92,6 @@ export function App() {
                         </ProtectedRoute>
         },
         { path: '*', element: null },   ]
-
            
     
     return (

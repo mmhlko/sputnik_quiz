@@ -1,9 +1,9 @@
 
 import { useForm } from 'react-hook-form';
-import s from './styles.module.scss'
 import Form from '../form';
 import FormInput from '../form-input';
 import FormButton from '../form-button';
+import { errorMessage, formValidations } from 'utils/validations';
 
 interface ILoginFormProps {
     onSubmit: (dataform: any) => void; 
@@ -11,33 +11,12 @@ interface ILoginFormProps {
     //onNavigateReset: (to:string) => void;
 }
 
-function LoginForm({onSubmit, onNavigate}: ILoginFormProps) {
+const LoginForm = ({onSubmit, onNavigate}: ILoginFormProps) => {
 
     const {register, handleSubmit, formState: {errors}} = useForm<any>({mode: 'onBlur'});
-    
-
-    const emailRegister = register('email', {
-        required: {
-            value: true,
-            message: "Обязательное поле"
-        },
-        pattern: {
-            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            message: "Email не соотвествует формату электронной почты"
-        }
-    })
-
-    const passwordRegister = register('password', {
-        required: {
-            value: true,
-            message: "Обязательное поле"
-        },
-        pattern: {
-            value: /^.{8,}$/,
-            message: "Пароль должен содержать минимум восемь символов" 
-        }
-    })
-    
+    const emailRegister = register('email', formValidations.email);
+    const passwordRegister = register('password', formValidations.password);
+        
     return ( 
         
         <Form title={'Вход'} handleForm={handleSubmit(onSubmit)}>
@@ -46,20 +25,19 @@ function LoginForm({onSubmit, onNavigate}: ILoginFormProps) {
                 id='email'
                 type='text'
                 placeholder='email'
-                autoComplete="none"
-                
+                autoComplete="none"               
             />
-            {errors?.email && <p className='errorMessage'>{errors.email.message as string}</p>}
+            {errorMessage('email', errors)}
             <FormInput 
                 {...passwordRegister}
                 id='password'
                 type='password'
                 placeholder='Пароль'
             />
-            {errors?.password && <p className='errorMessage'>{errors.password.message as string}</p>}
+            {errorMessage('password', errors)}
                        
-            <FormButton type='submit' color='primary' extraClass={s.formButton}>Войти</FormButton>
-            <FormButton onClick={() => onNavigate('/register')} type='button' color='secondary' extraClass={s.formButton}>Зарегистрироваться</FormButton>
+            <FormButton type='submit' color='primary' >Войти</FormButton>
+            <FormButton onClick={() => onNavigate('/register')} type='button' color='secondary' >Зарегистрироваться</FormButton>
         </Form>   
         
      );

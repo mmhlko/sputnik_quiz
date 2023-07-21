@@ -1,6 +1,6 @@
 import Quiz from "components/quiz";
 import ErrorComponent from "components/error-page";
-import { useAppSelector } from "storage/hook";
+import { useAppSelector } from "storage/hook-types";
 
 function QuizPage() {
 
@@ -8,10 +8,11 @@ function QuizPage() {
 
     return (
         <>
-        {error 
-        ? <ErrorComponent title={error}/>
-        : <Quiz />}
-        </>       
+            {error
+                ? <ErrorComponent title={error} />
+                : <Quiz />
+            }
+        </>
     );
 }
 

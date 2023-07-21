@@ -1,47 +1,38 @@
 import { User } from "@supabase/supabase-js"
-import { USER_AUTH_CHECK, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../types"
+import { USER_AUTH_CHECK, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../action-types";
+import { TUserActions } from "types/actions";
 
-
-
-export type TRegisterAction = {
-    type: string,
-    payload?: User
-}
-
-export type TAuthAction = {
-    type: string,
-    payload?: User
-}
-
-export function registerAction(data:User):TRegisterAction {
+export function registerAction(data:User):TUserActions {
     return {
         type: USER_REGISTER,
         payload: data,
     }
 }
 
-export function authorizeAction(data:User):TAuthAction {
+export function authorizeAction(data:User):TUserActions {
     return {
         type: USER_LOGIN,
         payload: data,
     }
 }
 
-export function getUser(data:User):TAuthAction {
+export function getUser(data:User):TUserActions {
     return {
         type: USER_LOCAL_STORAGE,
         payload: data,
     }
 }
 
-export function userLogout() {
+export function userLogout():TUserActions {
     return {
-        type: USER_LOGOUT
+        type: USER_LOGOUT,
+        payload: null
     }
 }
 
-export function authCheck() {
+export function authCheck():TUserActions {
     return {
-        type: USER_AUTH_CHECK
+        type: USER_AUTH_CHECK,
+        payload: null
     }
 }

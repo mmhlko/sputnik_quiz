@@ -1,17 +1,13 @@
-import { TResultAction } from "storage/actions/quizGame-actions";
-import { DECREMENT, INCREMENT, RESET_GAME, SHOW_RESULT } from "storage/types";
-
-export type TResultState = {    
-    score: number,
-    showResult: boolean,  
-}
+import { DECREMENT, INCREMENT, RESET_GAME, SHOW_RESULT } from "storage/action-types";
+import { TResultState } from "types/reducers";
+import { TQuizGameActions } from "types/actions";
 
 const initialState: TResultState = {
     score: 0,
     showResult: false,   
 }
 
-export function quizGameReducer(state = initialState, action:TResultAction) {
+export function quizGameReducer(state = initialState, action:TQuizGameActions) {
     switch (action.type) {
         case INCREMENT:
             return {...state, score: state.score + action.payload}

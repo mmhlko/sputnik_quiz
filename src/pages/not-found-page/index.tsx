@@ -1,5 +1,4 @@
-import { NotFound } from "components/not-found";
-
+import NotFound from "components/not-found";
 
 function NotFoundPage() {
     return ( 

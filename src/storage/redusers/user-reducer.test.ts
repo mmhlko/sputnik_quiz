@@ -1,7 +1,8 @@
 import { authorizeAction, userLogout } from "../../storage/actions/user-actions"
-import { TUserState, userReducer } from "./user-reducer";
+import { userReducer } from "./user-reducer";
 import supabase from "../../supabase";
-import api from "../../utils/api";
+import api from "../../utils/api-types";
+import { TUserState } from "types/reducers";
 
 jest.mock('../../supabase')
 

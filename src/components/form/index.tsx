@@ -10,7 +10,7 @@ interface IFormProps {
 }
 
 
-function Form({handleForm, children, title, align='center'}: IFormProps) {
+const Form = ({handleForm, children, title, align='center'}: IFormProps) => {
    
     return ( 
         <div className={s.container}>

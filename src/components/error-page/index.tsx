@@ -1,12 +1,13 @@
 import { Button } from "antd";
 import { Link } from "react-router-dom";
-import s from './styles.module.scss'
+import s from './styles.module.scss';
+
 type TErrorProps = {
     title: string,
     subtitle?: string
 }
 
-function ErrorComponent({title, subtitle}:TErrorProps) {
+const ErrorComponent = ({title, subtitle}:TErrorProps) => {
     
     return ( 
         <div className={s.wrapper}>

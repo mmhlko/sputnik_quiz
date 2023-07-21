@@ -1,4 +1,3 @@
-
 import s from './styles.module.scss'
 import { ReactNode } from 'react';
 import NotFoundIcon from './images/notfound-icon.svg'
@@ -11,7 +10,7 @@ type TNotFoundProps = {
   buttonText?: string,   
 }
 
-export function NotFound({children, title, buttonText = 'На главную'}: TNotFoundProps) {
+const NotFound = ({children, title, buttonText = 'На главную'}: TNotFoundProps) => {
   return (
     <div className={s.notfound}>      
       <NotFoundIcon className={s.image} aria-hidden='true'/>
@@ -21,3 +20,5 @@ export function NotFound({children, title, buttonText = 'На главную'}: 
     </div>
   )
 }
+
+export default NotFound;

@@ -1,9 +1,9 @@
-
 import s from './styles.module.scss';
 
-export function Spiner() {
+const Spiner = () => {
   return (    
     <div className={s.spiner}></div>   
-
   )
 }
+
+export default Spiner;

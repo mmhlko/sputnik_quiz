@@ -5,8 +5,7 @@ import UserBlock from 'components/user-block';
 import cn from 'classnames';
 
 
-function Header() {
-
+const Header = () => {
 
     return (
 

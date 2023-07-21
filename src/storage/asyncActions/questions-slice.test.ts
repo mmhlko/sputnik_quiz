@@ -1,5 +1,6 @@
-import { TQuizDataState, quizDataReducer } from "../../storage/redusers/quizData-reducer";
+import { quizDataReducer } from "../../storage/redusers/quizData-reducer";
 import { getQuestionsAction } from "../../storage/actions/quizData-actions";
+import { TQuizDataState } from "types/reducers";
 
 const questions = [{
     "id": 1,
@@ -27,15 +28,12 @@ const questions = [{
 },]
 
 test('Redux get questions', () => {
-    
     const initialState: TQuizDataState = {
         data: [],
         totalQuestions: 0,
         loading: false,
         error: null
     }
-
-    const newState = quizDataReducer(initialState, getQuestionsAction(questions))
-
+    const newState = quizDataReducer(initialState, getQuestionsAction(questions));
     expect(newState.data).toBe(questions)
 });

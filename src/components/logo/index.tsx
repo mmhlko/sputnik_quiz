@@ -4,7 +4,7 @@ import { Typography } from 'antd';
 
 const { Title } = Typography;
 
-function Logo() {
+const Logo = () => {
     return ( 
         <Link to='/' className={s.logo}><Title level={2} className={s.text}>QUIZ LOGO</Title></Link>        
      );

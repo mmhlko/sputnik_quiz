@@ -1,19 +1,19 @@
 import s from './styles.module.scss';
 import cn from 'classnames';
 import useCheckbox from 'hooks/useCheckbox';
-import { useAppDispatch } from 'storage/hook';
+import { useAppDispatch } from 'storage/hook-types';
 import { useEffect, useState } from 'react';
 import { decrementAction, incrementAction } from 'storage/actions/quizGame-actions';
 import { Checkbox, Typography, Card } from 'antd';
-import { TQuizQuestion } from 'storage/redusers/quizData-reducer';
+import { TQuizQuestion } from 'types/reducers';
 const { Title, Text } = Typography;
 
-export type TQuestionProps = {
+type TQuestionProps = {
     question: TQuizQuestion,
     isDisable: boolean
 }
 
-function Question({ question, isDisable }: TQuestionProps) {
+const Question = ({ question, isDisable }: TQuestionProps) => {
     
     const dispatch = useAppDispatch();
     const [activeCheckbox, setActiveCheckbox] = useState<number | null>(null);

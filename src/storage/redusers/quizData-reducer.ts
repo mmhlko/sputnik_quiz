@@ -1,18 +1,5 @@
-import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR} from "../../storage/types"
-
-export type TQuizQuestion = {
-    title: string,
-    variants: string[],
-    correctAnswer: number,
-    id: number
-}
-
-export type TQuizDataState = {
-    data: TQuizQuestion[],
-    totalQuestions: number,
-    loading: boolean,
-    error: string
-}
+import { TQuizDataState } from "types/reducers"
+import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR} from "../action-types"
 
 const initialState: TQuizDataState = {
     data: [],

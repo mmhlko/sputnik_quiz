@@ -1,12 +1,13 @@
-import { Dispatch } from "react";
-import { TResultAction, resetAction } from "storage/actions/quizGame-actions";
-import { TRegisterAction, authCheck, authorizeAction, registerAction, userLogout } from "storage/actions/user-actions";
-import api, { TUserRegisterBody } from "utils/api";
-
+import { Dispatch } from "redux";
+import { resetAction } from "storage/actions/quizGame-actions";
+import { authCheck, authorizeAction, registerAction, userLogout } from "storage/actions/user-actions";
+import { TEmptyAction, TQuizGameActions, TUserActions } from "types/actions";
+import { TUserAuthBody, TUserRegisterBody } from "types/api";
+import api from "utils/api-types";
 
 export const fetchRegisterUser = (dataForm: TUserRegisterBody):any => {
     
-    return (dispatch:Dispatch<TRegisterAction>) => {
+    return (dispatch:Dispatch<TUserActions>) => {
         api.userRegister(dataForm)
             .then((data) => {
                 dispatch(registerAction(data.user))
@@ -14,20 +15,20 @@ export const fetchRegisterUser = (dataForm: TUserRegisterBody):any => {
     }
 }
 
-export const fetchLoginUserSupabase = (dataForm: TUserRegisterBody):any => {
+export const fetchLoginUserSupabase = (dataForm: TUserAuthBody):any => {
 
-    return (dispatch:Dispatch<TRegisterAction>) => {
+    return (dispatch:Dispatch<TUserActions>, dispatchWithoutArg:Dispatch<TUserActions>) => {
         api.userLogin(dataForm)
             .then((data) => {
                 dispatch(authorizeAction(data.user))                   
             })
-            .finally(() => {dispatch(authCheck())})
+            .finally(() => {dispatchWithoutArg(authCheck())})
     }
 }
 
 export const fetchUserLogout = ():any => {    
 
-    return (dispatch:Dispatch<TResultAction>) => {
+    return (dispatch:Dispatch<TEmptyAction>) => {
         dispatch(userLogout())
         dispatch(resetAction())
         api.userLogout()    

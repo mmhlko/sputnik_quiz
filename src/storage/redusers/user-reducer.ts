@@ -1,20 +1,14 @@
-import { User } from "@supabase/supabase-js"
-import { TRegisterAction } from "storage/actions/user-actions"
-import { USER_AUTH_CHECK, USER_CHECKTOKEN, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../types"
 
-
-
-export type TUserState = {
-    isAuthChecked: boolean,
-    data: User | null
-}
+import { TUserActions } from "types/actions";
+import { USER_AUTH_CHECK, USER_CHECKTOKEN, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../action-types";
+import { TUserState } from "types/reducers";
 
 const initialState: TUserState = {
     isAuthChecked: false,
     data: null
 }
 
-export function userReducer(state = initialState, action:TRegisterAction) {
+export function userReducer(state = initialState, action:TUserActions) {
 
     switch (action.type) {
         case USER_REGISTER:

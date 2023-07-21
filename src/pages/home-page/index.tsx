@@ -1,6 +1,6 @@
 import { Button } from "antd";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "storage/hook";
+import { Link, useLocation } from "react-router-dom";
+import { useAppSelector } from "storage/hook-types";
 import s from './styles.module.scss'
 
 function HomePage() {

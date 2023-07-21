@@ -1,18 +1,18 @@
 import Question from "components/question"
 import s from "./styles.module.scss"
-import { useAppDispatch, useAppSelector } from "storage/hook";
+import { useAppDispatch, useAppSelector } from "storage/hook-types";
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { TQuizQuestion } from "storage/redusers/quizData-reducer"; 
 import { showResultAction } from "storage/actions/quizGame-actions";
 import { Pagination } from 'antd';
+import { TQuizQuestion } from "types/reducers";
 
-export type TQuestionListProps = {
+type TQuestionListProps = {
     questions: TQuizQuestion[],
     totalQuestions: number,
 
 }
 
-function QuestionList({ questions, totalQuestions }: TQuestionListProps) {
+const QuestionList = ({ questions, totalQuestions }: TQuestionListProps) => {
     const dispatch = useAppDispatch();
     const [page, setPage] = useState(1);
     const isDisable = useAppSelector(state => state.result.showResult)
@@ -40,9 +40,7 @@ function QuestionList({ questions, totalQuestions }: TQuestionListProps) {
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
-    }, [startItem])
-
-    
+    }, [startItem])    
 
     return (
         <>
