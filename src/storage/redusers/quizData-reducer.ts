@@ -1,5 +1,6 @@
-import { TQuizDataState } from "types/reducers"
-import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR} from "../action-types"
+import { TQuizDataState } from "types/reducers";
+import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR} from "../action-types";
+
 
 const initialState: TQuizDataState = {
     data: [],

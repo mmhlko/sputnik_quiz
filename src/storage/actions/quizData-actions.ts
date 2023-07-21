@@ -1,4 +1,4 @@
-import { TQuizDataAction, TQuizDataError, TQuizDataLoading } from "types/actions";
+import { TDataLoading, TQuizDataAction, TQuizDataError } from "types/actions";
 import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR } from "../action-types";
 import { TQuizQuestion } from "types/reducers";
 
@@ -9,13 +9,6 @@ export function getQuestionsAction(data: TQuizQuestion[]):TQuizDataAction {
     }
 }
 
-export function isLoading(isLoading: boolean): TQuizDataLoading{
-    return {
-        type: IS_LOADING,
-        payload: isLoading        
-    }
-}
-
 export function quizError(error: any): TQuizDataError{
     return {
         type: QUIZ_ERROR,
@@ -23,3 +16,9 @@ export function quizError(error: any): TQuizDataError{
     }
 }
 
+export function isQuestionsLoading(isLoading: boolean): TDataLoading{
+    return {
+        type: IS_LOADING,
+        payload: isLoading        
+    }
+}

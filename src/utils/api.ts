@@ -1,4 +1,4 @@
-import { TUserAuthBody, TUserRegisterBody } from "types/api";
+import { TUserAuthBody, TUserRegisterBody } from "types/api-types";
 import supabase from "../supabase";
 
 export class Api {
@@ -9,7 +9,7 @@ export class Api {
             .auth.signUp(bodyData)
         
             if(error) {
-                throw new Error(error.toString())
+                throw new Error(error.message.toString())
             }            
             return data   
     }
@@ -19,8 +19,8 @@ export class Api {
         const { data, error } = await supabase
             .auth.signInWithPassword(bodyData)
         
-            if(error) {
-                throw new Error(error.toString())
+            if(error) { 
+                throw new Error(error.message.toString())
             }            
             return data                    
     }

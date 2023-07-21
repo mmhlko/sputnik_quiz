@@ -16,7 +16,7 @@ import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
 import NotFoundPage from 'pages/not-found-page';
 import { AUTH_LOCAL_STORAGE } from 'utils/constants';
-import { TUserAuthBody, TUserRegisterBody } from 'types/api';
+import { TUserAuthBody, TUserRegisterBody } from 'types/api-types';
 const { Footer } = Layout;
 
 export function App() {
@@ -33,17 +33,20 @@ export function App() {
     const userFromLS = getLocalData(AUTH_LOCAL_STORAGE)?.user;     
 
     const getQuestions = () => {
-
         if (token) {             
             dispatch(fetchGetQuestionsSupabase())
         }
     }
+
+    const getUserFromLS = () => {
+        if (userFromLS) {
+            dispatch(getUser(userFromLS));
+        }
+    }
     
     useEffect(() => {
-
-        dispatch(getUser(userFromLS));
-        getQuestions();             
-
+        getUserFromLS();
+        getQuestions();           
     }, [token, dispatch])  
     
     //закрытие модального окна ведет на страницу открытия модального окна или на главную

@@ -1,5 +1,5 @@
 import Quiz from "components/quiz";
-import ErrorComponent from "components/error-page";
+import ErrorComponent from "components/error-component";
 import { useAppSelector } from "storage/hook-types";
 
 function QuizPage() {
@@ -9,7 +9,7 @@ function QuizPage() {
     return (
         <>
             {error
-                ? <ErrorComponent title={error} />
+                ? <ErrorComponent title={error} withButton/>
                 : <Quiz />
             }
         </>

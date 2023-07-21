@@ -46,3 +46,10 @@ main {
     align-self: flex-end;
     margin: 0;
 }
+
+@media (max-width: 760px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

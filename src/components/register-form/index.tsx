@@ -3,7 +3,10 @@ import Form from '../form';
 import FormInput from '../form-input';
 import FormButton from '../form-button';
 import { errorMessage, formValidations } from 'utils/validations';
-import { TUserRegisterBody } from 'types/api';
+import { TUserRegisterBody } from 'types/api-types';
+import ErrorComponent from 'components/error-component';
+import { useAppSelector } from 'storage/hook-types';
+import Spiner from 'components/spiner';
 
 interface IRegisterFormProps {
     onSubmit: (dataform: TUserRegisterBody) => void;
@@ -16,7 +19,8 @@ const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
 
     const nameRegister = register('name', formValidations.name);
     const emailRegister = register('email', formValidations.email);
-    const passwordRegister = register('password', formValidations.password)
+    const passwordRegister = register('password', formValidations.password);
+    const { error, loading } = useAppSelector(state => state.user);
 
     return (
         <Form title={'Регистрация'} handleForm={handleSubmit(onSubmit)}>
@@ -42,6 +46,8 @@ const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
                 placeholder='Пароль'
             />
             {errorMessage('password', errors)}
+            {loading && <Spiner />}
+            {error && <ErrorComponent title='Ошибка авторизации' subtitle={error as string}/>}
             <p className='info-text'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
             <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
             <FormButton onClick={() => onNavigate('/login')} type='button' color='secondary'>Войти</FormButton>

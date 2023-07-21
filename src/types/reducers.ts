@@ -27,5 +27,7 @@ export type TResultState = {
 
 export type TUserState = {
     isAuthChecked: boolean,
-    data: User | null
+    data: User,
+    error: string,
+    loading: boolean
 }

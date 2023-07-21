@@ -1,7 +1,7 @@
 import { authorizeAction, userLogout } from "../../storage/actions/user-actions"
 import { userReducer } from "./user-reducer";
 import supabase from "../../supabase";
-import api from "../../utils/api-types";
+import api from "../../utils/api";
 import { TUserState } from "types/reducers";
 
 jest.mock('../../supabase')
@@ -32,7 +32,9 @@ describe('user auth testing', () => {
                 }],
                 created_at: '2023-07-17T19:49:06.69348Z',
                 updated_at: '2023-07-19T05:49:39.300057Z'
-            }
+            },
+            error: null,
+            loading: false
         }
     
         const newState = userReducer(state, userLogout())
@@ -44,7 +46,9 @@ describe('user auth testing', () => {
     
         const state: TUserState = {
             isAuthChecked: false,
-            data: null
+            data: null,
+            error: null,
+            loading: false
         }
     
         const userRes = {

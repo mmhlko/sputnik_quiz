@@ -1,28 +1,38 @@
 import { Dispatch } from "redux";
 import { resetAction } from "storage/actions/quizGame-actions";
-import { authCheck, authorizeAction, registerAction, userLogout } from "storage/actions/user-actions";
-import { TEmptyAction, TQuizGameActions, TUserActions } from "types/actions";
-import { TUserAuthBody, TUserRegisterBody } from "types/api";
-import api from "utils/api-types";
+import { authCheck, authorizeAction, isUserLoading, registerAction, userError, userLogout } from "storage/actions/user-actions";
+import { TEmptyAction, UserActions } from "types/actions";
+import { TUserAuthBody, TUserRegisterBody } from "types/api-types";
+import api from "utils/api";
+
+
 
 export const fetchRegisterUser = (dataForm: TUserRegisterBody):any => {
     
-    return (dispatch:Dispatch<TUserActions>) => {
+    return (dispatch:Dispatch<UserActions>) => {
+        dispatch(isUserLoading(true))
         api.userRegister(dataForm)
             .then((data) => {
                 dispatch(registerAction(data.user))
             })
+            .catch(err => dispatch(userError(err.toString())))
+            .finally(() => dispatch(isUserLoading(false)))
     }
 }
 
 export const fetchLoginUserSupabase = (dataForm: TUserAuthBody):any => {
 
-    return (dispatch:Dispatch<TUserActions>, dispatchWithoutArg:Dispatch<TUserActions>) => {
+    return (dispatch:Dispatch<UserActions>) => {
+        dispatch(isUserLoading(true))
         api.userLogin(dataForm)
             .then((data) => {
                 dispatch(authorizeAction(data.user))                   
             })
-            .finally(() => {dispatchWithoutArg(authCheck())})
+            .catch(err => dispatch(userError(err.toString())))
+            .finally(() => {
+                dispatch(isUserLoading(false))
+                dispatch(authCheck())
+            })
     }
 }
 
