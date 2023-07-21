@@ -1,5 +1,3 @@
-
-import { TUserActions, UserActions } from "types/actions";
 import { IS_LOADING, USER_AUTH_CHECK, USER_CHECKTOKEN, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "../action-types";
 import { TUserState } from "types/reducers";
 

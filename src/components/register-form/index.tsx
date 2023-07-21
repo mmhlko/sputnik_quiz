@@ -8,6 +8,8 @@ import ErrorComponent from 'components/error-component';
 import { useAppSelector } from 'storage/hook-types';
 import Spiner from 'components/spiner';
 import { USER_AUTHENTICATION } from 'utils/constants';
+import { Typography } from 'antd';
+const { Text, Title } = Typography;
 
 interface IRegisterFormProps {
     onSubmit: (dataform: TUserRegisterBody) => void;
@@ -17,7 +19,6 @@ interface IRegisterFormProps {
 const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<any>({ mode: 'onBlur' });
-
     const nameRegister = register('name', formValidations.name);
     const emailRegister = register('email', formValidations.email);
     const passwordRegister = register('password', formValidations.password);
@@ -26,7 +27,10 @@ const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
     return (
         <Form title={'Регистрация'} handleForm={handleSubmit(onSubmit)}>
             {authorization === USER_AUTHENTICATION
-                ? <h4 style={{color: 'green'}}>Вы успешно зарегистрировались, войдите в систему</h4>
+                ? <>
+                    <Title level={3} type="success">Вы успешно зарегистрированы!</Title>
+                    <Text>Для входа в систему, необходимо подтвердить свой email</Text>
+                </>
                 : <>
                     <FormInput
                         {...nameRegister}
@@ -52,7 +56,7 @@ const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
                     {errorMessage('password', errors)}
                     {loading && <Spiner />}
                     {error && <ErrorComponent title='Ошибка авторизации' subtitle={error as string} />}
-                    <p className='info-text'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
+                    <p className='info-text'>Для регистрации нужно указать реальный email! Действует ограничение 4 регистрации за 1 час</p>
                     <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
                 </>
             }
