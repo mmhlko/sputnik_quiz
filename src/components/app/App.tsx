@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from 'react';
 import { useAppDispatch } from 'storage/hook-types';
 import { Layout } from 'antd';
 import ProtectedRoute from 'components/protected-route';
-import Header from 'components/login-form/header';
+import Header from 'components/header';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LoginForm from 'components/login-form';
 import { SubmitHandler } from 'react-hook-form';

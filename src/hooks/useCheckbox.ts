@@ -1,5 +1,5 @@
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useState } from "react";
-
 
 const useCheckbox = (index: number) => {
 
@@ -7,7 +7,7 @@ const useCheckbox = (index: number) => {
 
     return {
         value,
-        onChange: (e: any) => {
+        onChange: (e: CheckboxChangeEvent) => {
             setValue(e.target.value)
         }
     }
