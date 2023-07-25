@@ -18,8 +18,6 @@ import NotFoundPage from 'pages/not-found-page';
 import { AUTH_LOCAL_STORAGE } from 'utils/constants';
 import { TUserAuthBody, TUserRegisterBody } from 'types/api-types';
 import AppRouter from 'components/app-router';
-import api from 'utils/api';
-import { fetchRefreshTokenSupabase } from 'storage/asyncActions/refresh-token';
 import { User } from '@supabase/supabase-js';
 const { Footer } = Layout;
 
@@ -35,8 +33,7 @@ export function App() {
     const initialPath = location.state?.initialPath;
     const navigate = useNavigate();
 
-    const token:string = getLocalData(AUTH_LOCAL_STORAGE)?.access_token;
-    const refreshToken:string = getLocalData(AUTH_LOCAL_STORAGE)?.refresh_token;
+    const token:string = getLocalData(AUTH_LOCAL_STORAGE)?.access_token;    
     const userFromLS:User = getLocalData(AUTH_LOCAL_STORAGE)?.user;
 
     const getQuestions = () => {
@@ -51,8 +48,6 @@ export function App() {
             dispatch(getUser(userFromLS));
         }
     }
-
-
 
     useEffect(() => {
         getUserFromLS();

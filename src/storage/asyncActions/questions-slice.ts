@@ -2,7 +2,6 @@ import { getQuestionsAction, isQuestionsLoading, quizError } from "../../storage
 import api from "../../utils/api";
 import { TQuizActions } from "types/actions";
 import { TQuestionResponse } from "types/api-types";
-import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "storage/redux-types";
 

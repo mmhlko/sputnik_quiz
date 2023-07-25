@@ -3,8 +3,6 @@ import { authCheck, refreshTokenAction, userError } from "storage/actions/user-a
 import { TUserActions } from "types/actions";
 import { TAsyncRefreshTokenThunk } from "types/thunks";
 import api, { TAuthResponse } from "utils/api";
-import { AUTH_LOCAL_STORAGE, USER_REFRESH_TOKEN } from "utils/constants";
-import { setLocalData } from "utils/local-storage";
 
 export const fetchRefreshTokenSupabase = (refresh_token:string):TAsyncRefreshTokenThunk => {
 

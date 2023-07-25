@@ -1,6 +1,6 @@
 import { TUserAuthBody, TUserRegisterBody } from "types/api-types";
 import supabase from "../supabase";
-import { AuthError, User } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 
 type TApiConfig = {
     baseUrl: string;
@@ -86,8 +86,6 @@ export class Api {
             .catch((err) => alert(err)
             )
     }
-
-
 }
 
 const api = new Api({

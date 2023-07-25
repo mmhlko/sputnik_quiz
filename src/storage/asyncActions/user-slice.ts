@@ -44,14 +44,3 @@ export const fetchUserLogout = ():TAsyncLogoutThunk=> {
     }
 }
 
-//пока в разработке
-// export const fetchCheckToken = () => {
-    
-//     return (dispatch:Dispatch<TRegisterAction>) => {
-//         api.authorize(dataForm)
-//             .then((data:TAuthResponse) => {
-//                 setLocalData('accessToken', data.accessToken)
-//                 dispatch(authorizeAction(data.user))
-//             })
-//     }
-// }
