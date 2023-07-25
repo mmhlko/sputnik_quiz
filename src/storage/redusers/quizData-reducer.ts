@@ -1,5 +1,6 @@
 import { TQuizDataState } from "types/reducers";
 import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR} from "../action-types";
+import { TQuizActions } from "types/actions";
 
 
 const initialState: TQuizDataState = {
@@ -9,7 +10,7 @@ const initialState: TQuizDataState = {
     error: null
 }
 
-export function quizDataReducer(state = initialState, action:any) {
+export function quizDataReducer(state = initialState, action:TQuizActions) {
     switch (action.type) {
         case GET_QUESTIONS:
             return {...state, data: action.payload, totalQuestions: action.payload.length}

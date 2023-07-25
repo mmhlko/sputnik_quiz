@@ -1,30 +1,27 @@
-import { Dispatch } from "redux";
+import { Dispatch } from "react";
 import { resetAction } from "storage/actions/quizGame-actions";
 import { authCheck, authorizeAction, isUserLoading, registerAction, userError, userLogout } from "storage/actions/user-actions";
-import { setTimeout } from "timers/promises";
-import { TEmptyAction, UserActions } from "types/actions";
+import { TUserActions } from "types/actions";
 import { TUserAuthBody, TUserRegisterBody } from "types/api-types";
+import { TAsyncLoginThunk, TAsyncLogoutThunk, TAsyncRegisterThunk } from "types/thunks";
 import api from "utils/api";
 
-export const fetchRegisterUser = (dataForm: TUserRegisterBody):any => {
+export const fetchRegisterUser = (dataForm: TUserRegisterBody):TAsyncRegisterThunk => {
     
-    return (dispatch:Dispatch<UserActions>) => {
-        dispatch(isUserLoading(true))
-
+    return (dispatch: Dispatch<TUserActions>) => {
+        dispatch(isUserLoading(true));
         api.userRegister(dataForm)
             .then((data) => {
                 dispatch(registerAction(data.user.aud))
             })
             .catch(err => dispatch(userError(err.toString())))
-            .finally(() => dispatch(isUserLoading(false)))
-
-            
+            .finally(() => dispatch(isUserLoading(false)))            
     }
 }
 
-export const fetchLoginUserSupabase = (dataForm: TUserAuthBody):any => {
+export const fetchLoginUserSupabase = (dataForm: TUserAuthBody):TAsyncLoginThunk => {
 
-    return (dispatch:Dispatch<UserActions>) => {
+    return (dispatch: Dispatch<TUserActions>) => {
         dispatch(isUserLoading(true))
         api.userLogin(dataForm)
             .then((data) => {
@@ -38,12 +35,12 @@ export const fetchLoginUserSupabase = (dataForm: TUserAuthBody):any => {
     }
 }
 
-export const fetchUserLogout = ():any => {    
+export const fetchUserLogout = ():TAsyncLogoutThunk=> {    
 
-    return (dispatch:Dispatch<TEmptyAction>) => {
-        dispatch(userLogout())
+    return (dispatch) => {
         dispatch(resetAction())
-        api.userLogout()    
+        dispatch(userLogout())
+        api.userLogout()        
     }
 }
 

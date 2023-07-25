@@ -3,5 +3,6 @@ import { AppDispatch, RootState } from "./redux-types";
 
 
 //типизируем стандартные хуки под наше приложение
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+type DispatchFunc = () => AppDispatch;
+export const useAppDispatch: DispatchFunc = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

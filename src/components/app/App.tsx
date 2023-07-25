@@ -18,6 +18,9 @@ import NotFoundPage from 'pages/not-found-page';
 import { AUTH_LOCAL_STORAGE } from 'utils/constants';
 import { TUserAuthBody, TUserRegisterBody } from 'types/api-types';
 import AppRouter from 'components/app-router';
+import api from 'utils/api';
+import { fetchRefreshTokenSupabase } from 'storage/asyncActions/refresh-token';
+import { User } from '@supabase/supabase-js';
 const { Footer } = Layout;
 
 export type TRoutes = {
@@ -32,8 +35,9 @@ export function App() {
     const initialPath = location.state?.initialPath;
     const navigate = useNavigate();
 
-    const token = getLocalData(AUTH_LOCAL_STORAGE)?.access_token;
-    const userFromLS = getLocalData(AUTH_LOCAL_STORAGE)?.user;
+    const token:string = getLocalData(AUTH_LOCAL_STORAGE)?.access_token;
+    const refreshToken:string = getLocalData(AUTH_LOCAL_STORAGE)?.refresh_token;
+    const userFromLS:User = getLocalData(AUTH_LOCAL_STORAGE)?.user;
 
     const getQuestions = () => {
 
@@ -48,9 +52,11 @@ export function App() {
         }
     }
 
+
+
     useEffect(() => {
         getUserFromLS();
-        getQuestions();
+        getQuestions();        
     }, [token, dispatch])
 
     //закрытие модального окна ведет на страницу открытия модального окна или на главную
@@ -59,7 +65,6 @@ export function App() {
     }
 
     const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
-        //navigate('/login')
         dispatch(fetchRegisterUser(dataForm))
     }
     const cbSubmitFormLogin: SubmitHandler<TUserAuthBody> = (dataForm) => {

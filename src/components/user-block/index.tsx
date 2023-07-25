@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { fetchUserLogout } from 'storage/asyncActions/user-slice';
 import { useMediaQueries } from 'hooks/useMediaQuery';
 
+
 const UserBlock = () => {
 
     const user = useAppSelector(state => state.user.data);
@@ -15,7 +16,7 @@ const UserBlock = () => {
     const { sm } = useMediaQueries();
 
     const logoutFn = () => {
-        dispatch(fetchUserLogout())
+        dispatch(fetchUserLogout());        
     }
 
     return (

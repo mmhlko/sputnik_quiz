@@ -9,7 +9,7 @@ export function getQuestionsAction(data: TQuizQuestion[]):TQuizDataAction {
     }
 }
 
-export function quizError(error: any): TQuizDataError{
+export function quizError(error: string): TQuizDataError{
     return {
         type: QUIZ_ERROR,
         payload: error        
