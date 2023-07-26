@@ -17,10 +17,8 @@ export type TAuthResponse = {
 
 export class Api {
 
-
     private baseUrl;
     private headers;
-
 
     constructor({ baseUrl, headers }: TApiConfig) {
         this.baseUrl = baseUrl;
