@@ -1,68 +1,48 @@
 import s from './styles.module.scss';
 import cn from 'classnames';
 import useCheckbox from 'hooks/useCheckbox';
-import { useAppDispatch } from 'storage/hook-types';
-import { useEffect, useState } from 'react';
-import { decrementAction, incrementAction } from 'storage/actions/quizGame-actions';
+import { useAppDispatch, useAppSelector } from 'storage/hook-types';
+import { answerAction } from 'storage/actions/quizGame-actions';
 import { Checkbox, Typography, Card } from 'antd';
 import { TQuizQuestion } from 'types/reducers';
 const { Title, Text } = Typography;
 
 type TQuestionProps = {
     question: TQuizQuestion,
-    isDisable: boolean
+    isDisable: boolean,
+    id: number
 }
 
-const Question = ({ question, isDisable }: TQuestionProps) => {
-    
-    const dispatch = useAppDispatch();
-    const [activeCheckbox, setActiveCheckbox] = useState<number | null>(null);
-    const { title, variants, correctAnswer } = question;
-    const { value, onChange} = useCheckbox(null);
+const Question = ({ question, isDisable, id }: TQuestionProps) => {
 
-    const getCorrectAnswerFn = () => {
-        //логика определения правильного ответа
-        if (activeCheckbox) {
-            if (value === correctAnswer) {
-                if (activeCheckbox === correctAnswer) {
-                    return
-                } else {
-                    dispatch(incrementAction(1))
-                }
-            } else {
-                if (activeCheckbox !== correctAnswer) {
-                    return
-                } else {
-                    dispatch(decrementAction(1))
-                }
-            }
-        } else {
-            if (value === correctAnswer) {
-                dispatch(incrementAction(1))
-            } else {
-                return
-            }
+    const dispatch = useAppDispatch();
+    const { title, variants, correctAnswer } = question;
+    const { value, onChange } = useCheckbox(null);
+
+    const answer = useAppSelector(state => state.result.answers)
+
+    const handleClickCheckbox = (answerNumber: number) => {
+
+        if (answerNumber !== value) {
+            dispatch(answerAction({ [id]: [answerNumber] }))
         }
     }
-    
-    useEffect(() => {
 
-        setActiveCheckbox(value);  
-        getCorrectAnswerFn()
-        
-    }, [value])
-    
     return (
 
-        <Card title={<Title style={{whiteSpace: 'pre-wrap'}} level={3}>{title}</Title>} className={s.wrapper}>
+        <Card title={<Title style={{ whiteSpace: 'pre-wrap' }} level={3}>{title}</Title>} className={s.wrapper}>
             <ul className={s.variants}>
-                {variants.map((variant, index) => (
-                    <li key={index} className={s.variant}>
-                        <Checkbox value={index + 1} disabled={isDisable} onChange={onChange} checked={index + 1 === activeCheckbox}>
-                            <Text className={cn({ [s['colorGreen']]: isDisable && index + 1 === correctAnswer }, { [s['colorRed']]: isDisable && index + 1 !== correctAnswer })}>{variant}</Text>
-                        </Checkbox>
-                    </li>
-                ))}
+                {variants.map((variant, index) => {
+                    const answerNumber = index + 1;
+                    return (
+                        <li key={index} className={s.variant}>
+                            <Checkbox onClick={() => handleClickCheckbox(answerNumber)} value={answerNumber} disabled={isDisable} onChange={onChange} checked={answerNumber ===  /* activeCheckbox */ (answer[id] && answer[id][0])}>
+                                <Text className={cn({ [s['colorGreen']]: isDisable && answerNumber === correctAnswer }, { [s['colorRed']]: isDisable && answerNumber !== correctAnswer })}>{variant}</Text>
+                            </Checkbox>
+                        </li>
+                    )
+                }
+                )}
             </ul>
         </Card>
 

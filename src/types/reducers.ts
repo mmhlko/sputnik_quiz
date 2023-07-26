@@ -18,8 +18,15 @@ export type TQuizDataState = {
 
 //quizGameReducer
 
+
+
+export type TAnswers = {
+    [id: string]: number[];
+}
+
 export type TResultState = {    
     score: number,
+    answers: TAnswers,
     showResult: boolean,  
 }
 

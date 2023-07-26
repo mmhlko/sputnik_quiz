@@ -2,9 +2,9 @@ import Question from "components/question"
 import s from "./styles.module.scss"
 import { useAppDispatch, useAppSelector } from "storage/hook-types";
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { showResultAction } from "storage/actions/quizGame-actions";
+import { countingAction, showResultAction } from "storage/actions/quizGame-actions";
 import { Pagination } from 'antd';
-import { TQuizQuestion } from "types/reducers";
+import { TAnswers, TQuizQuestion } from "types/reducers";
 
 type TQuestionListProps = {
     questions: TQuizQuestion[],
@@ -20,11 +20,26 @@ const QuestionList = ({ questions, totalQuestions }: TQuestionListProps) => {
 
     const PAGE_SIZE = 5;
     const endItem = startItem + PAGE_SIZE;
-    const isPaginated = totalQuestions / PAGE_SIZE > 1;    
+    const isPaginated = totalQuestions / PAGE_SIZE > 1;
+    const answers = useAppSelector(state => state.result.answers);   
+    
+    const getQuizScore = (answers:TAnswers, questions:TQuizQuestion[]) => {
+        let quizScore = 0;
+        questions.forEach((question) => {            
+            if(answers[question.id]) {
+                if (question.correctAnswer === answers[question.id][0]) {
+                    quizScore ++;
+                }
+            }       
+        })      
+        
+        dispatch(countingAction(quizScore))
+    }
 
     function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
         // Prevent the browser from reloading the page
         e.preventDefault();
+        getQuizScore(answers, questions)
         dispatch(showResultAction());
     }
 
@@ -46,7 +61,7 @@ const QuestionList = ({ questions, totalQuestions }: TQuestionListProps) => {
         <>
             <form className={s.questions} onSubmit={handleSubmit} id="quiz-form">
                 {questions.slice(startItem, endItem).map((question) => (
-                    <Question key={question.id} question={question} isDisable={isDisable} />
+                    <Question key={question.id} question={question} isDisable={isDisable} id={question.id}/>
                 ))}
             </form>
             {isPaginated &&

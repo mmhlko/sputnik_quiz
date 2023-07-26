@@ -2,9 +2,9 @@
 export const IS_LOADING = 'IS_LOADING'
 
 //quiz game actions
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
 export const RESET_GAME = 'RESET_GAME'
+export const ANSWER_INITIALIZE = 'ANSWER_INITIALIZE';
+export const COUNTING = 'COUNTING';
 
 export const SHOW_RESULT = 'SHOW_RESULT';
 export const QUIZ_RESET = 'QUIZ_RESET';

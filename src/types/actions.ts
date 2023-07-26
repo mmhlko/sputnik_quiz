@@ -1,6 +1,6 @@
 import { User } from "@supabase/supabase-js";
-import { TQuizQuestion } from "./reducers";
-import { DECREMENT, GET_QUESTIONS, INCREMENT, IS_LOADING, QUIZ_ERROR, RESET_GAME, SHOW_RESULT, USER_AUTH_CHECK, USER_REFRESHTOKEN, USER_ERROR, USER_LOGOUT, USER_REGISTER } from "storage/action-types";
+import { TAnswers, TQuizQuestion } from "./reducers";
+import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR, RESET_GAME, SHOW_RESULT, USER_AUTH_CHECK, USER_REFRESHTOKEN, USER_ERROR, USER_LOGOUT, USER_REGISTER, ANSWER_INITIALIZE, COUNTING } from "storage/action-types";
 
 //commons
 
@@ -26,25 +26,25 @@ export type TQuizDataError = {
     payload: string
 }
 
-
-
 //quiz-game
 
-export type TQuizGameActions = TQuizIncrementAction | TQuizDecrementAction | TQuizResultAction | TQuizResetAction
+export type TQuizGameActions = TQuizResultAction | TQuizResetAction | TQuizAnswerAction | TQuizCountingAction
 
-export type TQuizIncrementAction = {
-    type: typeof INCREMENT,
-    payload: number
-}
-export type TQuizDecrementAction = {
-    type: typeof DECREMENT,
-    payload: number
-}
 export type TQuizResultAction = {
     type: typeof SHOW_RESULT,
 }
 export type TQuizResetAction = {
     type: typeof RESET_GAME,
+}
+
+export type TQuizAnswerAction = {
+    type: typeof ANSWER_INITIALIZE,
+    payload: TAnswers
+}
+
+export type TQuizCountingAction = {
+    type: typeof COUNTING,
+    payload: number
 }
 
 //user
