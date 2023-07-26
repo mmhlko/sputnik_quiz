@@ -4,7 +4,7 @@ import supabase from "../supabase";
 import api from "../utils/api";
 import { TUserState } from "types/reducers";
 
-jest.mock('../../supabase')
+jest.mock('../supabase')
 
 describe('user auth testing', () => {
     test('Redux userLogout action testing', () => {

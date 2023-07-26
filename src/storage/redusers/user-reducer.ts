@@ -1,7 +1,7 @@
 import { TUserActions } from "types/actions";
 import { IS_USER_LOADING, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REFRESHTOKEN, USER_REGISTER } from "../action-types";
 import { TUserState } from "types/reducers";
-import { USER_AUTHENTICATION } from "utils/constants";
+import { USER_AUTHENTICATION } from "../../utils/constants";
 
 const initialState: TUserState = {
     isAuthChecked: false,
