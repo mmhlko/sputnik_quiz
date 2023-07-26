@@ -14,7 +14,7 @@ interface ILoginFormProps {
 
 const LoginForm = ({onSubmit, onNavigate}: ILoginFormProps) => {
 
-    const {register, handleSubmit, formState: {errors}} = useForm<any>({mode: 'onBlur'});
+    const {register, handleSubmit, formState: {errors}} = useForm({mode: 'onBlur'});
     const emailRegister = register('email', formValidations.email);
     const passwordRegister = register('password', formValidations.password);
     const { error, loading } = useAppSelector(state => state.user);

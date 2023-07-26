@@ -18,7 +18,7 @@ interface IRegisterFormProps {
 
 const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<any>({ mode: 'onBlur' });
+    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onBlur' });
     const nameRegister = register('name', formValidations.name);
     const emailRegister = register('email', formValidations.email);
     const passwordRegister = register('password', formValidations.password);

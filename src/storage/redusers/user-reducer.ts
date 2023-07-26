@@ -1,5 +1,5 @@
 import { TUserActions } from "types/actions";
-import { IS_LOADING, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REFRESHTOKEN, USER_REGISTER } from "../action-types";
+import { IS_USER_LOADING, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REFRESHTOKEN, USER_REGISTER } from "../action-types";
 import { TUserState } from "types/reducers";
 import { USER_AUTHENTICATION } from "utils/constants";
 
@@ -28,7 +28,7 @@ export function userReducer(state = initialState, action:TUserActions) {
             return {...state, isAuthChecked: true}
         case USER_ERROR:
             return {...state, error: action.payload}
-        case IS_LOADING:
+        case IS_USER_LOADING:
             return {...state, loading: action.payload}
         default:
             return state

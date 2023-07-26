@@ -1,6 +1,6 @@
 import { User } from "@supabase/supabase-js";
-import { IS_LOADING, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REFRESHTOKEN, USER_REGISTER } from "../action-types";
-import { TDataLoading, TUserAuthCheckAction, TUserErrorAction, TUserLocalStorageAction, TUserLoginAction, TUserLogoutAction, TUserRefreshTokenAction, TUserRegisterAction } from "types/actions";
+import { IS_USER_LOADING, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REFRESHTOKEN, USER_REGISTER } from "../action-types";
+import { TUserAuthCheckAction, TUserErrorAction, TUserLoading, TUserLocalStorageAction, TUserLoginAction, TUserLogoutAction, TUserRefreshTokenAction, TUserRegisterAction } from "types/actions";
 
 export function registerAction(data:string):TUserRegisterAction {
     return {
@@ -49,9 +49,9 @@ export function userError(error: string): TUserErrorAction{
     }
 }
 
-export function isUserLoading(isLoading: boolean): TDataLoading{
+export function isUserLoading(isLoading: boolean): TUserLoading{
     return {
-        type: IS_LOADING,
+        type: IS_USER_LOADING,
         payload: isLoading        
     }
 }

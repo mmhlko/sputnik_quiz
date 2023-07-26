@@ -1,6 +1,6 @@
 import { User } from "@supabase/supabase-js";
 import { TAnswers, TQuizQuestion } from "./reducers";
-import { GET_QUESTIONS, IS_LOADING, QUIZ_ERROR, RESET_GAME, SHOW_RESULT, USER_AUTH_CHECK, USER_REFRESHTOKEN, USER_ERROR, USER_LOGOUT, USER_REGISTER, ANSWER_INITIALIZE, COUNTING } from "storage/action-types";
+import { GET_QUESTIONS, QUIZ_ERROR, RESET_GAME, SHOW_RESULT, USER_AUTH_CHECK, USER_REFRESHTOKEN, USER_ERROR, USER_LOGOUT, USER_REGISTER, ANSWER_INITIALIZE, COUNTING, IS_QUESTIONS_LOADING, IS_USER_LOADING } from "storage/action-types";
 
 //commons
 
@@ -8,13 +8,10 @@ export type TEmptyAction = {
     type: string
 }
 
-export type TDataLoading = {
-    type: typeof IS_LOADING,
-    payload: boolean
-}
+
 
 //quiz-data
-export type TQuizActions = TQuizDataAction | TDataLoading | TQuizDataError;
+export type TQuizActions = TQuizDataAction | TQuizDataLoading | TQuizDataError;
 
 export type TQuizDataAction = {
     type: typeof GET_QUESTIONS,
@@ -24,6 +21,11 @@ export type TQuizDataAction = {
 export type TQuizDataError = {
     type: typeof QUIZ_ERROR,
     payload: string
+}
+
+export type TQuizDataLoading = {
+    type: typeof IS_QUESTIONS_LOADING,
+    payload: boolean
 }
 
 //quiz-game
@@ -49,8 +51,8 @@ export type TQuizCountingAction = {
 
 //user
 
-export type TUserActions = TUserRegisterAction | TUserLoginAction | TUserLocalStorageAction | TUserErrorAction | TUserLogoutAction | TDataLoading | TUserRefreshTokenAction | TUserAuthCheckAction
-export type TLogoutActions = TDataLoading | TQuizResetAction | TUserLogoutAction
+export type TUserActions = TUserRegisterAction | TUserLoginAction | TUserLocalStorageAction | TUserErrorAction | TUserLogoutAction |  TUserRefreshTokenAction | TUserAuthCheckAction | TUserLoading
+export type TLogoutActions = TUserLoading | TQuizResetAction | TUserLogoutAction
 
 export type TUserRegisterAction = {
     type: typeof USER_REGISTER,
@@ -85,3 +87,7 @@ export type TUserErrorAction = {
     payload: string
 }
 
+export type TUserLoading = {
+    type: typeof IS_USER_LOADING,
+    payload: boolean
+}
