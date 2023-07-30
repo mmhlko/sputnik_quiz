@@ -26,3 +26,4 @@
 
 Сервер для приложения: https://github.com/mmhlko/json-server-auth
 
+### Задание 3. Квиз. Оптимизация
