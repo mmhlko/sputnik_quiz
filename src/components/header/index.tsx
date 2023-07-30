@@ -3,8 +3,8 @@ import s from './styles.module.scss'
 import UserBlock from 'components/user-block';
 import cn from 'classnames';
 
-const Header = () => {
-
+const Header = () => {   
+    
     return (
 
         <header className={s.wrapper}>

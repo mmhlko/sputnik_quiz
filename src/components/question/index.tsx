@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from 'storage/hook-types';
 import { answerAction } from 'storage/actions/quizGame-actions';
 import { Checkbox, Typography, Card } from 'antd';
 import { TQuizQuestion } from 'types/reducers';
+import { answersSelector } from 'storage/selectors';
 const { Title, Text } = Typography;
 
 type TQuestionProps = {
@@ -18,8 +19,8 @@ const Question = ({ question, isDisable, id }: TQuestionProps) => {
     const dispatch = useAppDispatch();
     const { title, variants, correctAnswer } = question;
     const { value, onChange } = useCheckbox(null);
-
-    const answer = useAppSelector(state => state.result.answers)
+    
+    const answer = useAppSelector(answersSelector)
 
     const handleClickCheckbox = (answerNumber: number) => {
 
@@ -27,7 +28,7 @@ const Question = ({ question, isDisable, id }: TQuestionProps) => {
             dispatch(answerAction({ [id]: [answerNumber] }))
         }
     }
-
+    
     return (
 
         <Card title={<Title style={{ whiteSpace: 'pre-wrap' }} level={3}>{title}</Title>} className={s.wrapper}>

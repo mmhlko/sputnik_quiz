@@ -18,8 +18,6 @@ export type TQuizDataState = {
 
 //quizGameReducer
 
-
-
 export type TAnswers = {
     [id: string]: number[];
 }

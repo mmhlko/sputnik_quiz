@@ -15,7 +15,7 @@ import HomePage from 'pages/home-page';
 import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
 import NotFoundPage from 'pages/not-found-page';
-import { AUTH_LOCAL_STORAGE } from 'utils/constants';
+import { AUTH_LOCAL_STORAGE, homePAth, loginPAth, quizPAth, registerPAth } from 'utils/constants';
 import { TUserAuthBody, TUserRegisterBody } from 'types/api-types';
 import AppRouter from 'components/app-router';
 import { User } from '@supabase/supabase-js';
@@ -37,7 +37,6 @@ export function App() {
     const userFromLS:User = getLocalData(AUTH_LOCAL_STORAGE)?.user;
 
     const getQuestions = () => {
-
         if (token) {
             dispatch(fetchGetQuestionsSupabase())
         }
@@ -56,7 +55,7 @@ export function App() {
 
     //закрытие модального окна ведет на страницу открытия модального окна или на главную
     const onCloseRoutingModal = () => {
-        navigate(initialPath || '/', { replace: true }) //вторым полем удаляем из истории переход обратно
+        navigate(initialPath || homePAth, { replace: true }) //вторым полем удаляем из истории переход обратно
     }
 
     const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
@@ -67,7 +66,6 @@ export function App() {
     }
     const handleClickNavigate = (to: string) => {
         navigate(to)
-
     }
     //добавляем подложку под модалку backgroundLocation и удаляем переход из истории
     const handleClickNavigateModal = (to: string) => {
@@ -75,16 +73,16 @@ export function App() {
     }
 
     const mainRoutes: TRoutes[] = [
-        { path: '/', element: <HomePage /> },
-        { path: '/quiz', element: <ProtectedRoute><QuizPage /></ProtectedRoute> },
-        { path: '/login', element: <ProtectedRoute onlyOnAuth><LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigate} /></ProtectedRoute> },
-        { path: '/register', element: <ProtectedRoute onlyOnAuth><RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigate} /></ProtectedRoute> },
+        { path: homePAth, element: <HomePage /> },
+        { path: quizPAth, element: <ProtectedRoute><QuizPage /></ProtectedRoute> },
+        { path: loginPAth, element: <ProtectedRoute onlyOnAuth><LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigate} /></ProtectedRoute> },
+        { path: registerPAth, element: <ProtectedRoute onlyOnAuth><RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigate} /></ProtectedRoute> },
         { path: '*', element: <NotFoundPage /> },
     ]
 
     const modalRoutes: TRoutes[] = [
         {
-            path: '/register',
+            path: registerPAth,
             element: <ProtectedRoute onlyOnAuth>
                 <Modal isOpen={true} onClose={onCloseRoutingModal} >
                     <RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigateModal} />
@@ -92,7 +90,7 @@ export function App() {
             </ProtectedRoute>
         },
         {
-            path: '/login',
+            path: loginPAth,
             element: <ProtectedRoute onlyOnAuth>
                 <Modal isOpen={true} onClose={onCloseRoutingModal} >
                     <LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigateModal} />

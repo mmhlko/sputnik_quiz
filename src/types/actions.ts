@@ -1,6 +1,6 @@
 import { User } from "@supabase/supabase-js";
 import { TAnswers, TQuizQuestion } from "./reducers";
-import { GET_QUESTIONS, QUIZ_ERROR, RESET_GAME, SHOW_RESULT, USER_AUTH_CHECK, USER_REFRESHTOKEN, USER_ERROR, USER_LOGOUT, USER_REGISTER, ANSWER_INITIALIZE, COUNTING, IS_QUESTIONS_LOADING, IS_USER_LOADING } from "storage/action-types";
+import { GET_QUESTIONS, QUIZ_ERROR, RESET_GAME, SHOW_RESULT, USER_AUTH_CHECK, USER_REFRESHTOKEN, USER_ERROR, USER_LOGOUT, USER_REGISTER, ANSWER_INITIALIZE, COUNTING, IS_QUESTIONS_LOADING, IS_USER_LOADING, USER_LOGIN, USER_LOCAL_STORAGE } from "storage/action-types";
 
 //commons
 
@@ -60,7 +60,7 @@ export type TUserRegisterAction = {
 }
 
 export type TUserLoginAction = {
-    type: string,
+    type: typeof USER_LOGIN,
     payload: User 
 }
 
@@ -70,7 +70,7 @@ export type TUserRefreshTokenAction = {
 }
 
 export type TUserLocalStorageAction = {
-    type: string,
+    type: typeof USER_LOCAL_STORAGE,
     payload: User 
 }
 

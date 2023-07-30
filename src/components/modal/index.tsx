@@ -5,7 +5,7 @@ import { useRef, ReactNode } from 'react'
 //onClick={() => e.stopPropagation()} запрещает обработку события при погружении(погружение, захват, всплытие)
 //onMouseDown={onClose} для закрытия модального окна только когда нажимаешь во внешнюю область, а не кликаешь (нажал+отжал)
 
-interface IModalProps {
+type IModalProps = {
     children: ReactNode,
     isOpen: boolean,
     onClose: () => void

@@ -1,10 +1,11 @@
 import Quiz from "components/quiz";
 import ErrorComponent from "components/error-component";
 import { useAppSelector } from "storage/hook-types";
+import { questionsSelector } from "storage/selectors";
 
 function QuizPage() {
 
-    const { error, loading, totalQuestions } = useAppSelector(state => state.questions);
+    const { error, loading, totalQuestions } = useAppSelector(questionsSelector);
 
     return (
         <>

@@ -26,13 +26,11 @@ export class Api {
     }
 
     private onResponce<T>(res: Response): Promise<T> { //метод обрабатывает запросы с сервера при получении ответа с него
-
         if (!res.ok) {
             throw new Error(`${res.status} - ${res.statusText}`);
         } else {
             return res.json()
         }
-
     }
 
     userRegister = async (bodyData: TUserRegisterBody) => {
@@ -47,10 +45,7 @@ export class Api {
     }
 
     userLogin = async (bodyData: TUserAuthBody) => {
-
-        const { data, error } = await supabase
-            .auth.signInWithPassword(bodyData)
-
+        const { data, error } = await supabase.auth.signInWithPassword(bodyData)
         if (error) {
             throw new Error(error.message.toString())
         }
@@ -91,7 +86,6 @@ const api = new Api({
     headers: {
         apikey: process.env.REACT_APP_ANON_KEY
     }
-
 })
 export default api;
 

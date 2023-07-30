@@ -2,6 +2,7 @@ import { Location, Navigate, useLocation } from "react-router-dom";
 import { ReactNode } from "react";
 import { useAppSelector } from "storage/hook-types";
 import { User } from "@supabase/supabase-js";
+import { homePAth, loginPAth } from "utils/constants";
 
 interface IProtectedRouteProps {
   onlyOnAuth?: boolean;
@@ -17,7 +18,7 @@ const protectionConditions = ({onlyOnAuth, user, location, children}:IProtection
 
   if (onlyOnAuth && user) {
     //если это компонент авторизации => редирект на главную или куда заходили по прямому url    
-    const from = location?.state?.from || { pathname: '/' };
+    const from = location?.state?.from || { pathname: homePAth };
     const { backgroundLocation } = location?.state?.from?.state || { backgroundLocation: null }
     return <Navigate replace to={from} state={{ backgroundLocation }} />
   }
@@ -25,7 +26,7 @@ const protectionConditions = ({onlyOnAuth, user, location, children}:IProtection
   if (!onlyOnAuth && !user) {
     //если компонент защищен то редирект на логин
     return (
-      <Navigate replace to={{ pathname: '/login' }} state={{ from: location }} />
+      <Navigate replace to={{ pathname: loginPAth }} state={{ from: location }} />
     )
   }
 

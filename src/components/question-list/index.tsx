@@ -5,6 +5,7 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import { countingAction, showResultAction } from "storage/actions/quizGame-actions";
 import { Pagination } from 'antd';
 import { TAnswers, TQuizQuestion } from "types/reducers";
+import { answersSelector, resultSelector } from "storage/selectors";
 
 type TQuestionListProps = {
     questions: TQuizQuestion[],
@@ -15,13 +16,14 @@ type TQuestionListProps = {
 const QuestionList = ({ questions, totalQuestions }: TQuestionListProps) => {
     const dispatch = useAppDispatch();
     const [page, setPage] = useState(1);
-    const isDisable = useAppSelector(state => state.result.showResult)
+    const answers = useAppSelector(answersSelector);  
+    const {showResult:isDisable} = useAppSelector(resultSelector)
     const [startItem, setStartItem] = useState(0);
 
     const PAGE_SIZE = 5;
     const endItem = startItem + PAGE_SIZE;
     const isPaginated = totalQuestions / PAGE_SIZE > 1;
-    const answers = useAppSelector(state => state.result.answers);   
+     
     
     const getQuizScore = (answers:TAnswers, questions:TQuizQuestion[]) => {
         let quizScore = 0;
@@ -44,7 +46,6 @@ const QuestionList = ({ questions, totalQuestions }: TQuestionListProps) => {
     }
 
     function handleClickPage(page: number) {
-
         setPage(page);
         if (page === 1) {
             setStartItem(0)

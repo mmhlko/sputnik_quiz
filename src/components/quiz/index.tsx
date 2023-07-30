@@ -10,20 +10,22 @@ import { resetAction, showResultAction } from 'storage/actions/quizGame-actions'
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { questionsSelector, resultSelector } from 'storage/selectors';
+import { SET_TIME, homePAth } from 'utils/constants';
 
 const { Countdown } = Statistic;
 const { Title } = Typography;
 
 const Quiz = () => {
 
-  const { score, showResult } = useAppSelector(state => state.result);
-  const { data: questions, totalQuestions, loading } = useAppSelector(state => state.questions);
+  const { score, showResult } = useAppSelector(resultSelector);
+  const { data: questions, totalQuestions, loading } = useAppSelector(questionsSelector);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation()
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();  
 
   const setDeadline = useMemo(() => {
-    return !showResult ? Date.now() + 60000 : 0;
+    return !showResult ? Date.now() + SET_TIME : 0;
   }, [showResult])
 
   const onFinish: CountdownProps['onFinish'] = () => {
@@ -54,7 +56,7 @@ const Quiz = () => {
           {showResult && <QuizResult result={score} total={totalQuestions} />}
           <div className={s.buttons}>
             <Button disabled={showResult} form='quiz-form' type="primary" htmlType='submit' block={false}>Узнать результат</Button>
-            <Link to='/'><Button type='primary'>Начать сначала</Button></Link>
+            <Link to={homePAth}><Button type='primary'>Начать сначала</Button></Link>
           </div>
         </div>
         : <Spiner />
@@ -63,7 +65,7 @@ const Quiz = () => {
         <div className={s.modalContent}>
           <Title level={2}>Время вышло</Title>
           {showResult && <QuizResult result={score} total={totalQuestions} />}
-          <Link to='/'><Button type='primary'>Начать сначала</Button></Link>
+          <Link to={homePAth}><Button type='primary'>Начать сначала</Button></Link>
         </div>
       </Modal>
     </>
