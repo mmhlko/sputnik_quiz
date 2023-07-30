@@ -23,7 +23,6 @@ const Question = ({ question, isDisable, id }: TQuestionProps) => {
     const answer = useAppSelector(answersSelector)
 
     const handleClickCheckbox = (answerNumber: number) => {
-
         if (answerNumber !== value) {
             dispatch(answerAction({ [id]: [answerNumber] }))
         }

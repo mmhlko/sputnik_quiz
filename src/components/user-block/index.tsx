@@ -24,12 +24,10 @@ const UserBlock = () => {
     return (
         <div className={s.userBlock}>
             {user?.email && <span><UserOutlined className={s.userIcon} />{sm && user.email}</span>}
-
             {!user
                 ? <Link replace to={loginPAth} state={{ backgroundLocation: location, initialPath: location.pathname }}><Button type='primary'>Войти</Button></Link>
                 : <Link to={homePAth}><Button type='primary' onClick={logoutFn}>Выйти</Button></Link>
             }
-
         </div>
     );
 }
