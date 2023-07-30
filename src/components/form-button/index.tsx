@@ -1,22 +1,9 @@
-import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import s from './styles.module.scss';
 import classNames from 'classnames';
-
-export enum FormButtonSize {
-    'full'= 'full',
-    'minContent'= 'minContent',   
-}
-
-interface IFormButtonProps extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-    children: ReactNode;
-    type: "button" | "submit" | "reset" | undefined;
-    color: 'primary' | 'secondary';
-    extraClass?: string;
-    size?:  FormButtonSize;
-}
+import { FormButtonSize, IFormButtonProps } from './formButtonMeta';
 
 
-function FormButton({children, color, size=FormButtonSize.full ,extraClass, ...props}: IFormButtonProps) {
+const FormButton = ({children, color, size=FormButtonSize.full ,extraClass, ...props}: IFormButtonProps) => {
     return ( 
         <button 
         {...props} 

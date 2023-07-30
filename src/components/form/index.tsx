@@ -1,16 +1,16 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, SyntheticEvent } from 'react';
 import s from './styles.module.scss'
 import classNames from 'classnames';
 
 interface IFormProps {
-    handleForm: (data:any) => void, 
+    handleForm: (e: SyntheticEvent<HTMLFormElement>) => void, 
     children?: ReactNode, 
     title?: string
     align?: 'left' | 'center' | 'rigth'
 }
 
 
-function Form({handleForm, children, title, align='center'}: IFormProps) {
+const Form = ({handleForm, children, title, align='center'}: IFormProps) => {
    
     return ( 
         <div className={s.container}>

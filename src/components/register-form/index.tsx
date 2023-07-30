@@ -1,84 +1,68 @@
-
 import { useForm } from 'react-hook-form';
 import Form from '../form';
 import FormInput from '../form-input';
 import FormButton from '../form-button';
-import { TUser, TUserRegisterBody } from 'utils/api';
-/* import { UserRegisterBodyDto } from '../../utils/api'; */
+import { errorMessage, formValidations } from 'utils/validations';
+import { TUserRegisterBody } from 'types/api-types';
+import ErrorComponent from 'components/error-component';
+import { useAppSelector } from 'storage/hook-types';
+import Spiner from 'components/spiner';
+import { USER_AUTHENTICATION, loginPAth } from 'utils/constants';
+import { Typography } from 'antd';
+import { userStateSelector } from 'storage/selectors';
+const { Text, Title } = Typography;
 
-
-
-interface IRegisterFormProps {
+type IRegisterFormProps = {
     onSubmit: (dataform: TUserRegisterBody) => void;
     onNavigate: (value: string) => void;
 }
 
-function RegisterForm({ onSubmit, onNavigate }: IRegisterFormProps) {
+const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<any>({ mode: 'onBlur' });
-
-    const nameRegister = register('name', {
-        required: {
-            value: false,
-            message: "Обязательное поле"
-        },
-        pattern: {
-            value: /^[A-Za-z]{3,}/,
-            message: "Имя должно быть не менее 3 букв"
-        }
-    })
-
-    const emailRegister = register('email', {
-        required: {
-            value: true,
-            message: "Обязательное поле"
-        },
-        pattern: {
-            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            message: "Email не соотвествует формату электронной почты"
-        }
-    })
-
-    const passwordRegister = register('password', {
-        required: {
-            value: true,
-            message: "Обязательное поле"
-        },
-        pattern: {
-            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            message: "Пароль должен содержать минимум восемь символов, одну букву латинского алфавита и одну цифру"
-        }
-    })
+    const { error, loading, authorization } = useAppSelector(userStateSelector);
+    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onBlur' });
+    const nameRegister = register('name', formValidations.name);
+    const emailRegister = register('email', formValidations.email);
+    const passwordRegister = register('password', formValidations.password);   
 
     return (
-            <Form title={'Регистрация'} handleForm={handleSubmit(onSubmit)}>
-                <FormInput
-                    {...nameRegister}
-                    id='username'
-                    type='text'
-                    placeholder='Имя'
-                />
-                {errors?.email && <p className='error-message'>{errors.email.message}</p>}
-                <FormInput
-                    {...emailRegister}
-                    id='email'
-                    type='email'
-                    placeholder='email'
-                />
-                {errors?.email && <p className='error-message'>{errors.email.message}</p>}
+        <Form title={'Регистрация'} handleForm={handleSubmit(onSubmit)}>
+            {authorization === USER_AUTHENTICATION
+                ? <>
+                    <Title level={3} type="success">Вы успешно зарегистрированы!</Title>
+                    <Text>Для входа в систему, необходимо подтвердить свой email</Text>
+                </>
+                : <>
+                    <FormInput
+                        {...nameRegister}
+                        id='username'
+                        type='text'
+                        placeholder='Имя'
+                    />
+                    {errorMessage('name', errors)}
+                    <FormInput
+                        {...emailRegister}
+                        id='email'
+                        type='email'
+                        placeholder='email'
+                    />
+                    {errorMessage('email', errors)}
 
-                <FormInput
-                    {...passwordRegister}
-                    id='password'
-                    type='password'
-                    placeholder='Пароль'
-                />
-                {errors?.password && <p className='error-message'>{errors.password.message}</p>}
-                <p className='info-text'>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</p>
-                <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
-                <FormButton onClick={() => onNavigate('/login')} type='button' color='secondary'>Войти</FormButton>
-            </Form>            
-
+                    <FormInput
+                        {...passwordRegister}
+                        id='password'
+                        type='password'
+                        placeholder='Пароль'
+                    />
+                    {errorMessage('password', errors)}
+                    {loading && <Spiner />}
+                    {error && <ErrorComponent title='Ошибка авторизации' subtitle={error as string} />}
+                    <p className='info-text'>Для регистрации нужно указать реальный email! Действует ограничение 4 регистрации за 1 час</p>
+                    <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
+                </>
+            }
+            <FormButton onClick={() => onNavigate(loginPAth)} type='button' color='secondary'>Войти</FormButton>
+        </Form>
     );
 }
 

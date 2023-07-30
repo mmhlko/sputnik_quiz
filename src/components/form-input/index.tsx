@@ -1,21 +1,16 @@
-import classNames from 'classnames'; 
+import classNames from 'classnames';
 import s from './styles.module.scss'
 import { forwardRef } from 'react';
 
+const FormInput = forwardRef<HTMLInputElement, any>(({ typeTag, ...props }, ref) => {
 
-//берет возможные пропсы для элемента инпута
-interface IFormInputProps extends React.HTMLProps<HTMLInputElement>{
-    typeTag: string;
-    
-}
-
-const FormInput = forwardRef<HTMLInputElement, any>(({typeTag, ...props}, ref) => {
-    return ( 
-        typeTag === 'textarea'
-            ? <textarea ref={ref} className={classNames(s.input, s.textarea)} {...props}/>
-            : <input ref={ref} className={s.input} {...props}/>
-
-     );
+    switch (typeTag) {
+        case 'textarea':
+            return <textarea ref={ref} className={classNames(s.input, s.textarea)} {...props} />
+        default:
+            return <input ref={ref} className={s.input} {...props} />;
+    }
 })
 
 export default FormInput;
+

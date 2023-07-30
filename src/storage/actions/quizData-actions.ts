@@ -1,10 +1,6 @@
-import { TQuizQuestion } from "storage/redusers/quizData-reducer";
-import { GET_QUESTIONS } from "storage/types";
-
-export type TQuizDataAction = {
-    type: string,
-    payload: TQuizQuestion[]
-}
+import { TQuizDataAction, TQuizDataError, TQuizDataLoading } from "types/actions";
+import { GET_QUESTIONS, IS_QUESTIONS_LOADING, QUIZ_ERROR } from "../action-types";
+import { TQuizQuestion } from "types/reducers";
 
 export function getQuestionsAction(data: TQuizQuestion[]):TQuizDataAction {
     return {
@@ -13,3 +9,16 @@ export function getQuestionsAction(data: TQuizQuestion[]):TQuizDataAction {
     }
 }
 
+export function quizError(error: string): TQuizDataError{
+    return {
+        type: QUIZ_ERROR,
+        payload: error        
+    }
+}
+
+export function isQuestionsLoading(isLoading: boolean): TQuizDataLoading{
+    return {
+        type: IS_QUESTIONS_LOADING,
+        payload: isLoading        
+    }
+}

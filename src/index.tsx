@@ -1,21 +1,21 @@
 import { App } from "components/app/App";
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client';
 import { Provider } from "react-redux";
 import store from 'storage/store'
 import 'index.scss'
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 
 window.ResizeObserver = undefined;
 
-const root = (
-    <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>
-)
+const Router = process.env.REACT_APP_GH_PAGES !== 'true' ? BrowserRouter : HashRouter;
 
-ReactDOM.render(
-    root,
-    document.getElementById('root')
+const root = createRoot(document.getElementById('root'));    
+
+
+root.render(
+    <Provider store={store}>
+        <Router>
+            <App />
+        </Router>
+    </Provider>
 );

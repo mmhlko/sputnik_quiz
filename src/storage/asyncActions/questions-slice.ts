@@ -1,16 +1,23 @@
-import { Dispatch } from "react"
-import { TQuizDataAction, getQuestionsAction } from "storage/actions/quizData-actions"
-import api, { TQuestionResponse } from "utils/api"
+import { getQuestionsAction, isQuestionsLoading, quizError } from "../../storage/actions/quizData-actions";
+import api from "../../utils/api";
+import { TQuizActions } from "types/actions";
+import { TQuestionResponse } from "types/api-types";
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "storage/redux-types";
 
+export const fetchGetQuestionsSupabase = ():ThunkAction<void, RootState, unknown, TQuizActions> => {
 
+    return (dispatch) => {
 
-export const fetchGetQuestions = (token:string):any => {
-    
-    return (dispatch:Dispatch<TQuizDataAction>) => {
-        api.getQuestions(token)
-            .then((questions:TQuestionResponse) => {
+        dispatch(isQuestionsLoading(true))
+
+        api.fetchQuestions()
+            .then((questions: TQuestionResponse) => {
                 dispatch(getQuestionsAction(questions))
             })
-            .catch(err => Error(err))
+            .catch(err => {
+                dispatch(quizError(err.toString()))
+            })
+            .finally(() => dispatch(isQuestionsLoading(false)))
     }
 }

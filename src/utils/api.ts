@@ -1,52 +1,24 @@
-export type TUser = {
-    email: string,
-    id: string,
-    name?: string
-}
-
-export type TUserResponce = {
-    email: string,
-    id: string,
-    name?: string
-}
-
-//тип данных при авторизации
-export type TUserAuthBody = {
-    email: string,
-    password: string,
-}
-
-export type TUserRegisterBody = {
-    email: string,
-    password: string,
-}
+import { TUserAuthBody, TUserRegisterBody } from "types/api-types";
+import supabase from "../supabase";
+import { User } from "@supabase/supabase-js";
 
 type TApiConfig = {
     baseUrl: string;
-    headers: any;
+    headers: any
 }
-//тип данных при получении ответа от сервера после авторизации
+
 export type TAuthResponse = {
-    user: TUser;
-    accessToken: string;
+    access_token: string,
+    expires_in: number,
+    refresh_token: string,
+    token_type: string,
+    user: User
 }
-
-//тип вопроса квиза
-export type TQuestion = {
-    title: string,
-    variants: string[],
-    correctAnswer: number,
-    id: number
-}
-
-//тип ответа от бд для списка вопросов
-export type TQuestionResponse = TQuestion[];
 
 export class Api {
 
     private baseUrl;
     private headers;
-
 
     constructor({ baseUrl, headers }: TApiConfig) {
         this.baseUrl = baseUrl;
@@ -54,60 +26,67 @@ export class Api {
     }
 
     private onResponce<T>(res: Response): Promise<T> { //метод обрабатывает запросы с сервера при получении ответа с него
-        return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
+        if (!res.ok) {
+            throw new Error(`${res.status} - ${res.statusText}`);
+        } else {
+            return res.json()
+        }
     }
 
-    register(bodyData: TUserRegisterBody) {
+    userRegister = async (bodyData: TUserRegisterBody) => {
 
-        return fetch(`${this.baseUrl}/register`, {
+        const { data, error } = await supabase
+            .auth.signUp(bodyData)
+
+        if (error) {
+            throw new Error(error.message.toString())
+        }
+        return data
+    }
+
+    userLogin = async (bodyData: TUserAuthBody) => {
+        const { data, error } = await supabase.auth.signInWithPassword(bodyData)
+        if (error) {
+            throw new Error(error.message.toString())
+        }
+        return data
+    }
+
+    userLogout = async () => {
+        await supabase.auth.signOut()
+    }
+
+    fetchQuestions = async () => {
+
+        const { data, error } = await supabase
+            .from('questions')
+            .select()
+        if (error || data.length === 0) {
+            const err = error.message || 'Нет данных'
+            throw new Error(err.toString())
+        }
+
+        return data
+    }
+
+    refreshToken(refresh_token: string) {
+        return fetch(`${this.baseUrl}/auth/v1/token?grant_type=refresh_token`, {
             method: 'POST',
-            headers: this.headers,
-            body: JSON.stringify(bodyData)
+            headers: { ...this.headers },
+            body: JSON.stringify({ refresh_token: refresh_token })
         })
             .then(this.onResponce<TAuthResponse>)
             .catch((err) => alert(err)
-            )
-    }
-
-    authorize(bodyData: TUserAuthBody) {
-
-        return fetch(`${this.baseUrl}/signin`, {
-            method: 'POST',
-            headers: this.headers,
-            body: JSON.stringify(bodyData)
-        })
-            .then(this.onResponce<TAuthResponse>)
-            .catch((err) => alert(err)
-            )
-    }
-
-    refreshToken(token: string) {
-        return fetch(`${this.baseUrl}/users/me`, {
-            headers: { ...this.headers, authorization: `Bearer ${token}` }
-        })
-            .then(this.onResponce<TAuthResponse>)
-            .catch((err) => console.log(err)
-            )
-    }
-
-    getQuestions(token: string) {
-        return fetch(`${this.baseUrl}/questions`, {
-            headers: { ...this.headers, authorization: `Bearer ${token}` }
-        })
-            .then(this.onResponce<TQuestionResponse>)
-            .catch((err) => console.log(err)
             )
     }
 }
 
-
 const api = new Api({
-    baseUrl: 'http://localhost:4000',
+    baseUrl: process.env.REACT_APP_SUBABASE_URL,
     headers: {
-        'content-type': 'application/json',
+        apikey: process.env.REACT_APP_ANON_KEY
     }
-
 })
-
-
 export default api;
+
+

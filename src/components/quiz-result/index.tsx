@@ -6,7 +6,7 @@ export type TQuizResultProps = {
     total: number
 }
 
-function QuizResult({ result, total }: TQuizResultProps) {
+const QuizResult = ({ result, total }: TQuizResultProps) => {
 
     const stars = result / total * 5
 

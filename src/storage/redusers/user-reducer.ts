@@ -1,39 +1,35 @@
-import { TRegisterAction } from "storage/actions/user-actions"
-import { USER_AUTH_CHECK, USER_CHECKTOKEN, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "storage/types"
-import { setLocalData } from "utils/local-storage"
-
-export type TUserDTO = {
-    email: string,
-    name: string,
-}
-
-export type TUserState = {
-    isAuthChecked: boolean,
-    data: TUserDTO | null
-}
+import { TUserActions } from "types/actions";
+import { IS_USER_LOADING, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REFRESHTOKEN, USER_REGISTER } from "../action-types";
+import { TUserState } from "types/reducers";
+import { USER_AUTHENTICATION } from "../../utils/constants";
 
 const initialState: TUserState = {
     isAuthChecked: false,
-    data: null
+    data: null,
+    loading: false,
+    error: null,
+    authorization: ''
 }
 
-export function userReducer(state = initialState, action:TRegisterAction) {
+export function userReducer(state = initialState, action:TUserActions) {
 
     switch (action.type) {
-        case USER_REGISTER:
-            return {...state, data: action.payload}
+        case USER_REGISTER: 
+            return {...state, authorization: action.payload}
         case USER_LOGIN:            
-            return {...state, data: action.payload, isAuthChecked:true}
+            return {...state, data: action.payload, isAuthChecked:true, error: null, authorization: USER_AUTHENTICATION}
         case USER_LOCAL_STORAGE:            
             return {...state, data: action.payload}
-        case USER_CHECKTOKEN:
-            return {...state, data: action.payload}
-        case USER_LOGOUT:
-            setLocalData('accessToken', null);
-            setLocalData('user', null);            
-            return {...state, data: null, isAuthChecked: false}
+         case USER_REFRESHTOKEN:
+            return {...state, data: action.payload, isAuthChecked:true, error: null, authorization: USER_AUTHENTICATION}
+        case USER_LOGOUT:           
+            return {...state, data: null, isAuthChecked: false, authorization: ''}
         case USER_AUTH_CHECK:
             return {...state, isAuthChecked: true}
+        case USER_ERROR:
+            return {...state, error: action.payload}
+        case IS_USER_LOADING:
+            return {...state, loading: action.payload}
         default:
             return state
     }

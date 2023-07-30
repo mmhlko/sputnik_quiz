@@ -1,46 +1,57 @@
-import { USER_AUTH_CHECK, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "storage/types"
-import { TUser, TUserRegisterBody, TUserResponce } from "utils/api"
+import { User } from "@supabase/supabase-js";
+import { IS_USER_LOADING, USER_AUTH_CHECK, USER_ERROR, USER_LOCAL_STORAGE, USER_LOGIN, USER_LOGOUT, USER_REFRESHTOKEN, USER_REGISTER } from "../action-types";
+import { TUserAuthCheckAction, TUserErrorAction, TUserLoading, TUserLocalStorageAction, TUserLoginAction, TUserLogoutAction, TUserRefreshTokenAction, TUserRegisterAction } from "types/actions";
 
-
-export type TRegisterAction = {
-    type: string,
-    payload?: TUserResponce
-}
-
-export type TAuthAction = {
-    type: string,
-    payload?: TUserResponce
-}
-
-export function registerAction(data:TUserResponce):TRegisterAction {
+export function registerAction(data:string):TUserRegisterAction {
     return {
         type: USER_REGISTER,
-        payload: data,
+        payload: data, //получаем строку успешной авторизации
     }
 }
 
-export function authorizeAction(data:TUserResponce):TAuthAction {
+export function authorizeAction(data:User):TUserLoginAction {
     return {
         type: USER_LOGIN,
         payload: data,
     }
 }
 
-export function getUser(data:TUserResponce):TAuthAction {
+export function refreshTokenAction(data:User):TUserRefreshTokenAction {
+    return {
+        type: USER_REFRESHTOKEN,
+        payload: data,
+    }
+}
+
+export function getUser(data:User):TUserLocalStorageAction {
     return {
         type: USER_LOCAL_STORAGE,
         payload: data,
     }
 }
 
-export function userLogout() {
+export function userLogout():TUserLogoutAction {
     return {
         type: USER_LOGOUT
     }
 }
 
-export function authCheck() {
+export function authCheck():TUserAuthCheckAction {
     return {
-        type: USER_AUTH_CHECK
+        type: USER_AUTH_CHECK,
+    }
+}
+
+export function userError(error: string): TUserErrorAction{
+    return {
+        type: USER_ERROR,
+        payload: error        
+    }
+}
+
+export function isUserLoading(isLoading: boolean): TUserLoading{
+    return {
+        type: IS_USER_LOADING,
+        payload: isLoading        
     }
 }
