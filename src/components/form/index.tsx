@@ -1,4 +1,4 @@
-import { ReactNode, SyntheticEvent } from 'react';
+import React, { ReactNode, SyntheticEvent } from 'react';
 import s from './styles.module.scss'
 import classNames from 'classnames';
 
@@ -6,7 +6,7 @@ interface IFormProps {
     handleForm: (e: SyntheticEvent<HTMLFormElement>) => void, 
     children?: ReactNode, 
     title?: string
-    align?: 'left' | 'center' | 'rigth'
+    align?: 'left' | 'center' | 'right'
 }
 
 
@@ -22,4 +22,4 @@ const Form = ({handleForm, children, title, align='center'}: IFormProps) => {
      );
 }
 
-export default Form;
+export default React.memo(Form);

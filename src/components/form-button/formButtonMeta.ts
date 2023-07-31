@@ -2,7 +2,6 @@ import { DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
 
 export enum FormButtonSize {
     'full'= 'full',
-    'minContent'= 'minContent',   
 }
 
 export interface IFormButtonProps extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {

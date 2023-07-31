@@ -7,9 +7,10 @@ import { TUserRegisterBody } from 'types/api-types';
 import ErrorComponent from 'components/error-component';
 import { useAppSelector } from 'storage/hook-types';
 import Spiner from 'components/spiner';
-import { USER_AUTHENTICATION, loginPAth } from 'utils/constants';
+import { USER_AUTHENTICATION, loginPath } from 'utils/constants';
 import { Typography } from 'antd';
 import { userStateSelector } from 'storage/selectors';
+import React, { useCallback } from 'react';
 const { Text, Title } = Typography;
 
 type IRegisterFormProps = {
@@ -23,7 +24,9 @@ const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onBlur' });
     const nameRegister = register('name', formValidations.name);
     const emailRegister = register('email', formValidations.email);
-    const passwordRegister = register('password', formValidations.password);   
+    const passwordRegister = register('password', formValidations.password); 
+    
+    const onClickFormButton = useCallback(() => onNavigate(loginPath), [])
 
     return (
         <Form title={'Регистрация'} handleForm={handleSubmit(onSubmit)}>
@@ -61,9 +64,9 @@ const RegisterForm = ({ onSubmit, onNavigate }: IRegisterFormProps) => {
                     <FormButton type='submit' color='primary'>Зарегистрироваться</FormButton>
                 </>
             }
-            <FormButton onClick={() => onNavigate(loginPAth)} type='button' color='secondary'>Войти</FormButton>
+            <FormButton onClick={onClickFormButton} type='button' color='secondary'>Войти</FormButton>
         </Form>
     );
 }
 
-export default RegisterForm;
+export default React.memo(RegisterForm);

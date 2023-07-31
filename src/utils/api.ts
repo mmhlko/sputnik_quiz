@@ -4,7 +4,9 @@ import { User } from "@supabase/supabase-js";
 
 type TApiConfig = {
     baseUrl: string;
-    headers: any
+    headers: {
+        apikey: string
+    }
 }
 
 export type TAuthResponse = {

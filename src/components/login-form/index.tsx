@@ -7,10 +7,12 @@ import ErrorComponent from 'components/error-component';
 import { useAppSelector } from 'storage/hook-types';
 import Spiner from 'components/spiner';
 import { userStateSelector } from 'storage/selectors';
-import { registerPAth } from 'utils/constants';
+import { registerPath } from 'utils/constants';
+import { TUserAuthBody } from 'types/api-types';
+import React, { useCallback } from 'react';
 
 type ILoginFormProps = {
-    onSubmit: (dataform: any) => void; 
+    onSubmit: (dataform: TUserAuthBody) => void; 
     onNavigate: (to:string) => void;
 }
 
@@ -19,7 +21,9 @@ const LoginForm = ({onSubmit, onNavigate}: ILoginFormProps) => {
     const { error, loading } = useAppSelector(userStateSelector);
     const {register, handleSubmit, formState: {errors}} = useForm({mode: 'onBlur'});
     const emailRegister = register('email', formValidations.email);
-    const passwordRegister = register('password', formValidations.password);   
+    const passwordRegister = register('password', formValidations.password);
+    
+    const handleClickNavigate = useCallback(() => {onNavigate(registerPath)}, [])
         
     return (         
         <Form title={'Вход'} handleForm={handleSubmit(onSubmit)}>
@@ -40,10 +44,10 @@ const LoginForm = ({onSubmit, onNavigate}: ILoginFormProps) => {
             {errorMessage('password', errors)}
             {loading && <Spiner />}
             {error && <ErrorComponent title='Ошибка авторизации' subtitle={error as string}/>}
-            <FormButton type='submit' color='primary' >Войти</FormButton>
-            <FormButton onClick={() => onNavigate(registerPAth)} type='button' color='secondary' >Зарегистрироваться</FormButton>
+            <FormButton type='submit' color='primary'>Войти</FormButton>
+            <FormButton onClick={handleClickNavigate} type='button' color='secondary' >Зарегистрироваться</FormButton>
         </Form>           
      );
 }
 
-export default LoginForm;
+export default React.memo(LoginForm);

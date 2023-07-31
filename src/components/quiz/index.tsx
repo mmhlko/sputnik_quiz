@@ -2,36 +2,39 @@ import s from './styles.module.scss';
 import { useAppDispatch, useAppSelector } from 'storage/hook-types';
 import QuestionList from 'components/question-list';
 import QuizResult from 'components/quiz-result';
-import { Button, CountdownProps, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import { Typography } from 'antd';
 import Spiner from 'components/spiner';
-import { Statistic } from 'antd';
-import { resetAction, showResultAction } from 'storage/actions/quizGame-actions';
-import { useEffect, useMemo, useState } from 'react';
+import { countingAction, resetAction } from 'storage/actions/quizGame-actions';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { questionsSelector, resultSelector } from 'storage/selectors';
-import { SET_TIME, homePAth } from 'utils/constants';
-
-const { Countdown } = Statistic;
+import { questionsSelector, showResultSelector } from 'storage/selectors';
+import { homePath } from 'utils/constants';
+import Timer from 'components/timer';
+import { TAnswers, TQuizQuestion } from 'types/reducers';
 const { Title } = Typography;
 
 const Quiz = () => {
 
-  const { score, showResult } = useAppSelector(resultSelector);
-  const { data: questions, totalQuestions, loading } = useAppSelector(questionsSelector);
+  const showResult = useAppSelector(showResultSelector);
+  const { loading, totalQuestions } = useAppSelector(questionsSelector);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation()
-  const dispatch = useAppDispatch();  
+  const dispatch = useAppDispatch();
 
-  const setDeadline = useMemo(() => {
-    return !showResult ? Date.now() + SET_TIME : 0;
-  }, [showResult])
+  const getQuizScore = (answers: TAnswers, questions: TQuizQuestion[]) => {
 
-  const onFinish: CountdownProps['onFinish'] = () => {
-    dispatch(showResultAction())
-    setIsModalOpen(true);
-  };
+    let quizScore = 0;
+    questions.forEach((question) => {
+      if (answers[question.id]) {
+        if (question.correctAnswer === answers[question.id][0]) {
+          quizScore++;
+        }
+      }
+    })
+    dispatch(countingAction(quizScore))
+  }
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -51,12 +54,12 @@ const Quiz = () => {
         ? <div className={s.quizWrapper}>
           <Title level={2}>Викторина</Title>
           <Title level={4}>Всего {totalQuestions} вопросов</Title>
-          <Countdown title="Осталось времени" value={setDeadline} onFinish={onFinish} />
-          <QuestionList questions={questions} totalQuestions={totalQuestions} />
-          {showResult && <QuizResult result={score} total={totalQuestions} />}
+          <Timer setIsModalOpen={setIsModalOpen} getQuizScore={getQuizScore} />
+          <QuestionList getQuizScore={getQuizScore} />
+          <QuizResult />
           <div className={s.buttons}>
             <Button disabled={showResult} form='quiz-form' type="primary" htmlType='submit' block={false}>Узнать результат</Button>
-            <Link to={homePAth}><Button type='primary'>Начать сначала</Button></Link>
+            <Link to={homePath}><Button type='primary'>Начать сначала</Button></Link>
           </div>
         </div>
         : <Spiner />
@@ -64,14 +67,12 @@ const Quiz = () => {
       <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
         <div className={s.modalContent}>
           <Title level={2}>Время вышло</Title>
-          {showResult && <QuizResult result={score} total={totalQuestions} />}
-          <Link to={homePAth}><Button type='primary'>Начать сначала</Button></Link>
+          <QuizResult />
+          <Link to={homePath}><Button type='primary'>Начать сначала</Button></Link>
         </div>
       </Modal>
     </>
-
-
   )
 }
 
-export default Quiz;
+export default React.memo(Quiz);

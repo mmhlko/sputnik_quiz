@@ -12,6 +12,7 @@ type IModalProps = {
 }
 
 const Modal = ({children, isOpen, onClose}: IModalProps) => {
+
     const refModal = useRef<HTMLDivElement>(null);
     
     const renderContent = () => {
@@ -21,13 +22,10 @@ const Modal = ({children, isOpen, onClose}: IModalProps) => {
                     {children}
                 </div>
             </div> 
-        );
-
-        
+        );        
     }
-
-    return createPortal(renderContent(), document.getElementById('modal-root') as HTMLDivElement)
     
+    return createPortal(renderContent(), document.getElementById('modal-root') as HTMLDivElement)
 }
 
 export default Modal;

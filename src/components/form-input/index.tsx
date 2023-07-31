@@ -1,16 +1,18 @@
-import classNames from 'classnames';
 import s from './styles.module.scss'
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
-const FormInput = forwardRef<HTMLInputElement, any>(({ typeTag, ...props }, ref) => {
+type Props = {
+    id: string,
+    type: string
+    placeholder?: string
+    autoComplete?: string
+};
 
-    switch (typeTag) {
-        case 'textarea':
-            return <textarea ref={ref} className={classNames(s.input, s.textarea)} {...props} />
-        default:
-            return <input ref={ref} className={s.input} {...props} />;
-    }
+const FormInput = forwardRef<HTMLInputElement, Props>(({...props }, ref) => {
+
+    return <input ref={ref} className={s.input} {...props} />;
+    
 })
 
-export default FormInput;
+export default React.memo(FormInput);
 

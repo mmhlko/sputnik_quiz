@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { useAppDispatch } from 'storage/hook-types';
 import { Layout } from 'antd';
 import ProtectedRoute from 'components/protected-route';
@@ -15,7 +15,7 @@ import HomePage from 'pages/home-page';
 import Modal from 'components/modal';
 import QuizPage from 'pages/quiz-page';
 import NotFoundPage from 'pages/not-found-page';
-import { AUTH_LOCAL_STORAGE, homePAth, loginPAth, quizPAth, registerPAth } from 'utils/constants';
+import { AUTH_LOCAL_STORAGE, homePath, loginPath, quizPath, registerPath } from 'utils/constants';
 import { TUserAuthBody, TUserRegisterBody } from 'types/api-types';
 import AppRouter from 'components/app-router';
 import { User } from '@supabase/supabase-js';
@@ -26,7 +26,7 @@ export type TRoutes = {
     element: ReactNode
 }
 
-export function App() {
+const App = () => {
 
     const dispatch = useAppDispatch();
     const location = useLocation();
@@ -55,7 +55,7 @@ export function App() {
 
     //закрытие модального окна ведет на страницу открытия модального окна или на главную
     const onCloseRoutingModal = () => {
-        navigate(initialPath || homePAth, { replace: true }) //вторым полем удаляем из истории переход обратно
+        navigate(initialPath || homePath, { replace: true }) //вторым полем удаляем из истории переход обратно
     }
 
     const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
@@ -73,16 +73,16 @@ export function App() {
     }
 
     const mainRoutes: TRoutes[] = [
-        { path: homePAth, element: <HomePage /> },
-        { path: quizPAth, element: <ProtectedRoute><QuizPage /></ProtectedRoute> },
-        { path: loginPAth, element: <ProtectedRoute onlyOnAuth><LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigate} /></ProtectedRoute> },
-        { path: registerPAth, element: <ProtectedRoute onlyOnAuth><RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigate} /></ProtectedRoute> },
+        { path: homePath, element: <HomePage /> },
+        { path: quizPath, element: <ProtectedRoute><QuizPage /></ProtectedRoute> },
+        { path: loginPath, element: <ProtectedRoute onlyOnAuth><LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigate} /></ProtectedRoute> },
+        { path: registerPath, element: <ProtectedRoute onlyOnAuth><RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigate} /></ProtectedRoute> },
         { path: '*', element: <NotFoundPage /> },
     ]
 
     const modalRoutes: TRoutes[] = [
         {
-            path: registerPAth,
+            path: registerPath,
             element: <ProtectedRoute onlyOnAuth>
                 <Modal isOpen={true} onClose={onCloseRoutingModal} >
                     <RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigateModal} />
@@ -90,7 +90,7 @@ export function App() {
             </ProtectedRoute>
         },
         {
-            path: loginPAth,
+            path: loginPath,
             element: <ProtectedRoute onlyOnAuth>
                 <Modal isOpen={true} onClose={onCloseRoutingModal} >
                     <LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigateModal} />
@@ -111,3 +111,5 @@ export function App() {
         </>
     );
 }
+
+export default React.memo(App);

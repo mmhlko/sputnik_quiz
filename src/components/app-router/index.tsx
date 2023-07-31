@@ -1,10 +1,10 @@
 import { TRoutes } from "components/app/App";
+import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 type TApprouterProps = {
     isModal?: boolean,
     routes: TRoutes[]
-
 }
 
 const AppRouter = ({ isModal, routes }: TApprouterProps) => {
@@ -28,7 +28,7 @@ const AppRouter = ({ isModal, routes }: TApprouterProps) => {
     }
 }
 
-export default AppRouter;
+export default React.memo(AppRouter);
 
 
 

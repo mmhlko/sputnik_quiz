@@ -1,4 +1,6 @@
 import { Rate, Typography } from "antd"
+import { useAppSelector } from "storage/hook-types";
+import { questionsSelector, scoreSelector, showResultSelector } from "storage/selectors";
 const { Title } = Typography;
 
 export type TQuizResultProps = {
@@ -6,16 +8,25 @@ export type TQuizResultProps = {
     total: number
 }
 
-const QuizResult = ({ result, total }: TQuizResultProps) => {
+const STARS_COUNT = 5;
 
-    const stars = result / total * 5
+const QuizResult = () => {
 
-    return (
-        <>
-            <Title level={3}>Ваш результат {result} из {total}</Title>
-            <Rate disabled allowHalf defaultValue={stars} />
-        </>
-    )
+    const score = useAppSelector(scoreSelector);
+    const { totalQuestions } = useAppSelector(questionsSelector);
+    const showResult = useAppSelector(showResultSelector)
+    const stars = score / totalQuestions * STARS_COUNT;
+
+    if(showResult) {
+
+        return (
+            <>
+                <Title level={3}>Ваш результат {score} из {totalQuestions}</Title>
+                <Rate disabled allowHalf defaultValue={stars} />
+            </>
+        )
+    }
+    
 }
 
 export default QuizResult

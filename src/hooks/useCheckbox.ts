@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const useCheckbox = (index: number) => {
 
-    const [value, setValue] = useState(index)
+    const [value, setValue] = useState(index);    
 
     return {
         value,

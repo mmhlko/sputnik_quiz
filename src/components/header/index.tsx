@@ -12,9 +12,7 @@ const Header = () => {
                 <Logo />
                 <UserBlock />
             </div>
-
         </header>
-
     );
 }
 

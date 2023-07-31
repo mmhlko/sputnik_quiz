@@ -10,8 +10,8 @@ export const SET_TIME = 60000 //ms
 
 
 //pathname
-export const homePAth = '/';
-export const loginPAth = '/login';
-export const registerPAth = '/register';
-export const quizPAth = '/quiz';
+export const homePath = '/';
+export const loginPath = '/login';
+export const registerPath = '/register';
+export const quizPath = '/quiz';
 

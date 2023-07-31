@@ -1,6 +1,7 @@
 import s from './styles.module.scss';
 import classNames from 'classnames';
 import { FormButtonSize, IFormButtonProps } from './formButtonMeta';
+import React from 'react';
 
 
 const FormButton = ({children, color, size=FormButtonSize.full ,extraClass, ...props}: IFormButtonProps) => {
@@ -13,5 +14,5 @@ const FormButton = ({children, color, size=FormButtonSize.full ,extraClass, ...p
      );
 }
 
-export default FormButton;
+export default React.memo(FormButton);
 

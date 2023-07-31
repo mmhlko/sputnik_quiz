@@ -2,8 +2,6 @@ import { ANSWER_INITIALIZE, COUNTING, RESET_GAME, SHOW_RESULT } from "storage/ac
 import { TResultState } from "types/reducers";
 import { TQuizGameActions } from "types/actions";
 
-
-
 const initialState: TResultState = {
     score: 0,
     answers: {},

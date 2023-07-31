@@ -1,51 +1,35 @@
 import Question from "components/question"
 import s from "./styles.module.scss"
 import { useAppDispatch, useAppSelector } from "storage/hook-types";
-import { SyntheticEvent, useEffect, useState } from 'react';
-import { countingAction, showResultAction } from "storage/actions/quizGame-actions";
+import React, { SyntheticEvent, memo, useEffect, useState } from 'react';
+import { showResultAction } from "storage/actions/quizGame-actions";
 import { Pagination } from 'antd';
 import { TAnswers, TQuizQuestion } from "types/reducers";
-import { answersSelector, resultSelector } from "storage/selectors";
+import { answersSelector, questionsSelector, showResultSelector } from "storage/selectors";
 
 type TQuestionListProps = {
-    questions: TQuizQuestion[],
-    totalQuestions: number,
-
+    getQuizScore: (answers: TAnswers, questions: TQuizQuestion[]) => void;
 }
 
-const QuestionList = ({ questions, totalQuestions }: TQuestionListProps) => {
+const QuestionList = memo(({ getQuizScore }: TQuestionListProps) => {
     const dispatch = useAppDispatch();
     const [page, setPage] = useState(1);
-    const answers = useAppSelector(answersSelector);  
-    const {showResult:isDisable} = useAppSelector(resultSelector)
+    const answers = useAppSelector(answersSelector);
+    const { data: questions, totalQuestions } = useAppSelector(questionsSelector);
+    const showResult = useAppSelector(showResultSelector)
     const [startItem, setStartItem] = useState(0);
 
     const PAGE_SIZE = 5;
     const endItem = startItem + PAGE_SIZE;
     const isPaginated = totalQuestions / PAGE_SIZE > 1;
-     
-    
-    const getQuizScore = (answers:TAnswers, questions:TQuizQuestion[]) => {
-        let quizScore = 0;
-        questions.forEach((question) => {            
-            if(answers[question.id]) {
-                if (question.correctAnswer === answers[question.id][0]) {
-                    quizScore ++;
-                }
-            }       
-        })      
-        
-        dispatch(countingAction(quizScore))
-    }
 
-    function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
-        // Prevent the browser from reloading the page
+    const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
-        getQuizScore(answers, questions)
+        getQuizScore(answers, questions);
         dispatch(showResultAction());
     }
 
-    function handleClickPage(page: number) {
+    const handleClickPage = (page: number) => {
         setPage(page);
         if (page === 1) {
             setStartItem(0)
@@ -56,15 +40,16 @@ const QuestionList = ({ questions, totalQuestions }: TQuestionListProps) => {
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
-    }, [startItem])    
+    }, [startItem])   
 
     return (
-        <>
+        <>  
             <form className={s.questions} onSubmit={handleSubmit} id="quiz-form">
                 {questions.slice(startItem, endItem).map((question) => (
-                    <Question key={question.id} question={question} isDisable={isDisable} id={question.id}/>
+                    <Question key={question.id} question={question} isDisable={showResult} id={question.id} />
                 ))}
             </form>
+            
             {isPaginated &&
                 <Pagination
                     total={totalQuestions}
@@ -75,8 +60,7 @@ const QuestionList = ({ questions, totalQuestions }: TQuestionListProps) => {
                 />
             }
         </>
-
     )
-}
+})
 
-export default QuestionList
+export default React.memo(QuestionList);

@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 import { fetchUserLogout } from 'storage/asyncActions/user-slice';
 import { useMediaQueries } from 'hooks/useMediaQuery';
 import { userDataSelector } from 'storage/selectors';
-import { homePAth, loginPAth } from 'utils/constants';
+import { homePath, loginPath } from 'utils/constants';
+import React, { useCallback } from 'react';
 
 
 const UserBlock = () => {
@@ -17,20 +18,20 @@ const UserBlock = () => {
     const location = useLocation();
     const { sm } = useMediaQueries();
 
-    const logoutFn = () => {
+    const logoutFn = useCallback(() => {
         dispatch(fetchUserLogout());        
-    }
+    }, [])
 
     return (
         <div className={s.userBlock}>
             {user?.email && <span><UserOutlined className={s.userIcon} />{sm && user.email}</span>}
             {!user
-                ? <Link replace to={loginPAth} state={{ backgroundLocation: location, initialPath: location.pathname }}><Button type='primary'>Войти</Button></Link>
-                : <Link to={homePAth}><Button type='primary' onClick={logoutFn}>Выйти</Button></Link>
+                ? <Link replace to={loginPath} state={{ backgroundLocation: location, initialPath: location.pathname }}><Button type='primary'>Войти</Button></Link>
+                : <Link to={homePath}><Button type='primary' onClick={logoutFn}>Выйти</Button></Link>
             }
         </div>
     );
 }
 
-export default UserBlock;
+export default React.memo(UserBlock);
 
