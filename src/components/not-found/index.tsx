@@ -20,7 +20,7 @@ const NotFound = ({children, title, buttonText = 'На главную'}: TNotFou
       {children}            
       <Link to={homePath}><Button type='link'>{buttonText}</Button></Link>
     </div>
-  )
+  );
 }
 
 export default NotFound;

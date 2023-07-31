@@ -21,8 +21,7 @@ const LoginForm = ({onSubmit, onNavigate}: ILoginFormProps) => {
     const { error, loading } = useAppSelector(userStateSelector);
     const {register, handleSubmit, formState: {errors}} = useForm({mode: 'onBlur'});
     const emailRegister = register('email', formValidations.email);
-    const passwordRegister = register('password', formValidations.password);
-    
+    const passwordRegister = register('password', formValidations.password);    
     const handleClickNavigate = useCallback(() => {onNavigate(registerPath)}, [])
         
     return (         

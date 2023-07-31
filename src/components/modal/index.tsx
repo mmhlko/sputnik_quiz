@@ -23,9 +23,9 @@ const Modal = ({children, isOpen, onClose}: IModalProps) => {
                 </div>
             </div> 
         );        
-    }
+    };
     
-    return createPortal(renderContent(), document.getElementById('modal-root') as HTMLDivElement)
+    return createPortal(renderContent(), document.getElementById('modal-root') as HTMLDivElement);
 }
 
 export default Modal;

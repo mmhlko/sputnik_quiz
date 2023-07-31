@@ -1,4 +1,4 @@
-import { FieldErrors } from "react-hook-form"
+import { FieldErrors, FieldValues } from "react-hook-form"
 
 export const formValidations = {
     name: {
@@ -34,7 +34,7 @@ export const formValidations = {
 
 }
 
-export const errorMessage = (key:string, errors: FieldErrors<any>) => {
+export const errorMessage = (key:string, errors: FieldErrors<FieldValues>) => {
 
     if (errors[key]) {
         return <p className='error-message'>{errors[key].message as string}</p>

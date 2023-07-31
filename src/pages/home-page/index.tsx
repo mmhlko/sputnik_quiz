@@ -5,7 +5,7 @@ import s from './styles.module.scss'
 import { userDataSelector } from "storage/selectors";
 import { loginPath, quizPath } from "utils/constants";
 
-function HomePage() {
+const HomePage = () => {
 
     const user = useAppSelector(userDataSelector);
     const location = useLocation();

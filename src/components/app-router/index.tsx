@@ -6,7 +6,7 @@ import HomePage from "pages/home-page";
 import NotFoundPage from "pages/not-found-page";
 import QuizPage from "pages/quiz-page";
 import React, { useCallback } from "react";
-import { Location, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Location, Route, Routes, useNavigate } from "react-router-dom";
 import { fetchLoginUserSupabase, fetchRegisterUser } from "storage/asyncActions/user-slice";
 import { useAppDispatch } from "storage/hook-types";
 import { TUserAuthBody, TUserRegisterBody } from "types/api-types";
