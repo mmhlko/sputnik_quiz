@@ -1,22 +1,12 @@
 import React, { ReactNode, useEffect } from 'react';
 import { useAppDispatch } from 'storage/hook-types';
 import { Layout } from 'antd';
-import ProtectedRoute from 'components/protected-route';
 import Header from 'components/header';
 import { useNavigate, useLocation } from 'react-router-dom';
-import LoginForm from 'components/login-form';
-import { SubmitHandler } from 'react-hook-form';
-import RegisterForm from 'components/register-form';
 import { getUser } from 'storage/actions/user-actions';
-import { fetchLoginUserSupabase, fetchRegisterUser } from 'storage/asyncActions/user-slice';
 import { getLocalData } from 'utils/local-storage';
 import { fetchGetQuestionsSupabase } from 'storage/asyncActions/questions-slice';
-import HomePage from 'pages/home-page';
-import Modal from 'components/modal';
-import QuizPage from 'pages/quiz-page';
-import NotFoundPage from 'pages/not-found-page';
-import { AUTH_LOCAL_STORAGE, homePath, loginPath, quizPath, registerPath } from 'utils/constants';
-import { TUserAuthBody, TUserRegisterBody } from 'types/api-types';
+import { AUTH_LOCAL_STORAGE } from 'utils/constants';
 import AppRouter from 'components/app-router';
 import { User } from '@supabase/supabase-js';
 const { Footer } = Layout;
@@ -30,9 +20,6 @@ const App = () => {
 
     const dispatch = useAppDispatch();
     const location = useLocation();
-    const initialPath = location.state?.initialPath;
-    const navigate = useNavigate();
-
     const token:string = getLocalData(AUTH_LOCAL_STORAGE)?.access_token;    
     const userFromLS:User = getLocalData(AUTH_LOCAL_STORAGE)?.user;
 
@@ -53,61 +40,15 @@ const App = () => {
         getQuestions();        
     }, [token, dispatch])
 
-    //закрытие модального окна ведет на страницу открытия модального окна или на главную
-    const onCloseRoutingModal = () => {
-        navigate(initialPath || homePath, { replace: true }) //вторым полем удаляем из истории переход обратно
-    }
-
-    const cbSubmitFormRegister: SubmitHandler<TUserRegisterBody> = (dataForm) => {
-        dispatch(fetchRegisterUser(dataForm))
-    }
-    const cbSubmitFormLogin: SubmitHandler<TUserAuthBody> = (dataForm) => {
-        dispatch(fetchLoginUserSupabase(dataForm))
-    }
-    const handleClickNavigate = (to: string) => {
-        navigate(to)
-    }
-    //добавляем подложку под модалку backgroundLocation и удаляем переход из истории
-    const handleClickNavigateModal = (to: string) => {
-        navigate(to, { replace: true, state: { backgroundLocation: { ...location, state: null }, initialPath } })
-    }
-
-    const mainRoutes: TRoutes[] = [
-        { path: homePath, element: <HomePage /> },
-        { path: quizPath, element: <ProtectedRoute><QuizPage /></ProtectedRoute> },
-        { path: loginPath, element: <ProtectedRoute onlyOnAuth><LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigate} /></ProtectedRoute> },
-        { path: registerPath, element: <ProtectedRoute onlyOnAuth><RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigate} /></ProtectedRoute> },
-        { path: '*', element: <NotFoundPage /> },
-    ]
-
-    const modalRoutes: TRoutes[] = [
-        {
-            path: registerPath,
-            element: <ProtectedRoute onlyOnAuth>
-                <Modal isOpen={true} onClose={onCloseRoutingModal} >
-                    <RegisterForm onSubmit={cbSubmitFormRegister} onNavigate={handleClickNavigateModal} />
-                </Modal>
-            </ProtectedRoute>
-        },
-        {
-            path: loginPath,
-            element: <ProtectedRoute onlyOnAuth>
-                <Modal isOpen={true} onClose={onCloseRoutingModal} >
-                    <LoginForm onSubmit={cbSubmitFormLogin} onNavigate={handleClickNavigateModal} />
-                </Modal>
-            </ProtectedRoute>
-        },
-        { path: '*', element: null },]
-
 
     return (
         <>
             <Header />
             <main className='container'>
-                <AppRouter routes={mainRoutes} />
+                <AppRouter location={location}/>
             </main>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Maxim Mikhaylenko</Footer>
-            <AppRouter isModal routes={modalRoutes} />
+            <AppRouter isModal location={location} />
         </>
     );
 }
